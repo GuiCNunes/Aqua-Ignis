@@ -39,6 +39,7 @@ public class Game {
     private void draw() throws IOException {
         screen.clear();
         screen.setCharacter(10, 10, TextCharacter.fromCharacter('X')[0]);
+        screen.setCharacter(20,20,TextCharacter.fromCharacter('O')[0]);
         screen.refresh();
     }
 
