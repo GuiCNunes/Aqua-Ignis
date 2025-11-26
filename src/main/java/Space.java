@@ -14,8 +14,8 @@ public class Space {
     private int width;
     private int height;
 
-    private Player ignis;
-    private Player aqua;
+    private Ignis ignis;
+    private Aqua aqua;
 
     public Space(int width, int height) {
         this.width = width;
@@ -24,10 +24,8 @@ public class Space {
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
     }
-    public void draw(TextGraphics graphics) {
-        aqua.draw(graphics);
-        ignis.draw(graphics);
-    }
+    public Aqua getAqua() {return aqua;}
+    public Ignis getIgnis() {return ignis;}
 
     public void processKey(KeyStroke key) {
         // ignis setas

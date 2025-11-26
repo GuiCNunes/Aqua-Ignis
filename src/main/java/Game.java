@@ -14,7 +14,7 @@ import java.io.IOException;
 public class Game {
 
     private Space space;
-
+    private SpaceView spaceView;
     private Screen screen;
 
     public Game() {
@@ -31,6 +31,7 @@ public class Game {
             TerminalSize size = terminal.getTerminalSize();
 
             this.space = new Space(size.getColumns(), size.getRows());
+            this.spaceView = new SpaceView();
 
             screen.setCursorPosition(null);   // we don't need a cursor
             screen.startScreen();             // screens must be started
@@ -46,7 +47,7 @@ public class Game {
 
         screen.clear();
 
-        space.draw(screen.newTextGraphics());
+        spaceView.draw(space, screen.newTextGraphics());
 
         screen.refresh();
     }
