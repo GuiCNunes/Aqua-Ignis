@@ -13,22 +13,24 @@ import java.io.IOException;
 
 public class Game {
 
-    private Player aqua;
-    private Player ignis;
+    private Space space;
 
     private Screen screen;
 
     public Game() {
         try {
-            TerminalSize terminalSize = new TerminalSize(40, 20);
+            TerminalSize terminalSize = new TerminalSize(60, 30);
+
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                     .setInitialTerminalSize(terminalSize);
 
-            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            Terminal terminal = terminalFactory.createTerminal();
+
             this.screen = new TerminalScreen(terminal);
 
-            aqua = new Aqua(10,10);
-            ignis = new Ignis(10,11);
+            TerminalSize size = terminal.getTerminalSize();
+
+            this.space = new Space(size.getColumns(), size.getRows());
 
             screen.setCursorPosition(null);   // we don't need a cursor
             screen.startScreen();             // screens must be started
@@ -44,16 +46,13 @@ public class Game {
 
         screen.clear();
 
-        TextGraphics textGraphics = screen.newTextGraphics();
-        aqua.draw(textGraphics);
-        ignis.draw(textGraphics);
+        space.draw(screen.newTextGraphics());
 
         screen.refresh();
-
     }
 
     private void processKey(KeyStroke key) {
-        System.out.println(key);
+        space.processKey(key);
     }
 
 
@@ -71,17 +70,6 @@ public class Game {
             }
 
             if(key.getKeyType() == KeyType.EOF){break;}
-
-            //fire boy mexia com setinhas e water girl com awsd :)
-            if (key.getKeyType() == KeyType.ArrowUp) ignis.setPosition(ignis.moveUp());
-            if (key.getKeyType() == KeyType.ArrowDown) ignis.setPosition(ignis.moveDown());
-            if (key.getKeyType() == KeyType.ArrowLeft) ignis.setPosition(ignis.moveLeft());
-            if (key.getKeyType() == KeyType.ArrowRight) ignis.setPosition(ignis.moveRight());
-
-            if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'w' || key.getCharacter() == 'W')) aqua.setPosition(aqua.moveUp());
-            if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 's' || key.getCharacter() == 'S')) aqua.setPosition(aqua.moveDown());
-            if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'a' || key.getCharacter() == 'A')) aqua.setPosition(aqua.moveLeft());
-            if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'd' || key.getCharacter() == 'D')) aqua.setPosition(aqua.moveRight());
 
             processKey(key);
             draw();
