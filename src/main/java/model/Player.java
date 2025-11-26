@@ -1,4 +1,5 @@
-import com.googlecode.lanterna.graphics.TextGraphics;
+package model;
+
 
 public abstract class Player extends Entity {
 
