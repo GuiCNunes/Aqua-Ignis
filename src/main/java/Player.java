@@ -19,5 +19,4 @@ public abstract class Player extends Entity {
         return new Position(position.getX() + 1, position.getY());
     }
 
-    public abstract void draw(TextGraphics graphics);
 }
