@@ -1,4 +1,8 @@
+package view;
+
+
 import com.googlecode.lanterna.graphics.TextGraphics;
+import model.Space;
 
 public class SpaceView {
     private PlayerView playerView = new PlayerView();
