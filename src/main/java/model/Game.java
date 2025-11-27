@@ -21,7 +21,7 @@ public class Game {
 
     public Game() {
         try {
-            TerminalSize terminalSize = new TerminalSize(60, 30);
+            TerminalSize terminalSize = new TerminalSize(60, 20);
 
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                     .setInitialTerminalSize(terminalSize);
