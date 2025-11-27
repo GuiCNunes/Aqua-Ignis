@@ -3,6 +3,8 @@ package model;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
+import java.util.List;
+
 
 public class Maze {
     private int width;
@@ -10,6 +12,8 @@ public class Maze {
 
     private Ignis ignis;
     private Aqua aqua;
+
+    private List<Monster> monsters;
 
     public Maze(int width, int height) {
         this.width = width;
@@ -39,11 +43,19 @@ public class Maze {
             movePlayer(aqua, aqua.moveLeft());
         if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'd' || key.getCharacter() == 'D'))
             movePlayer(aqua, aqua.moveRight());
+
+
     }
 
     private void movePlayer(Player player, Position newPos) {
         if (canMove(newPos)) {
             player.setPosition(newPos);
+        }
+    }
+
+    private void moveMonster(Monster monster, Position newPos) {
+        if(canMove(newPos)) {
+            monster.setPosition(newPos);
         }
     }
 
