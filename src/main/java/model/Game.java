@@ -1,5 +1,6 @@
 package model;
 
+import controller.SpaceController;
 import view.SpaceView;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.input.KeyStroke;
@@ -16,6 +17,7 @@ public class Game {
     private Space space;
     private SpaceView spaceView;
     private Screen screen;
+    private SpaceController spaceController;
 
     public Game() {
         try {
@@ -32,6 +34,7 @@ public class Game {
 
             this.space = new Space(size.getColumns(), size.getRows());
             this.spaceView = new SpaceView();
+            this.spaceController = new SpaceController(space);
 
             screen.setCursorPosition(null);   // we don't need a cursor
             screen.startScreen();             // screens must be started
@@ -53,7 +56,7 @@ public class Game {
     }
 
     private void processKey(KeyStroke key) {
-        space.processKey(key);
+        spaceController.processKey(key);
     }
 
 

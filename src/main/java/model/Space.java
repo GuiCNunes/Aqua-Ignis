@@ -22,6 +22,7 @@ public class Space {
     public Ignis getIgnis() {return ignis;}
 
     public void processKey(KeyStroke key) {
+        //devia ser um controller? ainda nao tenho a certeza mas acho que nao pensando no controller como uma ponte
         // ignis setas
         if (key.getKeyType() == KeyType.ArrowUp) movePlayer(ignis, ignis.moveUp());
         if (key.getKeyType() == KeyType.ArrowDown) movePlayer(ignis, ignis.moveDown());
