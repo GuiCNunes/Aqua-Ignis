@@ -5,7 +5,6 @@ public abstract class Entity {
 
     public Entity(int x, int y) {
         this.position = new Position(x, y);
-
     }
 
     public Position getPosition() {

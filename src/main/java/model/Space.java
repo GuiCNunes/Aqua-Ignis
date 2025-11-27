@@ -18,10 +18,12 @@ public class Space {
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
     }
+
     public Aqua getAqua() {return aqua;}
     public Ignis getIgnis() {return ignis;}
 
     public void processKey(KeyStroke key) {
+        //devia ser um controller? ainda nao tenho a certeza mas acho que nao pensando no controller como uma ponte
         // ignis setas
         if (key.getKeyType() == KeyType.ArrowUp) movePlayer(ignis, ignis.moveUp());
         if (key.getKeyType() == KeyType.ArrowDown) movePlayer(ignis, ignis.moveDown());
