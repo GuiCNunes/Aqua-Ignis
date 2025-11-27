@@ -53,6 +53,7 @@ public class Game {
         spaceView.draw(space, screen.newTextGraphics());
 
         screen.refresh();
+
     }
 
     private void processKey(KeyStroke key) {
@@ -62,6 +63,7 @@ public class Game {
 
 
     public void run() throws IOException {
+
         draw();
 
         while (true) {

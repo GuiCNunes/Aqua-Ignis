@@ -13,4 +13,5 @@ public class SpaceController {
     public void processKey(KeyStroke key){
         space.processKey(key);
     }
+
 }

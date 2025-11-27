@@ -18,6 +18,7 @@ public class Space {
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
     }
+
     public Aqua getAqua() {return aqua;}
     public Ignis getIgnis() {return ignis;}
 
