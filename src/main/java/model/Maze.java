@@ -4,14 +4,14 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
 
-public class Space {
+public class Maze {
     private int width;
     private int height;
 
     private Ignis ignis;
     private Aqua aqua;
 
-    public Space(int width, int height) {
+    public Maze(int width, int height) {
         this.width = width;
         this.height = height;
 
