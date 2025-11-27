@@ -1,6 +1,7 @@
 package model;
 
-import view.SpaceView;
+import controller.MazeController;
+import view.MazeView;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -13,9 +14,10 @@ import java.io.IOException;
 
 public class Game {
 
-    private Space space;
-    private SpaceView spaceView;
+    private Maze maze;
+    private MazeView mazeView;
     private Screen screen;
+    private MazeController mazeController;
 
     public Game() {
         try {
@@ -30,8 +32,9 @@ public class Game {
 
             TerminalSize size = terminal.getTerminalSize();
 
-            this.space = new Space(size.getColumns(), size.getRows());
-            this.spaceView = new SpaceView();
+            this.maze = new Maze(size.getColumns(), size.getRows());
+            this.mazeView = new MazeView();
+            this.mazeController = new MazeController(maze);
 
             screen.setCursorPosition(null);   // we don't need a cursor
             screen.startScreen();             // screens must be started
@@ -47,18 +50,20 @@ public class Game {
 
         screen.clear();
 
-        spaceView.draw(space, screen.newTextGraphics());
+        mazeView.draw(maze, screen.newTextGraphics());
 
         screen.refresh();
+
     }
 
     private void processKey(KeyStroke key) {
-        space.processKey(key);
+        mazeController.processKey(key);
     }
 
 
 
     public void run() throws IOException {
+
         draw();
 
         while (true) {
