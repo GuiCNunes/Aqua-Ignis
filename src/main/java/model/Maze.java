@@ -2,6 +2,12 @@ package model;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
+import model.entity.Ignis;
+import model.entity.Player;
+import model.entity.Aqua;
+import model.entity.Slime;
+import model.entity.Monster;
+import model.entity.Ghost;
 
 import java.util.ArrayList;
 import java.util.List;

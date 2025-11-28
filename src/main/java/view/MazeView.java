@@ -2,7 +2,7 @@ package view;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import model.Maze;
-import model.Monster;
+import model.entity.Monster;
 
 public class MazeView {
     private PlayerView playerView = new PlayerView();

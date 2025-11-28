@@ -1,5 +1,7 @@
-package model;
+package model.entity;
 
+
+import model.Entity;
 
 public abstract class Player extends Entity {
 
