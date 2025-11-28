@@ -1,5 +1,7 @@
 package view;
 
+import model.entity.Aqua;
+import model.entity.Ignis;
 import model.entity.Player;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -7,9 +9,15 @@ import com.googlecode.lanterna.TextColor;
 import model.Position;
 
 public class PlayerView {
-    public void draw(Player player, TextGraphics g, char character, String color) {
-        Position position = player.getPosition();
-        g.setForegroundColor(TextColor.Factory.fromString(color));
-        g.putString(new TerminalPosition(position.getX(), position.getY()), String.valueOf(character));
+    private IgnisView ignisView = new IgnisView();
+    private AquaView aquaView = new AquaView();
+
+    public void draw(Player player, TextGraphics g) {
+        if (player instanceof Aqua) {
+            aquaView.draw(player, g);
+        }
+        else if (player instanceof Ignis) {
+            ignisView.draw(player, g);
+        }
     }
 }

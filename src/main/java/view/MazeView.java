@@ -9,8 +9,8 @@ public class MazeView {
     private MonsterView monsterView = new MonsterView();
 
     public void draw(Maze maze, TextGraphics g) {
-        playerView.draw(maze.getAqua(), g, '~', "#00BFFF");
-        playerView.draw(maze.getIgnis(), g, '^', "#FFA500");
+        playerView.draw(maze.getAqua(), g); //'~', "#00BFFF");
+        playerView.draw(maze.getIgnis(), g); //'^', "#FFA500");
 
         for (Monster monster : maze.getMonsters()){
             monsterView.draw(monster, g, 'M', "#00FF00");
