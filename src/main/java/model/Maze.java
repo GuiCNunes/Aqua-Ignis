@@ -3,6 +3,7 @@ package model;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ public class Maze {
     private Ignis ignis;
     private Aqua aqua;
 
-    private List<Monster> monsters;
+    private List<Monster> monsters = new ArrayList<>();
 
     public Maze(int width, int height) {
         this.width = width;
@@ -21,10 +22,15 @@ public class Maze {
 
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
+
+        monsters.add(new Ghost(20, 5));
+        monsters.add(new Slime(5, 15));
     }
 
     public Aqua getAqua() {return aqua;}
     public Ignis getIgnis() {return ignis;}
+
+    public List<Monster> getMonsters() {return monsters;}
 
     public void processKey(KeyStroke key) {
         //devia ser um controller? ainda nao tenho a certeza mas acho que nao pensando no controller como uma ponte
@@ -50,12 +56,6 @@ public class Maze {
     private void movePlayer(Player player, Position newPos) {
         if (canMove(newPos)) {
             player.setPosition(newPos);
-        }
-    }
-
-    private void moveMonster(Monster monster, Position newPos) {
-        if(canMove(newPos)) {
-            monster.setPosition(newPos);
         }
     }
 
