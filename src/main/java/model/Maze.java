@@ -69,4 +69,7 @@ public class Maze {
         return p.getX() >= 0 && p.getX() < width &&
                 p.getY() >= 0 && p.getY() < height;
     }
+
+    public int getWidth() {return width;}
+    public int getHeight() {return height;}
 }
