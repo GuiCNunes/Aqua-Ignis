@@ -5,9 +5,13 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import model.Maze;
+import model.Position;
 import model.entity.Monster;
 
 public class MazeView {
+
+    private static int visionRadius = 6;
+
     private PlayerView playerView = new PlayerView();
     private MonsterView monsterView = new MonsterView();
 
@@ -24,4 +28,12 @@ public class MazeView {
         g.setBackgroundColor(TextColor.Factory.fromString("#765341"));
         g.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(maze.getWidth(), maze.getHeight()), ' ');
     }
+
+    private boolean isVisible(Position position, int x, int y) {
+        int dx = position.getX() - x;
+        int dy = position.getY() - y;
+        return dx * dx + dy * dy <= visionRadius * visionRadius;
+    }
+
+
 }
