@@ -1,10 +1,7 @@
-package view;
+package view.entityView;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import model.entity.Monster;
-import model.Position;
 import model.entity.Slime;
 
 public class MonsterView {

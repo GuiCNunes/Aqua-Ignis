@@ -7,6 +7,8 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import model.Maze;
 import model.Position;
 import model.entity.Monster;
+import view.entityView.MonsterView;
+import view.entityView.PlayerView;
 
 public class MazeView {
 
@@ -62,6 +64,4 @@ public class MazeView {
         int dy = position.getY() - y;
         return dx * dx + dy * dy <= visionRadius * visionRadius;
     }
-
-
 }

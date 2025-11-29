@@ -1,4 +1,4 @@
-package view;
+package view.entityView;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
