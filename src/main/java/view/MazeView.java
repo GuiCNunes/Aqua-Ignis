@@ -34,6 +34,17 @@ public class MazeView {
         g.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(maze.getWidth(), maze.getHeight()), ' ');
     }
 
+    private void drawVision(Maze maze, TextGraphics g, Position position) {
+        for(int y = 0; y < maze.getHeight(); y++){
+            for(int x = 0; x < maze.getWidth(); x++){
+                if(isVisible(position, x, y)){
+                    g.setBackgroundColor(TextColor.Factory.fromString("#765341"));
+                    g.setCharacter(x,y, ' ');
+                }
+            }
+        }
+    }
+
     private boolean isVisible(Position position, int x, int y) {
         int dx = position.getX() - x;
         int dy = position.getY() - y;
