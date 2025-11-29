@@ -20,6 +20,8 @@ public class Maze {
     private Ignis ignis;
     private Aqua aqua;
 
+    private boolean[][] Walls;
+
     private List<Monster> monsters = new ArrayList<>();
 
     public Maze(int width, int height) {
@@ -56,7 +58,6 @@ public class Maze {
         if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'd' || key.getCharacter() == 'D'))
             movePlayer(aqua, aqua.moveRight());
 
-
     }
 
     private void movePlayer(Player player, Position newPos) {
@@ -72,4 +73,8 @@ public class Maze {
 
     public int getWidth() {return width;}
     public int getHeight() {return height;}
+
+    private boolean isWall(int x, int y) {
+        return Walls[x][y];
+    }
 }
