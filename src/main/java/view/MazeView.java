@@ -17,7 +17,7 @@ public class MazeView {
         playerView.draw(maze.getIgnis(), g); //'^', "#FFA500");
 
         for (Monster monster : maze.getMonsters()){
-            monsterView.draw(monster, g, 'M', "#00FF00");
+            monsterView.draw(monster, g);
         }
     }
     private void drawMaze(Maze maze, TextGraphics g) {
