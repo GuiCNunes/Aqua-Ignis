@@ -10,7 +10,7 @@ import model.entity.Monster;
 
 public class MazeView {
 
-    private static int visionRadius = 6;
+    private static int visionRadius = 3;
 
     private PlayerView playerView = new PlayerView();
     private MonsterView monsterView = new MonsterView();
@@ -20,13 +20,25 @@ public class MazeView {
         playerView.draw(maze.getAqua(), g); //'~', "#00BFFF");
         playerView.draw(maze.getIgnis(), g); //'^', "#FFA500");
 
-        for (Monster monster : maze.getMonsters()){
-            monsterView.draw(monster, g);
-        }
     }
     private void drawMaze(Maze maze, TextGraphics g) {
-        g.setBackgroundColor(TextColor.Factory.fromString("#765341"));
-        g.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(maze.getWidth(), maze.getHeight()), ' ');
+        drawDarkness(maze, g);
+
+        Position aquaPos = maze.getAqua().getPosition();
+        drawVision(maze, g, aquaPos);
+
+        Position ignisPos = maze.getIgnis().getPosition();
+        drawVision(maze, g, ignisPos);
+
+        for(Monster monster  : maze.getMonsters()){
+            Position monsterPos = monster.getPosition();
+            int x = monsterPos.getX();
+            int y = monsterPos.getY();
+
+            if(isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)){
+                monsterView.draw(monster, g);
+            }
+        }
     }
 
     private void drawDarkness(Maze maze, TextGraphics g) {
