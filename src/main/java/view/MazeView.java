@@ -29,6 +29,11 @@ public class MazeView {
         g.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(maze.getWidth(), maze.getHeight()), ' ');
     }
 
+    private void drawDarkness(Maze maze, TextGraphics g) {
+        g.setBackgroundColor(TextColor.Factory.fromString("#000000"));
+        g.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(maze.getWidth(), maze.getHeight()), ' ');
+    }
+
     private boolean isVisible(Position position, int x, int y) {
         int dx = position.getX() - x;
         int dy = position.getY() - y;
