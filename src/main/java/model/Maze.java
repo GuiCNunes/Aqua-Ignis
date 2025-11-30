@@ -22,6 +22,8 @@ public class Maze {
 
     private boolean[][] walls;
 
+    private Position exit;
+
     private List<Monster> monsters = new ArrayList<>();
 
     public Maze(int width, int height) {
@@ -33,6 +35,8 @@ public class Maze {
 
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
+
+        exit = new Position(width/2,height-1);
 
         monsters.add(new Ghost(20, 5));
         monsters.add(new Slime(5, 15));
@@ -90,5 +94,6 @@ public class Maze {
             }
         }
         for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
+        walls[height - 1][width - width/2] = false;
     }
 }
