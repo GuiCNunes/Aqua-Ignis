@@ -20,13 +20,16 @@ public class Maze {
     private Ignis ignis;
     private Aqua aqua;
 
-    private boolean[][] Walls;
+    private boolean[][] walls;
 
     private List<Monster> monsters = new ArrayList<>();
 
     public Maze(int width, int height) {
         this.width = width;
         this.height = height;
+
+        walls = new boolean[height][width];
+        generator();
 
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
@@ -74,18 +77,18 @@ public class Maze {
     public int getWidth() {return width;}
     public int getHeight() {return height;}
 
-    private boolean isWall(int x, int y) {
-        return Walls[x][y];
+    public boolean isWall(int x, int y) {
+        return walls[y][x];
     }
 
     private void generator(){
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
-                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) Walls[x][y] = true;
-                else if ((x % 4 == 0 && y % 2 == 0) ||( x % 7 == 0 && y % 3 == 0)) Walls[x][y] = true;
-                else Walls[x][y] = false;
+                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) walls[x][y] = true;
+                else if ((x % 4 == 0 && y % 2 == 0) ||( x % 7 == 0 && y % 3 == 0)) walls[x][y] = true;
+                else walls[x][y] = false;
             }
         }
-        for(int i = 2; i < width - 2; i+=6) Walls[2][i] = false;
+        for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
     }
 }
