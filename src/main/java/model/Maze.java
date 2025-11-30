@@ -64,7 +64,7 @@ public class Maze {
     }
 
     private void movePlayer(Player player, Position newPos) {
-        if (canMove(newPos)) {
+        if (canMove(newPos) && !walls[newPos.getY()][newPos.getX()]) {
             player.setPosition(newPos);
         }
     }
