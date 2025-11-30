@@ -105,4 +105,17 @@ public class Maze {
         return false;
     }
 
+    public boolean checkLoss(){
+        Position aquaPos = aqua.getPosition();
+        Position ignisPos = ignis.getPosition();
+
+        for(Monster monster : monsters){
+            Position monsterPos = monster.getPosition();
+
+            if(monsterPos.equals(aquaPos)) return true;
+            if(monsterPos.equals(ignisPos)) return true;
+        }
+        return false;
+    }
+
 }
