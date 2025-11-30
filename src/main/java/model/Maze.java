@@ -99,4 +99,9 @@ public class Maze {
 
     public Position getExit() {return exit;}
 
+    public boolean checkWin(Position position){
+        if (position.getX() == exit.getX() && position.getY() == exit.getY()) return true;
+        return false;
+    }
+
 }
