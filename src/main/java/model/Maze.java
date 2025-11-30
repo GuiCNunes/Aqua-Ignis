@@ -31,12 +31,13 @@ public class Maze {
         this.height = height;
 
         walls = new boolean[height][width];
-        generator();
 
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
 
         exit = new Position(width/2,height-1);
+
+        generator();
 
         monsters.add(new Ghost(20, 5));
         monsters.add(new Slime(5, 15));
