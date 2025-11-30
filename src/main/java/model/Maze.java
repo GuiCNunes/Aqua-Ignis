@@ -84,9 +84,9 @@ public class Maze {
     private void generator(){
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
-                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) walls[x][y] = true;
-                else if ((x % 4 == 0 && y % 2 == 0) ||( x % 7 == 0 && y % 3 == 0)) walls[x][y] = true;
-                else walls[x][y] = false;
+                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) walls[y][x] = true;
+                else if ((x % 4 == 0 && y % 2 == 0) ||( x % 7 == 0 && y % 3 == 0)) walls[y][x] = true;
+                else walls[y][x] = false;
             }
         }
         for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
