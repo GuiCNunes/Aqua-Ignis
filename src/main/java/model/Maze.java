@@ -112,8 +112,8 @@ public class Maze {
         for(Monster monster : monsters){
             Position monsterPos = monster.getPosition();
 
-            if(monsterPos.equals(aquaPos)) return true;
-            if(monsterPos.equals(ignisPos)) return true;
+            if(monsterPos.getX() == aquaPos.getX() && monsterPos.getY() == aquaPos.getY()) return true;
+            if(monsterPos.getX() == ignisPos.getX() && monsterPos.getY() == ignisPos.getY()) return true;
         }
         return false;
     }

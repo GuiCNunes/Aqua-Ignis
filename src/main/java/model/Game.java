@@ -72,6 +72,12 @@ public class Game {
                 gui.stopScreen();
                 break;
             }
+
+            if(maze.checkLoss()){
+                System.out.println("Game Over my friend(s)");
+                gui.stopScreen();
+                break;
+            }
         }
     }
 
