@@ -1,4 +1,4 @@
-# project-t01g09
+<img width="224" height="202" alt="image" src="https://github.com/user-attachments/assets/765e087e-244b-4357-b48a-6aead018925b" /># project-t01g09
 
 #Aqua & Ignis
 
@@ -63,3 +63,6 @@ Finally, the use of delegation in the view layer makes it simpler to extend and 
 ## Mockups
 
 ![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Mockups/MOCKUPMENU.webp?raw=true)
+![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Mockups/helpmockup.webp?raw=true)
+![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Mockups/mockupmapa.webp?raw=true)
+![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Mockups/mochupwithvision.webp?raw=true)
