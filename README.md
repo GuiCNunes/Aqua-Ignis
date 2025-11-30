@@ -5,7 +5,7 @@ The Aqua & Ignis is a dual player escape room, where the goal for each player, A
 They will have to make sure they are safe from monsters and to find each other in the room labirint while being under low vision habilities.
 There will be levels in wich monsters in larger quantities and diferent maps acording to difficulti.
 
-This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes (up202404656@up.pt) and João Barros (up).
+This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes (up202404656@up.pt) and João Barros (up202405577@up.pt).
 
 ## Implemented Features
 
@@ -19,11 +19,11 @@ This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes 
 
 -**Low-vision habilities**- each player only has the habilitie to a certaint space arround its position.
 
--**Monsters** -
+-**Monsters** - monsters are implemented
 
 ## Planned Features
 
--**Monsters** - monsters moovement.
+-**Monsters** - monsters movement.
 
 -**Connected Menus** - the user can browse throw different menus. (EX: Main Menu, Play and Levels)
 
@@ -31,7 +31,7 @@ This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes 
 
 -**Textures for players, monsters and ambient** - having texture for everything
 
-_**Form of atack** - each player will have the habilitie to atack monsters.
+-**Form of atack** - each player will have the habilitie to atack monsters.
 
 
 ## Design
