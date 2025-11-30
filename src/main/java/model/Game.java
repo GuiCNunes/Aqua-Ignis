@@ -2,13 +2,11 @@ package model;
 
 import controller.MazeController;
 import view.MazeView;
-import com.googlecode.lanterna.TerminalSize;
+import gui.GUI;
+import gui.LanternaGUI;
+
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 
@@ -16,29 +14,18 @@ public class Game {
 
     private Maze maze;
     private MazeView mazeView;
-    private Screen screen;
     private MazeController mazeController;
+    private GUI gui;
 
     public Game() {
         try {
-            TerminalSize terminalSize = new TerminalSize(90, 30);
+            this.gui = new LanternaGUI(90,30);
 
-            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
-                    .setInitialTerminalSize(terminalSize);
-
-            Terminal terminal = terminalFactory.createTerminal();
-
-            this.screen = new TerminalScreen(terminal);
-
-            TerminalSize size = terminal.getTerminalSize();
-
-            this.maze = new Maze(size.getColumns(), size.getRows());
+            this.maze = new Maze(gui.getWidth(), gui.getHeight());
             this.mazeView = new MazeView();
             this.mazeController = new MazeController(maze);
 
-            screen.setCursorPosition(null);   // we don't need a cursor
-            screen.startScreen();             // screens must be started
-            screen.doResizeIfNecessary();     // resize screen if necessary
+            gui.startScreen();
 
         }
         catch (IOException e) {
@@ -48,11 +35,11 @@ public class Game {
 
     private void draw() throws IOException {
 
-        screen.clear();
+        gui.clear();
 
-        mazeView.draw(maze, screen.newTextGraphics());
+        mazeView.draw(maze, gui.newTextGraphics());
 
-        screen.refresh();
+        gui.refresh();
 
     }
 
@@ -68,10 +55,10 @@ public class Game {
 
         while (true) {
             KeyStroke key;
-            key = screen.readInput();
+            key = gui.readInput();
 
             if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q'){
-                screen.stopScreen();
+                gui.stopScreen();
                 break;
             }
 
@@ -82,7 +69,7 @@ public class Game {
 
             if (maze.checkWin(maze.getAqua().getPosition()) && maze.checkWin(maze.getIgnis().getPosition())) {
                 System.out.println("Congratulations! You win!");
-                screen.stopScreen();
+                gui.stopScreen();
                 break;
             }
         }
