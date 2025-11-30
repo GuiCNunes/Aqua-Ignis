@@ -58,6 +58,9 @@ On the other hand, MVC introduces more classes and requires some discipline to k
 Using gameloops also makes it easier to organize the code. HOwever it also means that every iteration must keep the game state consistent.
 Finally, the use of delegation in the view layer makes it simpler to extend and customise the visual representation of each entity, at the cost of adding an extra level of indirection between the game logic and the concrete rendering code.
 
+## UML
+![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/UML/img.png?raw=true)
+
 ## Mockups
 
 ![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Mockups/MOCKUPMENU.webp?raw=true)
