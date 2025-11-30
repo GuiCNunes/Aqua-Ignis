@@ -22,6 +22,8 @@ public class Maze {
 
     private boolean[][] walls;
 
+    private Position exit;
+
     private List<Monster> monsters = new ArrayList<>();
 
     public Maze(int width, int height) {
@@ -29,10 +31,13 @@ public class Maze {
         this.height = height;
 
         walls = new boolean[height][width];
-        generator();
 
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
+
+        exit = new Position(width/2,height-1);
+
+        generator();
 
         monsters.add(new Ghost(20, 5));
         monsters.add(new Slime(5, 15));
@@ -90,5 +95,14 @@ public class Maze {
             }
         }
         for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
+        walls[exit.getY()][exit.getX()] = false;
     }
+
+    public Position getExit() {return exit;}
+
+    public boolean checkWin(Position position){
+        if (position.getX() == exit.getX() && position.getY() == exit.getY()) return true;
+        return false;
+    }
+
 }

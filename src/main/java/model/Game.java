@@ -79,6 +79,12 @@ public class Game {
 
             processKey(key);
             draw();
+
+            if (maze.checkWin(maze.getAqua().getPosition()) && maze.checkWin(maze.getIgnis().getPosition())) {
+                System.out.println("Congratulations! You win!");
+                screen.stopScreen();
+                break;
+            }
         }
     }
 
