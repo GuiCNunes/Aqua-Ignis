@@ -61,3 +61,5 @@ Using gameloops also makes it easier to organize the code. HOwever it also means
 Finally, the use of delegation in the view layer makes it simpler to extend and customise the visual representation of each entity, at the cost of adding an extra level of indirection between the game logic and the concrete rendering code.
 
 ## Mockups
+
+![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Mockups/MOCKUPMENU.webp?raw=true)
