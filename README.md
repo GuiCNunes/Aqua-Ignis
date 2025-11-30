@@ -1,13 +1,13 @@
-#Aqua & Ignis
+# Aqua & Ignis
 
-##Game Description
+## Game Description
 The Aqua & Ignis is a dual player escape room, where the goal for each player, Aqua and Ignis to find each other and leave the room,
 They will have to make sure they are safe from monsters and to find each other in the room labirint while being under low vision habilities.
 There will be levels in wich monsters in larger quantities and diferent maps acording to difficulti.
 
 This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes (up202404656@up.pt) and João Barros (up).
 
-##Implemented Features
+## Implemented Features
 
 -**two players** - both players are implemented.
 
@@ -21,7 +21,7 @@ This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes 
 
 -**Monsters** -
 
-##Planned Features
+## Planned Features
 
 -**Monsters** - monsters moovement.
 
