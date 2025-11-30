@@ -27,7 +27,7 @@ class MazeTest {
     }
 
     @Test
-    void TestExitCreation() {
+    void TestExitExists() {
         Maze maze = new Maze(20, 50);
         assertNotNull(maze.getExit());
     }
@@ -84,11 +84,11 @@ class MazeTest {
     @Test
     void TestWallsBlockMov() {
         Maze maze = new Maze(20, 50);
-        Position exit = maze.getExit();
+        Position exitPosition = maze.getExit();
 
         for (int x = 0; x < maze.getWidth(); x++) {
             assertTrue(maze.isWall(x,0));
-            if (x != exit.getX() || (maze.getHeight() - 1) != exit.getY()) {
+            if (x != exitPosition.getX() || (maze.getHeight() - 1) != exitPosition.getY()) {
                 assertTrue(maze.isWall(x,maze.getHeight()-1));
             }
         }

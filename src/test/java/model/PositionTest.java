@@ -6,18 +6,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class PositionTest {
 
     @Test
-    void testConstructor() {
-        Position position = new Position(1,2);
-        assertEquals(1,position.getX());
-        assertEquals(2,position.getY());
+    void testInitialization() {
+        Position position = new Position(5,8);
+        assertEquals(5,position.getX());
+        assertEquals(8,position.getY());
     }
 
     @Test
-    public void testSet(){
-        Position position = new Position(1,2);
-        position.setX(3);
-        position.setY(4);
-        assertEquals(3,position.getX());
-        assertEquals(4,position.getY());
+    void testSet(){
+        Position position = new Position(2,4);
+        position.setX(8);
+        position.setY(12);
+        assertEquals(8,position.getX());
+        assertEquals(12,position.getY());
     }
 }
