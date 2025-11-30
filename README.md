@@ -1,5 +1,3 @@
-<img width="224" height="202" alt="image" src="https://github.com/user-attachments/assets/765e087e-244b-4357-b48a-6aead018925b" /># project-t01g09
-
 #Aqua & Ignis
 
 ##Game Description
