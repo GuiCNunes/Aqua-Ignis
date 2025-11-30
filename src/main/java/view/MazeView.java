@@ -52,8 +52,13 @@ public class MazeView {
         for(int y = 0; y < maze.getHeight(); y++){
             for(int x = 0; x < maze.getWidth(); x++){
                 if(isVisible(position, x, y)){
-                    g.setBackgroundColor(TextColor.Factory.fromString("#765341"));
-                    g.setCharacter(x,y, ' ');
+                    if(maze.isWall(x, y)){
+                        g.setBackgroundColor(TextColor.Factory.fromString("#4A3B2D"));
+                        g.setCharacter(x,y, ' ');
+                    }
+                    else{
+                        g.setBackgroundColor(TextColor.Factory.fromString("#765341"));
+                        g.setCharacter(x,y, ' '); }
                 }
             }
         }
