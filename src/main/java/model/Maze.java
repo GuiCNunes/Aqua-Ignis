@@ -77,4 +77,15 @@ public class Maze {
     private boolean isWall(int x, int y) {
         return Walls[x][y];
     }
+
+    private void generator(){
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) Walls[x][y] = true;
+                else if ((x % 4 == 0 && y % 2 == 0) ||( x % 7 == 0 && y % 3 == 0)) Walls[x][y] = true;
+                else Walls[x][y] = false;
+            }
+        }
+        for(int i = 2; i < width - 2; i+=6) Walls[2][i] = false;
+    }
 }
