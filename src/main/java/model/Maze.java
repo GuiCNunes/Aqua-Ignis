@@ -96,4 +96,7 @@ public class Maze {
         for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
         walls[height - 1][width - width/2] = false;
     }
+
+    public Position getExit() {return exit;}
+
 }
