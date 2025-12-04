@@ -4,23 +4,35 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import gui.GUI;
 import model.Maze;
 import model.Position;
 import model.entity.Monster;
+import org.w3c.dom.Text;
 import view.entityView.MonsterView;
 import view.entityView.PlayerView;
 
-public class MazeView {
+public class MazeView extends View<Maze>{
 
     private static int visionRadius = 3;
 
     private PlayerView playerView = new PlayerView();
     private MonsterView monsterView = new MonsterView();
 
-    public void draw(Maze maze, TextGraphics g) {
+    public MazeView(Maze maze) {
+        super(maze);
+    }
+
+    @Override
+    public void drawElements(GUI gui) {
+        Maze maze = getModel();
+
+        TextGraphics g = gui.newTextGraphics();
+
         drawMaze(maze, g);
-        playerView.draw(maze.getAqua(), g); //'~', "#00BFFF");
-        playerView.draw(maze.getIgnis(), g); //'^', "#FFA500");
+
+        playerView.draw(maze.getAqua(), g);
+        playerView.draw(maze.getIgnis(), g);
 
     }
     private void drawMaze(Maze maze, TextGraphics g) {
