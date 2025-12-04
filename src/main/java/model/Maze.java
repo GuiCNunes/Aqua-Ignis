@@ -20,14 +20,24 @@ public class Maze {
     private Ignis ignis;
     private Aqua aqua;
 
+    private boolean[][] walls;
+
+    private Position exit;
+
     private List<Monster> monsters = new ArrayList<>();
 
     public Maze(int width, int height) {
         this.width = width;
         this.height = height;
 
+        walls = new boolean[height][width];
+
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
+
+        exit = new Position(width/2,height-1);
+
+        generator();
 
         monsters.add(new Ghost(20, 5));
         monsters.add(new Slime(5, 15));
@@ -56,11 +66,10 @@ public class Maze {
         if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'd' || key.getCharacter() == 'D'))
             movePlayer(aqua, aqua.moveRight());
 
-
     }
 
     private void movePlayer(Player player, Position newPos) {
-        if (canMove(newPos)) {
+        if (canMove(newPos) && !walls[newPos.getY()][newPos.getX()]) {
             player.setPosition(newPos);
         }
     }
@@ -72,4 +81,41 @@ public class Maze {
 
     public int getWidth() {return width;}
     public int getHeight() {return height;}
+
+    public boolean isWall(int x, int y) {
+        return walls[y][x];
+    }
+
+    private void generator(){
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) walls[y][x] = true;
+                else if ((x % 4 == 0 && y % 2 == 0) ||( x % 7 == 0 && y % 3 == 0)) walls[y][x] = true;
+                else walls[y][x] = false;
+            }
+        }
+        for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
+        walls[exit.getY()][exit.getX()] = false;
+    }
+
+    public Position getExit() {return exit;}
+
+    public boolean checkWin(Position position){
+        if (position.getX() == exit.getX() && position.getY() == exit.getY()) return true;
+        return false;
+    }
+
+    public boolean checkLoss(){
+        Position aquaPos = aqua.getPosition();
+        Position ignisPos = ignis.getPosition();
+
+        for(Monster monster : monsters){
+            Position monsterPos = monster.getPosition();
+
+            if(monsterPos.getX() == aquaPos.getX() && monsterPos.getY() == aquaPos.getY()) return true;
+            if(monsterPos.getX() == ignisPos.getX() && monsterPos.getY() == ignisPos.getY()) return true;
+        }
+        return false;
+    }
+
 }
