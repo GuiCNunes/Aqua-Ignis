@@ -22,7 +22,7 @@ public class Game {
             this.gui = new LanternaGUI(90,30);
 
             this.maze = new Maze(gui.getWidth(), gui.getHeight());
-            this.mazeView = new MazeView();
+            this.mazeView = new MazeView(maze);
             this.mazeController = new MazeController(maze);
 
             gui.startScreen();
@@ -37,7 +37,7 @@ public class Game {
 
         gui.clear();
 
-        mazeView.draw(maze, gui.newTextGraphics());
+        mazeView.draw(gui);
 
         gui.refresh();
 
