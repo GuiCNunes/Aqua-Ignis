@@ -17,4 +17,6 @@ public interface GUI {
 
     int getWidth();
     int getHeight();
+
+    enum operation{up, down, left, right}
 }
