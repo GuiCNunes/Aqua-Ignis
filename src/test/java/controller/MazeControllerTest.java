@@ -3,6 +3,8 @@ package controller;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import model.Maze;
+import model.Position;
+import model.entity.Ignis;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
@@ -15,12 +17,20 @@ class MazeControllerTest {
     @Mock
     private Maze mockMaze;
 
+    @Mock
+    private Ignis mockIgnis;
+
     private MazeController controller;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         controller = new MazeController(mockMaze);
+
+        when(mockMaze.getIgnis()).thenReturn(mockIgnis);
+
+        when(mockIgnis.moveUp()).thenReturn(new Position(10, 9));
+        when(mockIgnis.moveDown()).thenReturn(new Position(10, 11));
     }
 
     @Test
@@ -29,7 +39,7 @@ class MazeControllerTest {
 
         controller.processKey(key);
 
-        verify(mockMaze, times(1)).processKey(key);
+        verify(mockMaze, times(1)).movePlayer(mockIgnis, mockIgnis.moveUp());
     }
 
     @Test
@@ -40,6 +50,7 @@ class MazeControllerTest {
         controller.processKey(key1);
         controller.processKey(key2);
 
-        verify(mockMaze, times(2)).processKey(any(KeyStroke.class));
+        verify(mockMaze, times(1)).movePlayer(mockIgnis, mockIgnis.moveUp());
+        verify(mockMaze, times(1)).movePlayer(mockIgnis, mockIgnis.moveDown());
     }
 }
