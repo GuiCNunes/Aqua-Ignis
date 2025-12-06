@@ -18,5 +18,7 @@ public interface GUI {
     int getWidth();
     int getHeight();
 
-    enum operation{up, down, left, right}
+    enum operation{up, down, left, right, w, a, s, d, quit, none}
+
+    operation getOperation() throws IOException;
 }

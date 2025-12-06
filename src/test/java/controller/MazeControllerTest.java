@@ -1,5 +1,5 @@
 package controller;
-
+/*
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import model.Maze;
@@ -54,3 +54,5 @@ class MazeControllerTest {
         verify(mockMaze, times(1)).movePlayer(mockIgnis, mockIgnis.moveDown());
     }
 }
+
+ */

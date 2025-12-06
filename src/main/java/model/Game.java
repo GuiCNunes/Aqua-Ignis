@@ -43,8 +43,8 @@ public class Game {
 
     }
 
-    private void processKey(KeyStroke key) {
-        mazeController.processKey(key);
+    public GUI getGui() {
+        return gui;
     }
 
 
@@ -54,17 +54,16 @@ public class Game {
         draw();
 
         while (true) {
-            KeyStroke key;
-            key = gui.readInput();
 
-            if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q'){
+            GUI.operation op = gui.getOperation();
+
+            if(op == GUI.operation.quit){
                 gui.stopScreen();
                 break;
             }
 
-            if(key.getKeyType() == KeyType.EOF){break;}
+            if(op != GUI.operation.none) mazeController.command(this, op);
 
-            processKey(key);
             draw();
 
             if (maze.checkWin(maze.getAqua().getPosition()) && maze.checkWin(maze.getIgnis().getPosition())) {
