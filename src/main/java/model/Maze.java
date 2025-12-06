@@ -48,27 +48,8 @@ public class Maze {
 
     public List<Monster> getMonsters() {return monsters;}
 
-    public void processKey(KeyStroke key) {
-        //devia ser um controller? ainda nao tenho a certeza mas acho que nao pensando no controller como uma ponte
-        // ignis setas
-        if (key.getKeyType() == KeyType.ArrowUp) movePlayer(ignis, ignis.moveUp());
-        if (key.getKeyType() == KeyType.ArrowDown) movePlayer(ignis, ignis.moveDown());
-        if (key.getKeyType() == KeyType.ArrowLeft) movePlayer(ignis, ignis.moveLeft());
-        if (key.getKeyType() == KeyType.ArrowRight) movePlayer(ignis, ignis.moveRight());
 
-        // aqua wasd
-        if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'w' || key.getCharacter() == 'W'))
-            movePlayer(aqua, aqua.moveUp());
-        if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 's' || key.getCharacter() == 'S'))
-            movePlayer(aqua, aqua.moveDown());
-        if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'a' || key.getCharacter() == 'A'))
-            movePlayer(aqua, aqua.moveLeft());
-        if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'd' || key.getCharacter() == 'D'))
-            movePlayer(aqua, aqua.moveRight());
-
-    }
-
-    private void movePlayer(Player player, Position newPos) {
+    public void movePlayer(Player player, Position newPos) {
         if (canMove(newPos) && !walls[newPos.getY()][newPos.getX()]) {
             player.setPosition(newPos);
         }
