@@ -35,7 +35,7 @@ public class IgnisController extends GameController {
     }
 
     @Override
-    public void command(Game game, GUI.operation op) throws IOException{
+    public void command(Game game, GUI.operation op, long time) throws IOException{
         switch (op) {
             case up : moveUp(); break;
             case down: moveDown(); break;
