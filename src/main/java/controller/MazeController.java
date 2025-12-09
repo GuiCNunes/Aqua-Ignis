@@ -1,12 +1,8 @@
 package controller;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
 import gui.GUI;
 import model.Game;
 import model.Maze;
-import model.Position;
-import model.entity.Player;
 import model.menu.Menu;
 import states.MenuState;
 
