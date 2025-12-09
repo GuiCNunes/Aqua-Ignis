@@ -1,10 +1,8 @@
 package model;
 
-import controller.MazeController;
 import model.menu.Menu;
 import states.MenuState;
 import states.State;
-import view.MazeView;
 import gui.GUI;
 import gui.LanternaGUI;
 
