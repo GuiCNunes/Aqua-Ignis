@@ -13,12 +13,12 @@ public class GameState extends State<Maze> {
     }
 
     @Override
-    protected View<Maze> getView() {
+    public View<Maze> getView() {
         return new MazeView(getModel());
     }
 
     @Override
-    protected Controller<Maze> getController() {
+    public Controller<Maze> getController() {
         return new MazeController(getModel());
     }
 }

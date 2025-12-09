@@ -97,6 +97,8 @@ public class LanternaGUI implements GUI {
             }
         }
 
+        if(key.getKeyType() == KeyType.Enter) return operation.select;
+
         return operation.none;
     }
 }

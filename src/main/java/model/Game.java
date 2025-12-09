@@ -1,29 +1,24 @@
 package model;
 
-import controller.MazeController;
-import view.MazeView;
+import model.menu.Menu;
+import states.MenuState;
+import states.State;
 import gui.GUI;
 import gui.LanternaGUI;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
 
 import java.io.IOException;
 
 public class Game {
 
-    private Maze maze;
-    private MazeView mazeView;
-    private MazeController mazeController;
     private GUI gui;
+    private State state;
 
     public Game() {
-        try {
-            this.gui = new LanternaGUI(90,30);
 
-            this.maze = new Maze(gui.getWidth(), gui.getHeight());
-            this.mazeView = new MazeView(maze);
-            this.mazeController = new MazeController(maze);
+        try {
+            this.state = new MenuState(new Menu());
+            this.gui = new LanternaGUI(90,30);
 
             gui.startScreen();
 
@@ -33,51 +28,30 @@ public class Game {
         }
     }
 
-    private void draw() throws IOException {
-
-        gui.clear();
-
-        mazeView.draw(gui);
-
-        gui.refresh();
-
+    public void setState(State state) {
+        this.state = state;
     }
-
-    public GUI getGui() {
-        return gui;
-    }
-
 
 
     public void run() throws IOException {
+        int FPS = 30;
+        int frameTime = 1000 / FPS;
 
-        draw();
+        while (this.state != null) {
+            long startTime = System.currentTimeMillis();
 
-        while (true) {
+            state.command(this, gui, startTime);
 
-            GUI.operation op = gui.getOperation();
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            long sleepTime = frameTime - elapsedTime;
 
-            if(op == GUI.operation.quit){
-                gui.stopScreen();
-                break;
-            }
-
-            if(op != GUI.operation.none) mazeController.command(this, op);
-
-            draw();
-
-            if (maze.checkWin(maze.getAqua().getPosition()) && maze.checkWin(maze.getIgnis().getPosition())) {
-                System.out.println("Congratulations! You win!");
-                gui.stopScreen();
-                break;
-            }
-
-            if(maze.checkLoss()){
-                System.out.println("Game Over my friend(s)");
-                gui.stopScreen();
-                break;
+            try {
+                if (sleepTime > 0) Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
             }
         }
+
+        gui.stopScreen();
     }
 
 }

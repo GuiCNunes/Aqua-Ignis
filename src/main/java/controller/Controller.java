@@ -17,5 +17,5 @@ public abstract class Controller<T> {
         return model;
     }
 
-    public abstract void command(Game game, GUI.operation operation) throws IOException;
+    public abstract void command(Game game, GUI.operation operation, long time) throws IOException;
 }

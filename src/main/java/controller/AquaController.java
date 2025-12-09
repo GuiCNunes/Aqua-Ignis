@@ -37,7 +37,7 @@ public class AquaController extends GameController {
     }
 
     @Override
-    public void command(Game game, GUI.operation op) throws IOException {
+    public void command(Game game, GUI.operation op, long time) throws IOException {
         switch (op) {
             case w : moveUp(); break;
             case s: moveDown(); break;
