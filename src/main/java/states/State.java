@@ -11,8 +11,8 @@ import java.io.IOException;
 public abstract class State<T> {
 
     private T model;
-    private View view;
-    private Controller controller;
+    private View<T> view;
+    private Controller<T> controller;
 
     public State(T model) {
         this.model = model;
@@ -29,9 +29,8 @@ public abstract class State<T> {
     }
 
     public void command(Game game, GUI gui, long time) throws IOException {
-        GUI.operation action = gui.getOperation();
-        controller.command(game, action, time);
+        GUI.operation operation = gui.getOperation();
+        controller.command(game, operation, time);
         view.draw(gui);
-        gui.refresh();
     }
 }
