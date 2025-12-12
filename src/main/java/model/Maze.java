@@ -11,6 +11,7 @@ import model.entity.Ghost;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Maze {
@@ -68,10 +69,19 @@ public class Maze {
     }
 
     private void generator(){
+
+        Random random = new Random();
+
+        int xFactor_1 = random.nextInt(4) + 2;
+        int yFactor_1 = random.nextInt(4) + 2;
+
+        int xFactor_2 = random.nextInt(6) + 3;
+        int yFactor_2 = random.nextInt(6) + 3;
+
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
                 if(x == 0 || x == width - 1 || y == 0 || y == height - 1) walls[y][x] = true;
-                else if ((x % 4 == 0 && y % 2 == 0) ||( x % 7 == 0 && y % 3 == 0)) walls[y][x] = true;
+                else if ((x % xFactor_1 == 0 && y % yFactor_1 == 0) ||( x % xFactor_2 == 0 && y % yFactor_2 == 0)) walls[y][x] = true;
                 else walls[y][x] = false;
             }
         }
