@@ -1,7 +1,5 @@
 package model;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
 import model.entity.Ignis;
 import model.entity.Player;
 import model.entity.Aqua;
@@ -27,6 +25,8 @@ public class Maze {
 
     private List<Monster> monsters = new ArrayList<>();
 
+    private enum Cardinal {north, south, east, west}
+
     public Maze(int width, int height) {
         this.width = width;
         this.height = height;
@@ -36,7 +36,7 @@ public class Maze {
         ignis = new Ignis(11,10);
         aqua = new Aqua(10,10);
 
-        exit = new Position(width/2,height-1);
+        exit = randomExit();
 
         generator();
 
@@ -66,6 +66,29 @@ public class Maze {
 
     public boolean isWall(int x, int y) {
         return walls[y][x];
+    }
+
+    private Position randomExit(){
+        Random random = new Random();
+        Cardinal cardinal = Cardinal.values()[random.nextInt(Cardinal.values().length)];
+        int randomCord;
+
+        switch (cardinal) {
+            case north:
+                randomCord = random.nextInt((width - 2)/2) * 2 + 1;
+                return new Position(randomCord, 0);
+            case south:
+                randomCord = random.nextInt((width - 2)/2) * 2 + 1;
+                return new Position(randomCord, height - 1);
+            case east:
+                randomCord = random.nextInt((height - 2)/2) * 2 + 1;
+                return new Position(randomCord, width - 1);
+            case west:
+                randomCord = random.nextInt((height - 2)/2) * 2 + 1;
+                return new Position(randomCord, 0);
+        }
+        return new Position(width/2, height -1);
+
     }
 
     private void generator(){
