@@ -1,9 +1,6 @@
 package view;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import gui.GUI;
 import model.Maze;
 import model.Position;
@@ -26,22 +23,20 @@ public class MazeView extends View<Maze>{
     public void drawElements(GUI gui) {
         Maze maze = getModel();
 
-        TextGraphics g = gui.newTextGraphics();
+        drawMaze(maze, gui);
 
-        drawMaze(maze, g);
-
-        playerView.draw(maze.getAqua(), g);
-        playerView.draw(maze.getIgnis(), g);
+        playerView.draw(maze.getAqua(), gui);
+        playerView.draw(maze.getIgnis(), gui);
 
     }
-    private void drawMaze(Maze maze, TextGraphics g) {
-        drawDarkness(maze, g);
+    private void drawMaze(Maze maze, GUI gui) {
+        drawDarkness(maze, gui);
 
         Position aquaPos = maze.getAqua().getPosition();
-        drawVision(maze, g, aquaPos);
+        drawVision(maze, gui, aquaPos);
 
         Position ignisPos = maze.getIgnis().getPosition();
-        drawVision(maze, g, ignisPos);
+        drawVision(maze, gui, ignisPos);
 
         for(Monster monster  : maze.getMonsters()){
             Position monsterPos = monster.getPosition();
@@ -49,27 +44,25 @@ public class MazeView extends View<Maze>{
             int y = monsterPos.getY();
 
             if(isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)){
-                monsterView.draw(monster, g);
+                monsterView.draw(monster, gui);
             }
         }
     }
 
-    private void drawDarkness(Maze maze, TextGraphics g) {
-        g.setBackgroundColor(TextColor.Factory.fromString("#000000"));
-        g.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(maze.getWidth(), maze.getHeight()), ' ');
+    private void drawDarkness(Maze maze, GUI gui) {
+        gui.fillRect(0, 0, maze.getWidth(), maze.getHeight(),
+                TextColor.Factory.fromString("#000000"));
     }
 
-    private void drawVision(Maze maze, TextGraphics g, Position position) {
+    private void drawVision(Maze maze, GUI gui, Position position) {
         for(int y = 0; y < maze.getHeight(); y++){
             for(int x = 0; x < maze.getWidth(); x++){
                 if(isVisible(position, x, y)){
                     if(maze.isWall(x, y)){
-                        g.setBackgroundColor(TextColor.Factory.fromString("#4A3B2D"));
-                        g.setCharacter(x,y, ' ');
+                        gui.drawPixel(x, y, TextColor.Factory.fromString("#4A3B2D"));
                     }
                     else{
-                        g.setBackgroundColor(TextColor.Factory.fromString("#765341"));
-                        g.setCharacter(x,y, ' '); }
+                        gui.drawPixel(x, y, TextColor.Factory.fromString("#765341"));                    }
                 }
             }
         }
