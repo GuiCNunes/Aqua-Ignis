@@ -98,31 +98,32 @@ public class Maze {
 
         Random random = new Random();
 
-        int xFactor_1 = random.nextInt(4) + 2;
-        int yFactor_1 = random.nextInt(4) + 2;
-
-        int xFactor_2 = random.nextInt(6) + 3;
-        int yFactor_2 = random.nextInt(6) + 3;
-
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) walls[y][x] = true;
-                else if ((x % xFactor_1 == 0 && y % yFactor_1 == 0) ||( x % xFactor_2 == 0 && y % yFactor_2 == 0)) walls[y][x] = true;
-                else walls[y][x] = false;
+        for(int y  = 0; y < height; y++){
+            for(int x  = 0; x < width; x++){
+                walls[y][x] = true;
             }
         }
-        for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
+
         walls[exit.getY()][exit.getX()] = false;
+
+        int pathX = width/2;
+        int pathY = height/2;
+        if(pathX%2 == 0) pathX ++;
+        if(pathY%2 == 0) pathY ++;
+
+        path(pathX, pathY);
+
+
 
         int roomSize = random.nextInt(4) + 4;
         int half = roomSize / 2;
 
-
         int centerX = width/2;
+        int centerY = height/2;
+
         int startX = centerX - half;
         int endX = centerX + half;
 
-        int centerY = height/2;
         int startY = centerY - half;
         int endY = centerY + half;
 
@@ -149,7 +150,40 @@ public class Maze {
 
     }
 
-    public Position getExit() {return exit;}
+    private void path(int x, int y){
+
+        if(x <= 0 || x >= width - 1 || y <= 0 || y >= height - 1) return;
+
+        walls[y][x] = false;
+
+        int[]dx = {0,0,2,-2};
+        int[]dy = {2,-2,0,0};
+
+        int[] direction = {0,1,2,3};
+
+        Random random = new Random();
+
+        for(int i = direction.length - 1; i >= 0; i--){
+            int index = random.nextInt(i+1);
+            int temp = direction[index];
+            direction[index] = direction[i];
+            direction[i] = temp;
+        }
+
+        for(int i : direction){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if(nx > 0 && nx < width - 1 && ny > 0 && ny < height - 1 && walls[ny][nx]){
+
+                walls[y + dy[i] / 2][x + dx[i] / 2] = false;
+
+                path(nx, ny);
+            }
+        }
+    }
+
+
 
     public boolean checkWin(Position position){
         if (position.getX() == exit.getX() && position.getY() == exit.getY()) return true;
