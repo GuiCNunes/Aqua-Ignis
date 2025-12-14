@@ -33,8 +33,11 @@ public class Maze {
 
         walls = new boolean[height][width];
 
-        ignis = new Ignis(11,10);
-        aqua = new Aqua(10,10);
+        int centerX = width / 2;
+        int centerY = height / 2;
+
+        ignis = new Ignis(centerX - 1,centerY);
+        aqua = new Aqua(centerX + 1,centerY);
 
         exit = randomExit();
 
@@ -82,10 +85,10 @@ public class Maze {
                 return new Position(randomCord, height - 1);
             case east:
                 randomCord = random.nextInt((height - 2)/2) * 2 + 1;
-                return new Position(randomCord, width - 1);
+                return new Position(width - 1, randomCord);
             case west:
                 randomCord = random.nextInt((height - 2)/2) * 2 + 1;
-                return new Position(randomCord, 0);
+                return new Position(0, randomCord);
         }
         return new Position(width/2, height -1);
 
@@ -110,6 +113,40 @@ public class Maze {
         }
         for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
         walls[exit.getY()][exit.getX()] = false;
+
+        int roomSize = random.nextInt(4) + 4;
+        int half = roomSize / 2;
+
+
+        int centerX = width/2;
+        int startX = centerX - half;
+        int endX = centerX + half;
+
+        int centerY = height/2;
+        int startY = centerY - half;
+        int endY = centerY + half;
+
+        for (int y = startY + 1; y < endY; y++ ) {
+            for (int x = startX + 1; x < endX; x++ ) {
+                walls[y][x] = false;
+            }
+        }
+
+        for (int x = startX; x <= endX; x++ ) {
+            walls[startY][x] = true;
+            walls[endY][x] = true;
+        }
+
+        for(int y = startY; y <= endY; y++ ) {
+            walls[y][startX] = true;
+            walls[y][endX] = true;
+        }
+
+        walls[startY][centerX] = false; //norte, sul etc...
+        walls[endY][centerX] = false;
+        walls[centerY][startX] = false;
+        walls[centerY][endX] = false;
+
     }
 
     public Position getExit() {return exit;}
