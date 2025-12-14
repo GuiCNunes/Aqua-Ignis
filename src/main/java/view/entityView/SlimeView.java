@@ -10,6 +10,6 @@ public class SlimeView {
     public void draw(Monster monster, GUI gui) {
         Position position = monster.getPosition();
         gui.drawString(position.getX(), position.getY(), "0",
-                TextColor.Factory.fromString("00FF00"), null);
+                TextColor.Factory.fromString("#00FF00"), null);
     }
 }
