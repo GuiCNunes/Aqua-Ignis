@@ -108,11 +108,10 @@ public class Maze {
 
         int pathX = width/2;
         int pathY = height/2;
-        if(pathX%2 == 0) pathX ++;
-        if(pathY%2 == 0) pathY ++;
+        if(pathX%2 == 0) pathX --;
+        if(pathY%2 == 0) pathY --;
 
         path(pathX, pathY);
-
 
 
         int roomSize = random.nextInt(4) + 4;
@@ -211,4 +210,15 @@ public class Maze {
         return false;
     }
 
+    private Cardinal getExitCardinal(){
+        int eX = exit.getX();
+        int eY = exit.getY();
+
+        if(eY == 0) return Cardinal.north;
+        if(eY == height-1) return Cardinal.south;
+        if(eX == width - 1) return Cardinal.east;
+        if(eX == 0) return Cardinal.west;
+
+        return Cardinal.north;
+    }
 }
