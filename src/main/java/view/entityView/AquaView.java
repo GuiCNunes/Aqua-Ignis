@@ -1,15 +1,14 @@
 package view.entityView;
 
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import model.Position;
+import gui.GUI;
 import model.entity.Player;
 
 public class AquaView {
-    public void draw(Player player, TextGraphics g) {
+    public void draw(Player player, GUI gui) {
         Position position = player.getPosition();
-        g.setForegroundColor(TextColor.Factory.fromString("#00BFFF"));
-        g.putString(new TerminalPosition(position.getX(), position.getY()), "O");
+        gui.drawString(position.getX(), position.getY(), "0",
+                TextColor.Factory.fromString("#00BFFF"), null);
     }
 }

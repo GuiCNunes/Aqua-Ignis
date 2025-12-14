@@ -1,15 +1,14 @@
 package view.entityView;
 
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
+import gui.GUI;
 import model.Position;
 import model.entity.Monster;
 
 public class GhostView {
-    public void draw(Monster monster, TextGraphics g) {
+    public void draw(Monster monster, GUI gui) {
         Position position = monster.getPosition();
-        g.setForegroundColor(TextColor.Factory.fromString("#FFFFFF"));
-        g.putString(new TerminalPosition(position.getX(), position.getY()), "∫");
+        gui.drawString(position.getX(), position.getY(), "∫",
+                TextColor.Factory.fromString("#FFFFFF"), null);
     }
 }

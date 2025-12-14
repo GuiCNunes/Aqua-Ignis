@@ -1,5 +1,6 @@
 package gui;
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -58,11 +59,6 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
-    public TextGraphics newTextGraphics() {
-        return screen.newTextGraphics();
-    }
-
-    @Override
     public int getWidth() {
         return width;
     }
@@ -101,4 +97,42 @@ public class LanternaGUI implements GUI {
 
         return operation.none;
     }
+
+    @Override
+    public void drawPixel(int x, int y, TextColor color) {
+        if (x < 0 || y < 0 || x >= width || y >= height) return;
+        var g = screen.newTextGraphics();
+        g.setBackgroundColor(color);
+        g.putString(x, y, " ");
+    }
+
+    @Override
+    public void drawString(int x, int y, String s, TextColor fg, TextColor bg) {
+        if (x < 0 || y < 0 || x >= width || y >= height) return;
+        var g = screen.newTextGraphics();
+        if (bg != null) g.setBackgroundColor(bg);
+        if (fg != null) g.setForegroundColor(fg);
+        g.putString(x, y, s);
+    }
+
+    @Override
+    public void fillRect(int x, int y, int w, int h, TextColor color) {
+        var g = screen.newTextGraphics();
+        g.setBackgroundColor(color);
+        g.fillRectangle(
+                new com.googlecode.lanterna.TerminalPosition(x, y),
+                new com.googlecode.lanterna.TerminalSize(w, h),
+                ' '
+        );
+    }
+
+    @Override
+    public void drawText(int x, int y, String text, TextColor fg, TextColor bg) {
+        var g = screen.newTextGraphics();
+        if (bg != null) g.setBackgroundColor(bg);
+        if (fg != null) g.setForegroundColor(fg);
+        g.putString(x, y, text);
+    }
+
 }
+

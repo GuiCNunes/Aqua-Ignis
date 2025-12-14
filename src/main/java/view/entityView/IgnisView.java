@@ -1,15 +1,14 @@
 package view.entityView;
 
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
+import gui.GUI;
 import model.Position;
 import model.entity.Player;
 
 public class IgnisView {
-    public void draw(Player player, TextGraphics g) {
+    public void draw(Player player, GUI gui) {
         Position position = player.getPosition();
-        g.setForegroundColor(TextColor.Factory.fromString("#FFA500"));
-        g.putString(new TerminalPosition(position.getX(), position.getY()), "X");
+        gui.drawString(position.getX(), position.getY(), "X",
+                TextColor.Factory.fromString("#FFA500"), null);
     }
 }
