@@ -25,7 +25,7 @@ public class Maze {
 
     private List<Monster> monsters = new ArrayList<>();
 
-    private enum Cardinal {north, south, east, west}
+    private enum Cardinal {east, west}
 
     public Maze(int width, int height) {
         this.width = width;
@@ -33,8 +33,11 @@ public class Maze {
 
         walls = new boolean[height][width];
 
-        ignis = new Ignis(11,10);
-        aqua = new Aqua(10,10);
+        int centerX = width / 2;
+        int centerY = height / 2;
+
+        ignis = new Ignis(centerX - 1,centerY);
+        aqua = new Aqua(centerX + 1,centerY);
 
         exit = randomExit();
 
@@ -74,18 +77,12 @@ public class Maze {
         int randomCord;
 
         switch (cardinal) {
-            case north:
-                randomCord = random.nextInt((width - 2)/2) * 2 + 1;
-                return new Position(randomCord, 0);
-            case south:
-                randomCord = random.nextInt((width - 2)/2) * 2 + 1;
-                return new Position(randomCord, height - 1);
             case east:
-                randomCord = random.nextInt((height - 2)/2) * 2 + 1;
-                return new Position(randomCord, width - 1);
+                randomCord = random.nextInt((height - 10)/2) * 2 + 1;
+                return new Position(width - 1, randomCord);
             case west:
-                randomCord = random.nextInt((height - 2)/2) * 2 + 1;
-                return new Position(randomCord, 0);
+                randomCord = random.nextInt((height - 10)/2) * 2 + 1;
+                return new Position(0, randomCord);
         }
         return new Position(width/2, height -1);
 
@@ -95,24 +92,120 @@ public class Maze {
 
         Random random = new Random();
 
-        int xFactor_1 = random.nextInt(4) + 2;
-        int yFactor_1 = random.nextInt(4) + 2;
-
-        int xFactor_2 = random.nextInt(6) + 3;
-        int yFactor_2 = random.nextInt(6) + 3;
-
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                if(x == 0 || x == width - 1 || y == 0 || y == height - 1) walls[y][x] = true;
-                else if ((x % xFactor_1 == 0 && y % yFactor_1 == 0) ||( x % xFactor_2 == 0 && y % yFactor_2 == 0)) walls[y][x] = true;
-                else walls[y][x] = false;
+        for(int y  = 0; y < height; y++){
+            for(int x  = 0; x < width; x++){
+                walls[y][x] = true;
             }
         }
-        for(int i = 2; i < width - 2; i+=6) walls[2][i] = false;
+
         walls[exit.getY()][exit.getX()] = false;
+
+        int pathX = width/2;
+        int pathY = height/2;
+        if(pathX%2 == 0) pathX --;
+        if(pathY%2 == 0) pathY --;
+
+        path(pathX, pathY);
+
+        int eX = exit.getX();
+        int eY = exit.getY();
+
+        switch(getExitCardinal()) {
+            case east:
+                eX = width - 3;
+                eY = (eY % 2 == 0) ? eY : eY - 1;
+                break;
+            case west:
+                eX = 1;
+                eY = (eY % 2 == 0) ? eY : eY - 1;
+                break;
+        }
+
+        if(eX >= 1 && eX < width - 2 && eY >= 1 && eY < height - 2){
+            walls[eY][eX] = false;
+            walls[eY+1][eX] = false;
+            walls[eY][eX+1] = false;
+            walls[eY+1][eX+1] = false;
+        }
+
+
+        int roomSize = random.nextInt(4) + 4;
+        int half = roomSize / 2;
+
+        int centerX = width/2;
+        int centerY = height/2;
+
+        int startX = centerX - half;
+        int endX = centerX + half;
+
+        int startY = centerY - half;
+        int endY = centerY + half;
+
+        for (int y = startY + 1; y < endY; y++ ) {
+            for (int x = startX + 1; x < endX; x++ ) {
+                walls[y][x] = false;
+            }
+        }
+
+        for (int x = startX; x <= endX; x++ ) {
+            walls[startY][x] = true;
+            walls[endY][x] = true;
+        }
+
+        for(int y = startY; y <= endY; y++ ) {
+            walls[y][startX] = true;
+            walls[y][endX] = true;
+        }
+
+        walls[startY][centerX] = false;
+        walls[endY][centerX] = false;
+        walls[centerY][startX] = false;
+        walls[centerY][endX] = false;
+
     }
 
-    public Position getExit() {return exit;}
+    private void path(int x, int y){
+
+        if(x <= 0 || x >= width - 2 || y <= 0 || y >= height - 2) return;
+
+        walls[y][x] = false;
+        walls[y+1][x] = false;
+        walls[y][x+1] = false;
+        walls[y+1][x+1] = false;
+
+        int[]dx = {0,0,4,-4};
+        int[]dy = {4,-4,0,0};
+
+        int[] direction = {0,1,2,3};
+
+        Random random = new Random();
+
+        for(int i = direction.length - 1; i >= 0; i--){
+            int index = random.nextInt(i+1);
+            int temp = direction[index];
+            direction[index] = direction[i];
+            direction[i] = temp;
+        }
+
+        for(int i : direction){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if(nx > 0 && nx < width - 2 && ny > 0 && ny < height - 2 && walls[ny][nx]){
+
+                int directionX = dx[i] / 4;
+                int directionY = dy[i] / 4;
+
+                walls[y + directionY][x + directionX] = false;
+                walls[y + directionY*2][x + directionX*2] = false;
+                walls[y + directionY*3][x + directionX*3] = false;
+
+                path(nx, ny);
+            }
+        }
+    }
+
+
 
     public boolean checkWin(Position position){
         if (position.getX() == exit.getX() && position.getY() == exit.getY()) return true;
@@ -132,4 +225,12 @@ public class Maze {
         return false;
     }
 
+    private Cardinal getExitCardinal(){
+        int eX = exit.getX();
+
+        if(eX == width - 1) return Cardinal.east;
+        if(eX == 0) return Cardinal.west;
+
+        return Cardinal.east;
+    }
 }

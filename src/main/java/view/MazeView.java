@@ -5,7 +5,6 @@ import gui.GUI;
 import model.Maze;
 import model.Position;
 import model.entity.Monster;
-import org.w3c.dom.Text;
 import view.entityView.MonsterView;
 import view.entityView.PlayerView;
 
