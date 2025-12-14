@@ -155,9 +155,12 @@ public class Maze {
         if(x <= 0 || x >= width - 1 || y <= 0 || y >= height - 1) return;
 
         walls[y][x] = false;
+        walls[y+1][x] = false;
+        walls[y][x+1] = false;
+        walls[y+1][x+1] = false;
 
-        int[]dx = {0,0,2,-2};
-        int[]dy = {2,-2,0,0};
+        int[]dx = {0,0,4,-4};
+        int[]dy = {4,-4,0,0};
 
         int[] direction = {0,1,2,3};
 
@@ -176,7 +179,12 @@ public class Maze {
 
             if(nx > 0 && nx < width - 1 && ny > 0 && ny < height - 1 && walls[ny][nx]){
 
-                walls[y + dy[i] / 2][x + dx[i] / 2] = false;
+                int directionX = dx[i] / 4;
+                int directionY = dy[i] / 4;
+
+                walls[y + directionY][x + directionX] = false;
+                walls[y + directionY*2][x + directionX*2] = false;
+                walls[y + directionY*3][x + directionX*3] = false;
 
                 path(nx, ny);
             }
