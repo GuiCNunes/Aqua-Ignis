@@ -7,7 +7,7 @@ import model.Position;
 
 import java.io.IOException;
 
-public class AquaController extends GameController {
+public class AquaController extends EntityController {
 
     public AquaController(Maze maze) {
         super(maze);

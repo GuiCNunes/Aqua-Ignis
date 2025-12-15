@@ -7,7 +7,7 @@ import model.Position;
 
 import java.io.IOException;
 
-public class IgnisController extends GameController {
+public class IgnisController extends EntityController {
 
     public IgnisController(Maze maze) {
         super(maze);

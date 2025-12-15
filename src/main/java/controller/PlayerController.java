@@ -6,7 +6,7 @@ import model.Maze;
 
 import java.io.IOException;
 
-public class PlayerController extends GameController {
+public class PlayerController extends EntityController {
 
     private IgnisController ignisController;
     private AquaController aquaController;
