@@ -1,4 +1,13 @@
 package gui;
+
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -23,6 +32,8 @@ public class LanternaGUI implements GUI {
 
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                 .setInitialTerminalSize(terminalSize);
+
+       // terminalFactory = terminalFactory.setTerminalEmulatorFontConfiguration(loadSquareFontCfg());
 
         Terminal terminal = terminalFactory.createTerminal();
 
@@ -132,6 +143,26 @@ public class LanternaGUI implements GUI {
         if (bg != null) g.setBackgroundColor(bg);
         if (fg != null) g.setForegroundColor(fg);
         g.putString(x, y, text);
+    }
+
+
+    private AWTTerminalFontConfiguration loadSquareFontCfg() throws IOException {
+        try {
+            URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
+            if (resource == null) throw new IOException("Font not found: fonts/square.ttf");
+
+            File fontFile = new File(resource.toURI());
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+
+            Font newfont = font.deriveFont(Font.PLAIN, 4f);
+            return AWTTerminalFontConfiguration.newInstance(newfont);
+
+        } catch (URISyntaxException | FontFormatException e) {
+            throw new IOException("Failed to load font configuration", e);
+        }
     }
 
 }
