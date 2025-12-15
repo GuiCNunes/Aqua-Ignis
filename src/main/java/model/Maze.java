@@ -205,26 +205,6 @@ public class Maze {
         }
     }
 
-
-
-    public boolean checkWin(Position position){
-        if (position.getX() == exit.getX() && position.getY() == exit.getY()) return true;
-        return false;
-    }
-
-    public boolean checkLoss(){
-        Position aquaPos = aqua.getPosition();
-        Position ignisPos = ignis.getPosition();
-
-        for(Monster monster : monsters){
-            Position monsterPos = monster.getPosition();
-
-            if(monsterPos.getX() == aquaPos.getX() && monsterPos.getY() == aquaPos.getY()) return true;
-            if(monsterPos.getX() == ignisPos.getX() && monsterPos.getY() == ignisPos.getY()) return true;
-        }
-        return false;
-    }
-
     private Cardinal getExitCardinal(){
         int eX = exit.getX();
 
