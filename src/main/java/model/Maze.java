@@ -233,4 +233,8 @@ public class Maze {
 
         return Cardinal.east;
     }
+
+    public Position getExit(){
+        return exit;
+    }
 }
