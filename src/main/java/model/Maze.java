@@ -27,6 +27,8 @@ public class Maze {
 
     private enum Cardinal {east, west}
 
+    private Random random = new Random();
+
     public Maze(int width, int height) {
         this.width = width;
         this.height = height;
@@ -42,9 +44,6 @@ public class Maze {
         exit = randomExit();
 
         generator();
-
-        monsters.add(new Ghost(20, 5));
-        monsters.add(new Slime(5, 15));
     }
 
     public Aqua getAqua() {return aqua;}
@@ -72,7 +71,6 @@ public class Maze {
     }
 
     private Position randomExit(){
-        Random random = new Random();
         Cardinal cardinal = Cardinal.values()[random.nextInt(Cardinal.values().length)];
         int randomCord;
 
@@ -89,8 +87,6 @@ public class Maze {
     }
 
     private void generator(){
-
-        Random random = new Random();
 
         for(int y  = 0; y < height; y++){
             for(int x  = 0; x < width; x++){
@@ -177,8 +173,6 @@ public class Maze {
         int[]dy = {4,-4,0,0};
 
         int[] direction = {0,1,2,3};
-
-        Random random = new Random();
 
         for(int i = direction.length - 1; i >= 0; i--){
             int index = random.nextInt(i+1);
