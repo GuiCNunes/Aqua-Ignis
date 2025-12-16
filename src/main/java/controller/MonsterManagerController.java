@@ -1,5 +1,5 @@
 package controller;
-
+/*
 import gui.GUI;
 import model.Game;
 import model.Maze;
@@ -16,7 +16,7 @@ public class MonsterManagerController extends GameController {
 
     private SlimeController slimeController;
     private GhostController ghostController;
-    private Map<Monster, Long> lastMoveTimes = new HashMap<>();
+    private long lastMove;
 
     public MonsterManagerController(Maze maze) {
         super(maze);
@@ -40,30 +40,32 @@ public class MonsterManagerController extends GameController {
         return aquaPosition;
     }
 
-    public void update(Game game, long time) {
-        for(Monster monster : getModel().getMonsters()){
+
+
+    @Override
+    public void command(Game game, GUI.operation op, long time) throws IOException{
+
 
             MonsterController monsterController;
 
-            if(monster instanceof Ghost) monsterController = ghostController;
-            else if(monster instanceof Slime) monsterController = slimeController;
+
             else continue;
 
             long lastMove = lastMoveTimes.getOrDefault(monster, time);
             long delay = 1000/monsterController.getSpeed();
 
             if(time - lastMove >= delay) {
+                for(Monster monster : getModel().getMonsters()) {
+                    if(monster instanceof Ghost) monsterController = ghostController;
+                    else if(monster instanceof Slime) monsterController = slimeController;
                 Position target = findPlayer(monster.getPosition());
                 monsterController.moveMonster(monster, target);
 
-                lastMoveTimes.put(monster, time);
-            }
+                lastMoveTimes.put(monster, time);}
+
 
         }
     }
-
-    @Override
-    public void command(Game game, GUI.operation op, long time) throws IOException{
-        update(game, time);
-    }
 }
+*/
+

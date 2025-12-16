@@ -1,22 +1,25 @@
 package controller;
 
+import gui.GUI;
+import model.Game;
 import model.Maze;
 import model.Position;
 import model.entity.Monster;
 import model.entity.Slime;
 
-public class SlimeController extends MonsterController {
+import java.io.IOException;
+
+public class SlimeController extends EntityController {
+
 
     public SlimeController(Maze maze) {
-        super(maze, 1);
+        super(maze);
     }
 
+
+    public void moveMonster(Slime slime, Position newPosition) {
+        getModel().moveEntity(slime, newPosition, false);
+    }
     @Override
-    public void moveMonster(Monster monster, Position target) {
-        Slime slime = (Slime) monster;
-
-        Position position = nextPosition(monster, target);
-
-        getModel().moveEntity(monster, position, false);
-    }
+    public void command(Game game, GUI.operation op, long time) throws IOException {}
 }
