@@ -7,14 +7,14 @@ import model.Position;
 
 import java.io.IOException;
 
-public class AquaController extends GameController {
+public class AquaController extends EntityController {
 
     public AquaController(Maze maze) {
         super(maze);
     }
 
     private void moveAqua(Position position) {
-        getModel().movePlayer(getModel().getAqua(), position);
+        getModel().moveEntity(getModel().getAqua(), position, false);
     }
 
 

@@ -27,6 +27,8 @@ public class Maze {
 
     private enum Cardinal {east, west}
 
+    private Random random = new Random();
+
     public Maze(int width, int height) {
         this.width = width;
         this.height = height;
@@ -42,9 +44,6 @@ public class Maze {
         exit = randomExit();
 
         generator();
-
-        monsters.add(new Ghost(20, 5));
-        monsters.add(new Slime(5, 15));
     }
 
     public Aqua getAqua() {return aqua;}
@@ -52,10 +51,49 @@ public class Maze {
 
     public List<Monster> getMonsters() {return monsters;}
 
+    public Position getFreePosition(){
+        int x,y;
 
-    public void movePlayer(Player player, Position newPos) {
-        if (canMove(newPos) && !walls[newPos.getY()][newPos.getX()]) {
-            player.setPosition(newPos);
+        while(true){
+            x = random.nextInt(width);
+            y = random.nextInt(height);
+
+            if (walls[y][x]) continue;
+
+            Position ignisPosition = ignis.getPosition();
+            Position aquaPosition = aqua.getPosition();
+
+            if((ignisPosition.getX() == x && ignisPosition.getY() == y)
+                    || (aquaPosition.getX() == x && aquaPosition.getY() == y)) continue;
+
+            boolean free = true;
+
+            for(Monster monster : monsters) {
+                Position monsterPosition = monster.getPosition();
+                if((monsterPosition.getX() == x && monsterPosition.getY() == y)){
+                    free = false;
+                    break;
+                }
+            }
+
+            if(!free) continue;
+            else if (free) {
+                return new Position(x,y);
+            }
+        }
+    }
+
+    public void moveEntity(Entity entity, Position newPos, boolean phase) {
+
+        if(!canMove(newPos)) return;
+
+        if(phase) {
+            entity.setPosition(newPos);
+            return;
+        }
+
+        else if (!walls[newPos.getY()][newPos.getX()]) {
+            entity.setPosition(newPos);
         }
     }
 
@@ -72,7 +110,6 @@ public class Maze {
     }
 
     private Position randomExit(){
-        Random random = new Random();
         Cardinal cardinal = Cardinal.values()[random.nextInt(Cardinal.values().length)];
         int randomCord;
 
@@ -89,8 +126,6 @@ public class Maze {
     }
 
     private void generator(){
-
-        Random random = new Random();
 
         for(int y  = 0; y < height; y++){
             for(int x  = 0; x < width; x++){
@@ -178,8 +213,6 @@ public class Maze {
 
         int[] direction = {0,1,2,3};
 
-        Random random = new Random();
-
         for(int i = direction.length - 1; i >= 0; i--){
             int index = random.nextInt(i+1);
             int temp = direction[index];
@@ -216,5 +249,9 @@ public class Maze {
 
     public Position getExit(){
         return exit;
+    }
+
+    public void addMonster(Monster monster){
+        monsters.add(monster);
     }
 }

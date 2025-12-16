@@ -4,21 +4,35 @@ import gui.GUI;
 import model.Game;
 import model.Maze;
 import model.Position;
+import model.entity.Ghost;
 import model.entity.Monster;
+import model.entity.Slime;
 import model.menu.Menu;
 import states.MenuState;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class MazeController extends GameController {
     private PlayerController playerController;
+    private MonsterController monsterController;
+    private long lastSpawnTime = 0;
+    private long spawnInterval = 100;
 
     public MazeController(Maze maze) {
         super(maze);
         this.playerController = new PlayerController(maze);
+        this.monsterController = new MonsterController(maze);
+
     }
 
     public void command(Game game, GUI.operation op, long time) throws IOException {
+
+        spawnMonsters(time);
+        monsterController.command(game,op, time);
+
+
+
         if(op == GUI.operation.quit || checkLoss()){
             System.out.println("You lost!");
             game.setState(new MenuState(new Menu()));
@@ -53,6 +67,19 @@ public class MazeController extends GameController {
         }
 
         return false;
+    }
+
+    private void spawnMonsters(long time){
+        if(time - lastSpawnTime >= spawnInterval  && getModel().getMonsters().size() < 1000){
+            Position spawn = getModel().getFreePosition();
+
+            Random random = new Random();
+
+            if(random.nextBoolean()) getModel().addMonster(new Slime(spawn.getX(), spawn.getY()));
+            else getModel().addMonster(new Ghost(spawn.getX(), spawn.getY()));
+
+            lastSpawnTime = time;
+        }
     }
 
 }
