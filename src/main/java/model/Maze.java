@@ -52,7 +52,10 @@ public class Maze {
     public List<Monster> getMonsters() {return monsters;}
 
 
-    public void movePlayer(Player player, Position newPos) {
+    public void moveEntity(Player player, Position newPos) {
+
+        if(!canMove(newPos)) return;
+
         if (canMove(newPos) && !walls[newPos.getY()][newPos.getX()]) {
             player.setPosition(newPos);
         }
@@ -210,5 +213,9 @@ public class Maze {
 
     public Position getExit(){
         return exit;
+    }
+
+    public void addMonster(Monster monster){
+        monsters.add(monster);
     }
 }

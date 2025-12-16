@@ -14,7 +14,7 @@ public class IgnisController extends EntityController {
     }
 
     private void moveIgnis(Position position) {
-        getModel().movePlayer(getModel().getIgnis(),  position);
+        getModel().moveEntity(getModel().getIgnis(),  position);
     }
 
 
