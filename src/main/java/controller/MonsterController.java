@@ -10,10 +10,16 @@ import java.io.IOException;
 
 public abstract class MonsterController extends EntityController {
 
-    public MonsterController(Maze maze) {
+    private int speed;
+
+    public MonsterController(Maze maze, int speed) {
         super(maze);
+        this.speed = speed;
     }
-    public abstract void moveMonster(Monster monster);
+
+    public int getSpeed() {return speed;}
+
+    public abstract void moveMonster(Monster monster, Position target);
 
     protected Position nextPosition(Monster monster, Position target) {
         Position monsterPosition = monster.getPosition();
