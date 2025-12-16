@@ -51,6 +51,37 @@ public class Maze {
 
     public List<Monster> getMonsters() {return monsters;}
 
+    public Position getFreePosition(){
+        int x,y;
+
+        while(true){
+            x = random.nextInt(width);
+            y = random.nextInt(height);
+
+            if (walls[y][x]) continue;
+
+            Position ignisPosition = ignis.getPosition();
+            Position aquaPosition = aqua.getPosition();
+
+            if((ignisPosition.getX() == x && ignisPosition.getY() == y)
+                    || (aquaPosition.getX() == x && aquaPosition.getY() == y)) continue;
+
+            boolean free = true;
+
+            for(Monster monster : monsters) {
+                Position monsterPosition = monster.getPosition();
+                if((monsterPosition.getX() == x && monsterPosition.getY() == y)){
+                    free = false;
+                    break;
+                }
+            }
+
+            if(!free) continue;
+            else if (free) {
+                return new Position(x,y);
+            }
+        }
+    }
 
     public void moveEntity(Player player, Position newPos) {
 
