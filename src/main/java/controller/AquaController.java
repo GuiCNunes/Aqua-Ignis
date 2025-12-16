@@ -14,7 +14,7 @@ public class AquaController extends EntityController {
     }
 
     private void moveAqua(Position position) {
-        getModel().moveEntity(getModel().getAqua(), position);
+        getModel().moveEntity(getModel().getAqua(), position, false);
     }
 
 

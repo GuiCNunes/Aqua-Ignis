@@ -83,12 +83,14 @@ public class Maze {
         }
     }
 
-    public void moveEntity(Player player, Position newPos) {
+    public void moveEntity(Entity entity, Position newPos, boolean phase) {
 
         if(!canMove(newPos)) return;
 
+        if(phase) entity.setPosition(newPos);
+
         if (canMove(newPos) && !walls[newPos.getY()][newPos.getX()]) {
-            player.setPosition(newPos);
+            entity.setPosition(newPos);
         }
     }
 
