@@ -87,9 +87,12 @@ public class Maze {
 
         if(!canMove(newPos)) return;
 
-        if(phase) entity.setPosition(newPos);
+        if(phase) {
+            entity.setPosition(newPos);
+            return;
+        }
 
-        if (canMove(newPos) && !walls[newPos.getY()][newPos.getX()]) {
+        else if (!walls[newPos.getY()][newPos.getX()]) {
             entity.setPosition(newPos);
         }
     }
