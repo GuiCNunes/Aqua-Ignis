@@ -7,7 +7,7 @@ import model.entity.Monster;
 
 public class GhostController extends MonsterController {
 
-    public GhostController(Maze maze, int speed) {
+    public GhostController(Maze maze) {
         super(maze, 2);
     }
 

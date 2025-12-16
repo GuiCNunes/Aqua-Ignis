@@ -7,7 +7,7 @@ import model.entity.Slime;
 
 public class SlimeController extends MonsterController {
 
-    public SlimeController(Maze maze, int speed) {
+    public SlimeController(Maze maze) {
         super(maze, 1);
     }
 
