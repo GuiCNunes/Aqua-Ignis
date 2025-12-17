@@ -5,7 +5,7 @@ import states.MenuState;
 import states.State;
 import gui.GUI;
 import gui.LanternaGUI;
-
+import view.Scale;
 
 import java.io.IOException;
 
@@ -18,8 +18,9 @@ public class Game {
 
         try {
             this.state = new MenuState(new Menu());
-            this.gui = new LanternaGUI(90,30);
-
+            int w = 90 * Scale.SCALE + 2;
+            int h = 30 * Scale.SCALE + 2;
+            this.gui = new LanternaGUI(w, h);
             gui.startScreen();
 
         }
