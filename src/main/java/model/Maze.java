@@ -21,6 +21,8 @@ public class Maze {
 
     private boolean[][] walls;
 
+    private boolean[][] memory;
+
     private Position exit;
 
     private List<Monster> monsters = new ArrayList<>();
@@ -34,6 +36,7 @@ public class Maze {
         this.height = height;
 
         walls = new boolean[height][width];
+        memory = new boolean[height][width];
 
         int centerX = width / 2;
         int centerY = height / 2;
@@ -107,6 +110,21 @@ public class Maze {
 
     public boolean isWall(int x, int y) {
         return walls[y][x];
+    }
+
+    public void updateMemory(int x, int y) {
+        if(x >= 0 && x < width && y >= 0 && y < height) {
+            if(!isWall(x, y)) {
+                memory[y][x] = true;
+            }
+        }
+    }
+
+    public boolean isMemorized(int x, int y){
+        if(x >= 0 && x < width && y >= 0 && y < height){
+            return memory[y][x];
+        }
+        return false;
     }
 
     private Position randomExit(){

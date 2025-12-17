@@ -36,12 +36,14 @@ public class MazeView extends View<Maze> {
 
     private void drawMaze(Maze maze, GUI gui) {
         drawDarkness(maze, gui);
+        drawMemory(maze, gui);
 
         Position aquaPos = maze.getAqua().getPosition();
         drawVision(maze, gui, aquaPos);
 
         Position ignisPos = maze.getIgnis().getPosition();
         drawVision(maze, gui, ignisPos);
+
 
         for (Monster monster : maze.getMonsters()) {
             Position mp = monster.getPosition();
@@ -63,6 +65,8 @@ public class MazeView extends View<Maze> {
         for (int y = 0; y < maze.getHeight(); y++) {
             for (int x = 0; x < maze.getWidth(); x++) {
                 if (!isVisible(position, x, y)) continue;
+
+                maze.updateMemory(x,y);
 
                 TextColor c = maze.isWall(x, y)
                         ? TextColor.Factory.fromString("#4A3B2D")
@@ -112,4 +116,23 @@ public class MazeView extends View<Maze> {
         }
         return true;
     }
+
+    private void drawMemory(Maze maze, GUI gui) {
+        TextColor shadow = TextColor.Factory.fromString("#282828");
+
+        for(int y = 0; y < maze.getHeight(); y++) {
+            for(int x = 0; x < maze.getWidth(); x++) {
+                if(maze.isMemorized(x,y)){
+                    Position aquaPos = maze.getAqua().getPosition();
+                    Position ignisPos = maze.getIgnis().getPosition();
+
+                    if((!isVisible(aquaPos, x, y) && !isVisible(ignisPos, x, y))) {
+                        gui.fillRect(sx(x), sy(y), SCALE, SCALE, shadow);
+                    }
+                }
+            }
+        }
+    }
+
+
 }
