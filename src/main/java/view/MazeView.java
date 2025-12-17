@@ -92,14 +92,10 @@ public class MazeView extends View<Maze> {
         int currentX = x0;
         int currentY = y0;
 
-        while (true) {
+        while (currentX != x || currentY != y) {
 
             if (getModel().isWall(currentX, currentY) && (currentX != x0 || currentY != y0)) {
                 return false;
-            }
-
-            if (currentX == x && currentY == y) {
-                break;
             }
 
             int dif2 = 2 * dif;
