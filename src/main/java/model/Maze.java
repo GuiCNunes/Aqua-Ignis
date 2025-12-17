@@ -278,7 +278,7 @@ public class Maze {
         monsters.add(monster);
     }
 
-    private List<Star> getStars(){
+    public List<Star> getStars(){
         return stars;
     }
 
