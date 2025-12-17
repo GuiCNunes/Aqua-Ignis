@@ -4,8 +4,10 @@ import com.googlecode.lanterna.TextColor;
 import gui.GUI;
 import model.Maze;
 import model.Position;
+import model.entity.Key;
 import model.entity.Monster;
 import model.entity.Star;
+import view.entityView.KeyView;
 import view.entityView.MonsterView;
 import view.entityView.PlayerView;
 import view.entityView.StarView;
@@ -19,6 +21,7 @@ public class MazeView extends View<Maze> {
     private final PlayerView playerView = new PlayerView();
     private final MonsterView monsterView = new MonsterView();
     private final StarView starView = new StarView();
+    private final KeyView keyView = new KeyView();
 
     public MazeView(Maze maze) {
         super(maze);
@@ -50,6 +53,7 @@ public class MazeView extends View<Maze> {
         drawVision(maze, gui, ignisPos);
 
         drawStars(maze, gui, aquaPos, ignisPos);
+        drawKey(maze, gui, aquaPos, ignisPos);
 
         for (Monster monster : maze.getMonsters()) {
             Position mp = monster.getPosition();
@@ -79,16 +83,26 @@ public class MazeView extends View<Maze> {
     }
 
     private void drawVision(Maze maze, GUI gui, Position position) {
+
+        TextColor openExitColor = TextColor.Factory.fromString("#00FFFF");
+
         for (int y = 0; y < maze.getHeight(); y++) {
             for (int x = 0; x < maze.getWidth(); x++) {
                 if (!isVisible(position, x, y)) continue;
 
                 maze.updateMemory(x,y);
 
-                TextColor c = maze.isWall(x, y)
-                        ? TextColor.Factory.fromString("#4A3B2D")
-                        : TextColor.Factory.fromString("#765341");
+                TextColor c;
+                Position exitPosition = maze.getExit();
 
+                if(x == exitPosition.getX() && y == exitPosition.getY() && maze.isExitOpen()){
+                    c = openExitColor;
+                }
+                else{
+                    c = maze.isWall(x, y)
+                            ? TextColor.Factory.fromString("#4A3B2D")
+                            : TextColor.Factory.fromString("#765341");
+                }
                 gui.fillRect(sx(x), sy(y), SCALE, SCALE, c);
             }
         }
@@ -168,6 +182,19 @@ public class MazeView extends View<Maze> {
         TextColor starColor = TextColor.Factory.fromString("#FFD700");
 
         gui.drawText(3, 1, starDisplay.toString(), starColor, TextColor.Factory.fromString("#2C2C2C"));
+    }
+
+    private void drawKey(Maze maze, GUI gui, Position aquaPos, Position ignisPos) {
+        Key key = maze.getKey();
+
+        if (key == null) return;
+
+        int x = key.getPosition().getX();
+        int y = key.getPosition().getY();
+
+        if(isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)) {
+            keyView.draw(gui, key);
+        }
     }
 
 }

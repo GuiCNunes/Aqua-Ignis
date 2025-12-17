@@ -54,6 +54,7 @@ public class Maze {
 
         generator();
         generateStars();
+        generateKey();
     }
 
     public Aqua getAqua() {return aqua;}
@@ -89,6 +90,16 @@ public class Maze {
                 }
             }
 
+            if(key != null && key.getPosition().getX() == x && key.getPosition().getY() == y) free = false;
+
+            for(Star star : stars) {
+                Position starPosition = star.getPosition();
+                if(starPosition.getX() == x && starPosition.getY() == y) {
+                    free = false;
+                    break;
+                }
+            }
+
             if(!free) continue;
             else if (free) {
                 return new Position(x,y);
@@ -110,6 +121,7 @@ public class Maze {
 
         if(entity instanceof Player){
             collectStars(entity.getPosition());
+            collectKey(entity.getPosition());
         }
     }
 
@@ -311,5 +323,17 @@ public class Maze {
                 return;
             }
         }
+    }
+
+    private void generateKey(){
+        Position keyPosition = getFreePosition();
+        key = new Key(keyPosition.getX(), keyPosition.getY());
+    }
+
+    private void collectKey(Position position){
+        if (key == null) return;
+        if(key.getPosition().getX() == position.getX() && key.getPosition().getY() == position.getY()) {
+            exitOpen = true;
+            key = null;}
     }
 }

@@ -48,6 +48,8 @@ public class MazeController extends GameController {
         boolean winIgnis = false;
         boolean winAqua = false;
 
+        if(!getModel().isExitOpen()) return false;
+
         if(getModel().getIgnis().getPosition().getX() == getModel().getExit().getX() &&
                 getModel().getIgnis().getPosition().getY() == getModel().getExit().getY()) winIgnis = true;
         if(getModel().getAqua().getPosition().getX() == getModel().getExit().getX() &&

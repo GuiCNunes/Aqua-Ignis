@@ -10,16 +10,16 @@ import static view.Scale.SCALE;
 
 public class KeyView extends View<Key> {
 
-    public KeyView(Key key) {
+    public KeyView() {
         super(null);
     }
     @Override
     public void drawElements(GUI gui) {}
 
-    public void draw(GUI gui, Star star) {
-        TextColor keyColor = TextColor.Factory.fromString("#9A7B4F");
+    public void draw(GUI gui, Key key) {
+        TextColor keyColor = TextColor.Factory.fromString("#FF0000");
 
-        gui.drawString(star.getPosition().getX() * SCALE, star.getPosition().getY() * SCALE,
+        gui.drawString(key.getPosition().getX() * SCALE, key.getPosition().getY() * SCALE,
                 "K" ,keyColor, keyColor);
     }
 }
