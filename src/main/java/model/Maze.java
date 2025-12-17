@@ -94,11 +94,14 @@ public class Maze {
 
         if(phase) {
             entity.setPosition(newPos);
-            return;
         }
 
         else if (!walls[newPos.getY()][newPos.getX()]) {
             entity.setPosition(newPos);
+        }
+
+        if(entity instanceof Player){
+            collectStars(entity.getPosition());
         }
     }
 
@@ -287,6 +290,15 @@ public class Maze {
         for(int i = 0; i < stars.size(); i++){
             Position starPosition = getFreePosition();
             stars.add(new Star(starPosition.getX(), starPosition.getY()));
+        }
+    }
+
+    private void collectStars(Position position){
+        for (Star star : stars){
+            if(star.getPosition().getX() == position.getX() && star.getPosition().getY() == position.getY()){
+                collectedStars++;
+                stars.remove(star);
+            }
         }
     }
 }
