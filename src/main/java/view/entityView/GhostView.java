@@ -10,7 +10,10 @@ import static view.Scale.SCALE;
 public class GhostView {
     public void draw(Monster monster, GUI gui) {
         Position position = monster.getPosition();
+
+        TextColor ghostColor = TextColor.Factory.fromString("#FFFFFF");
+
         gui.drawString(position.getX()*SCALE, position.getY()*SCALE, "∫",
-                TextColor.Factory.fromString("#FFFFFF"), null);
+                ghostColor, ghostColor);
     }
 }

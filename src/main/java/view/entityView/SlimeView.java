@@ -10,7 +10,10 @@ import static view.Scale.SCALE;
 public class SlimeView {
     public void draw(Monster monster, GUI gui) {
         Position position = monster.getPosition();
+
+        TextColor slimeColor =  TextColor.Factory.fromString("#00FF00");
+
         gui.drawString(position.getX() *SCALE, position.getY()* SCALE, "0",
-                TextColor.Factory.fromString("#00FF00"), null);
+                slimeColor, slimeColor);
     }
 }
