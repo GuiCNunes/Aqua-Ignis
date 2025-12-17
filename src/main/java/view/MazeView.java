@@ -33,6 +33,8 @@ public class MazeView extends View<Maze> {
 
         drawMaze(maze, gui);
 
+        drawStarCounter(maze, gui);
+
         playerView.draw(maze.getAqua(), gui);
         playerView.draw(maze.getIgnis(), gui);
     }
@@ -149,5 +151,23 @@ public class MazeView extends View<Maze> {
         }
     }
 
+    private void drawStarCounter(Maze maze, GUI gui){
+        int collected = maze.getCollectedStars();
+        int maxStars = 3;
+
+        StringBuilder starDisplay = new StringBuilder("Stars: ");
+
+        for(int i = 0; i < collected; i++){
+            starDisplay.append("*");
+        }
+
+        for(int i = collected; i < maxStars; i++){
+            starDisplay.append("*");
+        }
+
+        TextColor starColor = TextColor.Factory.fromString("#FFD700");
+
+        gui.drawText(3, 1, starDisplay.toString(), starColor, TextColor.Factory.fromString("#000000"));
+    }
 
 }

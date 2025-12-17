@@ -39,7 +39,7 @@ public class Maze {
         int centerX = width / 2;
         int centerY = height / 2;
 
-        stars = new ArrayList<>(5);
+        stars = new ArrayList<>(3);
         collectedStars = 0;
 
         ignis = new Ignis(centerX - 1,centerY);
