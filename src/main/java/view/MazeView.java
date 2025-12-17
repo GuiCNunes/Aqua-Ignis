@@ -8,16 +8,21 @@ import model.entity.Monster;
 import view.entityView.MonsterView;
 import view.entityView.PlayerView;
 
-public class MazeView extends View<Maze>{
+import static view.Scale.SCALE;
+
+public class MazeView extends View<Maze> {
 
     private static int visionRadius = 3;
 
-    private PlayerView playerView = new PlayerView();
-    private MonsterView monsterView = new MonsterView();
+    private final PlayerView playerView = new PlayerView();
+    private final MonsterView monsterView = new MonsterView();
 
     public MazeView(Maze maze) {
         super(maze);
     }
+
+    private int sx(int x) { return x * SCALE; }
+    private int sy(int y) { return y * SCALE; }
 
     @Override
     public void drawElements(GUI gui) {
@@ -27,8 +32,8 @@ public class MazeView extends View<Maze>{
 
         playerView.draw(maze.getAqua(), gui);
         playerView.draw(maze.getIgnis(), gui);
-
     }
+
     private void drawMaze(Maze maze, GUI gui) {
         drawDarkness(maze, gui);
 
@@ -38,32 +43,32 @@ public class MazeView extends View<Maze>{
         Position ignisPos = maze.getIgnis().getPosition();
         drawVision(maze, gui, ignisPos);
 
-        for(Monster monster  : maze.getMonsters()){
-            Position monsterPos = monster.getPosition();
-            int x = monsterPos.getX();
-            int y = monsterPos.getY();
+        for (Monster monster : maze.getMonsters()) {
+            Position mp = monster.getPosition();
+            int x = mp.getX();
+            int y = mp.getY();
 
-            if(isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)){
+            if (isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)) {
                 monsterView.draw(monster, gui);
             }
         }
     }
 
     private void drawDarkness(Maze maze, GUI gui) {
-        gui.fillRect(0, 0, maze.getWidth(), maze.getHeight(),
+        gui.fillRect(0, 0, maze.getWidth() * SCALE, maze.getHeight() * SCALE,
                 TextColor.Factory.fromString("#000000"));
     }
 
     private void drawVision(Maze maze, GUI gui, Position position) {
-        for(int y = 0; y < maze.getHeight(); y++){
-            for(int x = 0; x < maze.getWidth(); x++){
-                if(isVisible(position, x, y)){
-                    if(maze.isWall(x, y)){
-                        gui.drawPixel(x, y, TextColor.Factory.fromString("#4A3B2D"));
-                    }
-                    else{
-                        gui.drawPixel(x, y, TextColor.Factory.fromString("#765341"));                    }
-                }
+        for (int y = 0; y < maze.getHeight(); y++) {
+            for (int x = 0; x < maze.getWidth(); x++) {
+                if (!isVisible(position, x, y)) continue;
+
+                TextColor c = maze.isWall(x, y)
+                        ? TextColor.Factory.fromString("#4A3B2D")
+                        : TextColor.Factory.fromString("#765341");
+
+                gui.fillRect(sx(x), sy(y), SCALE, SCALE, c);
             }
         }
     }

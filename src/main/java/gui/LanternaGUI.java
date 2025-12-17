@@ -17,6 +17,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
 
 import java.io.IOException;
 import java.security.Key;
@@ -31,12 +32,14 @@ public class LanternaGUI implements GUI {
         TerminalSize terminalSize = new TerminalSize(width, height);
 
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
-                .setInitialTerminalSize(terminalSize);
+                .setInitialTerminalSize(terminalSize)
+                .setTerminalEmulatorFontConfiguration(loadSquareFontCfg1());
 
-       // terminalFactory = terminalFactory.setTerminalEmulatorFontConfiguration(loadSquareFontCfg());
-
-        Terminal terminal = terminalFactory.createTerminal();
-
+        AWTTerminalFrame terminal = terminalFactory.createAWTTerminal();
+        terminal.setTitle("Aqua & Ignis");
+        terminal.setResizable(false);
+        terminal.pack();
+        terminal.setVisible(true);
         this.screen = new TerminalScreen(terminal);
 
         this.width = terminal.getTerminalSize().getColumns();
@@ -71,14 +74,13 @@ public class LanternaGUI implements GUI {
 
     @Override
     public int getWidth() {
-        return width;
+        return screen.getTerminalSize().getColumns();
     }
 
     @Override
     public int getHeight() {
-        return height;
+        return screen.getTerminalSize().getRows();
     }
-
     @Override
     public operation getOperation() throws IOException {
         KeyStroke key = screen.pollInput();
@@ -164,6 +166,12 @@ public class LanternaGUI implements GUI {
             throw new IOException("Failed to load font configuration", e);
         }
     }
+
+    private AWTTerminalFontConfiguration loadSquareFontCfg1() {
+        Font font = new Font("Monospaced", Font.PLAIN, 16); // testa 10, 8, 6...
+        return AWTTerminalFontConfiguration.newInstance(font);
+    }
+
 
 }
 
