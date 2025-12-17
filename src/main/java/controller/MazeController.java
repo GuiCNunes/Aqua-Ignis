@@ -17,7 +17,7 @@ public class MazeController extends GameController {
     private PlayerController playerController;
     private MonsterController monsterController;
     private long lastSpawnTime = 0;
-    private long spawnInterval = 100;
+    private long spawnInterval = 10000;
 
     public MazeController(Maze maze) {
         super(maze);
@@ -70,7 +70,7 @@ public class MazeController extends GameController {
     }
 
     private void spawnMonsters(long time){
-        if(time - lastSpawnTime >= spawnInterval  && getModel().getMonsters().size() < 1000){
+        if(time - lastSpawnTime >= spawnInterval  && getModel().getMonsters().size() < 15){
             Position spawn = getModel().getFreePosition();
 
             Random random = new Random();
