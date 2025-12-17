@@ -62,8 +62,8 @@ public class MazeController extends GameController {
 
         for(Monster monster : getModel().getMonsters()){
             Position monsterPosition = monster.getPosition();
-            if(aquaPosition.equals(monsterPosition)) return true;
-            if(ignisPosition.equals(monsterPosition)) return true;
+            if(aquaPosition.getX() == monsterPosition.getX() && aquaPosition.getY() == monsterPosition.getY()) return true;
+            else if (ignisPosition.getX() == monsterPosition.getX() && ignisPosition.getY() == monsterPosition.getY()) return true;
         }
 
         return false;
