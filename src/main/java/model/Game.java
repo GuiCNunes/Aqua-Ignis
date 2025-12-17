@@ -29,6 +29,14 @@ public class Game {
         }
     }
 
+    public void recreateGUI() throws IOException {
+        if(this.gui != null) this.gui.stopScreen();
+        int w = 90 * Scale.SCALE + 2;
+        int h = 30 * Scale.SCALE + 2;
+        this.gui = new LanternaGUI(w, h);
+        this.gui.startScreen();
+    }
+
     public void setState(State state) {
         this.state = state;
     }
