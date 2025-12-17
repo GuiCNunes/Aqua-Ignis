@@ -162,12 +162,12 @@ public class MazeView extends View<Maze> {
         }
 
         for(int i = collected; i < maxStars; i++){
-            starDisplay.append("*");
+            starDisplay.append("-");
         }
 
         TextColor starColor = TextColor.Factory.fromString("#FFD700");
 
-        gui.drawText(3, 1, starDisplay.toString(), starColor, TextColor.Factory.fromString("#000000"));
+        gui.drawText(3, 1, starDisplay.toString(), starColor, TextColor.Factory.fromString("#2C2C2C"));
     }
 
 }

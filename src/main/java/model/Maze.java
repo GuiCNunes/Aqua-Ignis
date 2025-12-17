@@ -3,6 +3,7 @@ package model;
 import model.entity.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -287,17 +288,20 @@ public class Maze {
     }
 
     private void generateStars(){
-        for(int i = 0; i < stars.size(); i++){
+        for(int i = 0; i < 3; i++){
             Position starPosition = getFreePosition();
             stars.add(new Star(starPosition.getX(), starPosition.getY()));
         }
     }
 
     private void collectStars(Position position){
-        for (Star star : stars){
+        Iterator<Star> starIterator = stars.iterator();
+        while(starIterator.hasNext()){
+            Star star = starIterator.next();
             if(star.getPosition().getX() == position.getX() && star.getPosition().getY() == position.getY()){
-                collectedStars++;
-                stars.remove(star);
+                collectedStars ++;
+                starIterator.remove();
+                return;
             }
         }
     }
