@@ -15,6 +15,9 @@ public class Maze {
     private Ignis ignis;
     private Aqua aqua;
 
+    private Key key;
+    private boolean exitOpen;
+
     private boolean[][] walls;
 
     private boolean[][] memory;
@@ -47,6 +50,7 @@ public class Maze {
         aqua = new Aqua(centerX + 1,centerY);
 
         exit = randomExit();
+        exitOpen = false;
 
         generator();
         generateStars();
@@ -54,6 +58,9 @@ public class Maze {
 
     public Aqua getAqua() {return aqua;}
     public Ignis getIgnis() {return ignis;}
+
+    public Key getKey(){return key;}
+    public boolean isExitOpen() {return exitOpen;}
 
     public List<Monster> getMonsters() {return monsters;}
 
