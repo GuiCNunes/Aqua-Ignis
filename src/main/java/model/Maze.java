@@ -1,13 +1,9 @@
 package model;
 
-import model.entity.Ignis;
-import model.entity.Player;
-import model.entity.Aqua;
-import model.entity.Slime;
-import model.entity.Monster;
-import model.entity.Ghost;
+import model.entity.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -26,6 +22,9 @@ public class Maze {
     private Position exit;
 
     private List<Monster> monsters = new ArrayList<>();
+    private List<Star> stars = new ArrayList<>();
+
+    private int collectedStars;
 
     private enum Cardinal {east, west}
 
@@ -41,12 +40,16 @@ public class Maze {
         int centerX = width / 2;
         int centerY = height / 2;
 
+        stars = new ArrayList<>(3);
+        collectedStars = 0;
+
         ignis = new Ignis(centerX - 1,centerY);
         aqua = new Aqua(centerX + 1,centerY);
 
         exit = randomExit();
 
         generator();
+        generateStars();
     }
 
     public Aqua getAqua() {return aqua;}
@@ -92,11 +95,14 @@ public class Maze {
 
         if(phase) {
             entity.setPosition(newPos);
-            return;
         }
 
         else if (!walls[newPos.getY()][newPos.getX()]) {
             entity.setPosition(newPos);
+        }
+
+        if(entity instanceof Player){
+            collectStars(entity.getPosition());
         }
     }
 
@@ -271,5 +277,32 @@ public class Maze {
 
     public void addMonster(Monster monster){
         monsters.add(monster);
+    }
+
+    public List<Star> getStars(){
+        return stars;
+    }
+
+    public int getCollectedStars(){
+        return collectedStars;
+    }
+
+    private void generateStars(){
+        for(int i = 0; i < 3; i++){
+            Position starPosition = getFreePosition();
+            stars.add(new Star(starPosition.getX(), starPosition.getY()));
+        }
+    }
+
+    private void collectStars(Position position){
+        Iterator<Star> starIterator = stars.iterator();
+        while(starIterator.hasNext()){
+            Star star = starIterator.next();
+            if(star.getPosition().getX() == position.getX() && star.getPosition().getY() == position.getY()){
+                collectedStars ++;
+                starIterator.remove();
+                return;
+            }
+        }
     }
 }

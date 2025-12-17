@@ -10,7 +10,10 @@ import static view.Scale.SCALE;
 public class IgnisView {
     public void draw(Player player, GUI gui) {
         Position position = player.getPosition();
+
+        TextColor ignisColor = TextColor.Factory.fromString("#FFA500");
+
         gui.drawString(position.getX() * SCALE, position.getY() * SCALE, "X",
-                TextColor.Factory.fromString("#FFA500"), null);
+                ignisColor, ignisColor);
     }
 }

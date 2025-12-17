@@ -9,7 +9,10 @@ import static view.Scale.SCALE;
 public class AquaView {
     public void draw(Player player, GUI gui) {
         Position position = player.getPosition();
+
+        TextColor aquaColor = TextColor.Factory.fromString("#00BFFF");
+
         gui.drawString(position.getX() * SCALE, position.getY() * SCALE, "0",
-                TextColor.Factory.fromString("#00BFFF"), null);
+                aquaColor, aquaColor);
     }
 }

@@ -5,8 +5,10 @@ import gui.GUI;
 import model.Maze;
 import model.Position;
 import model.entity.Monster;
+import model.entity.Star;
 import view.entityView.MonsterView;
 import view.entityView.PlayerView;
+import view.entityView.StarView;
 
 import static view.Scale.SCALE;
 
@@ -16,6 +18,7 @@ public class MazeView extends View<Maze> {
 
     private final PlayerView playerView = new PlayerView();
     private final MonsterView monsterView = new MonsterView();
+    private final StarView starView = new StarView();
 
     public MazeView(Maze maze) {
         super(maze);
@@ -29,6 +32,8 @@ public class MazeView extends View<Maze> {
         Maze maze = getModel();
 
         drawMaze(maze, gui);
+
+        drawStarCounter(maze, gui);
 
         playerView.draw(maze.getAqua(), gui);
         playerView.draw(maze.getIgnis(), gui);
@@ -44,6 +49,7 @@ public class MazeView extends View<Maze> {
         Position ignisPos = maze.getIgnis().getPosition();
         drawVision(maze, gui, ignisPos);
 
+        drawStars(maze, gui, aquaPos, ignisPos);
 
         for (Monster monster : maze.getMonsters()) {
             Position mp = monster.getPosition();
@@ -52,6 +58,17 @@ public class MazeView extends View<Maze> {
 
             if (isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)) {
                 monsterView.draw(monster, gui);
+            }
+        }
+    }
+
+    private void drawStars(Maze maze, GUI gui, Position aquaPos, Position ignisPos) {
+        for(Star star: maze.getStars()){
+            int x = star.getPosition().getX();
+            int y = star.getPosition().getY();
+
+            if(isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)) {
+                starView.draw(gui, star);
             }
         }
     }
@@ -134,5 +151,23 @@ public class MazeView extends View<Maze> {
         }
     }
 
+    private void drawStarCounter(Maze maze, GUI gui){
+        int collected = maze.getCollectedStars();
+        int maxStars = 3;
+
+        StringBuilder starDisplay = new StringBuilder("Stars: ");
+
+        for(int i = 0; i < collected; i++){
+            starDisplay.append("*");
+        }
+
+        for(int i = collected; i < maxStars; i++){
+            starDisplay.append("-");
+        }
+
+        TextColor starColor = TextColor.Factory.fromString("#FFD700");
+
+        gui.drawText(3, 1, starDisplay.toString(), starColor, TextColor.Factory.fromString("#2C2C2C"));
+    }
 
 }
