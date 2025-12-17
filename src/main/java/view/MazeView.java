@@ -12,7 +12,7 @@ import static view.Scale.SCALE;
 
 public class MazeView extends View<Maze> {
 
-    private static int visionRadius = 3;
+    private static int visionRadius = 20;
 
     private final PlayerView playerView = new PlayerView();
     private final MonsterView monsterView = new MonsterView();
@@ -76,6 +76,44 @@ public class MazeView extends View<Maze> {
     private boolean isVisible(Position position, int x, int y) {
         int dx = position.getX() - x;
         int dy = position.getY() - y;
-        return dx * dx + dy * dy <= visionRadius * visionRadius;
+
+        if (dx * dx + dy * dy > visionRadius * visionRadius) return false;
+
+        int x0 = position.getX();
+        int y0 = position.getY();
+
+        int absDx = Math.abs(x - x0);
+        int absDy = Math.abs(y - y0);
+
+        int stepX = (x0 < x) ? 1 : -1;
+        int stepY = (y0 < y) ? 1 : -1;
+
+        int dif = absDx - absDy;
+        int currentX = x0;
+        int currentY = y0;
+
+        while (true) {
+
+            if (getModel().isWall(currentX, currentY) && (currentX != x0 || currentY != y0)) {
+                return false;
+            }
+
+            if (currentX == x && currentY == y) {
+                break;
+            }
+
+            int dif2 = 2 * dif;
+
+            if (dif2 > -absDy) {
+                dif -= absDy;
+                currentX += stepX;
+            }
+
+            if (dif2 < absDx) {
+                dif += absDx;
+                currentY += stepY;
+            }
+        }
+        return true;
     }
 }
