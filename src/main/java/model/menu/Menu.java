@@ -1,5 +1,7 @@
 package model.menu;
 
+import view.Scale;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public class Menu {
     private int currentEntry = 0;
 
     public Menu() {
-        this.entries = Arrays.asList("Start", "Help", "Exit");
+        this.entries = Arrays.asList("Start", "Help", "Exit", "Size");
     }
 
     public void nextEntry() {
@@ -24,8 +26,10 @@ public class Menu {
     }
 
     public String getEntry(int i) {
+        if(entries.get(i).equals("Size")) return "Size: " + view.Scale.SCALE;
         return entries.get(i);
     }
+
 
     public boolean isSelected(int i) {
         return currentEntry == i;
@@ -42,6 +46,8 @@ public class Menu {
     public boolean isSelectedExit() {
         return isSelected(2);
     }
+
+    public boolean isSelectedSize() {return isSelected(3);}
 
     public int getNumberEntries() {
         return this.entries.size();
