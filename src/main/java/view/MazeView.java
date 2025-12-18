@@ -37,6 +37,7 @@ public class MazeView extends View<Maze> {
         drawMaze(maze, gui);
 
         drawStarCounter(maze, gui);
+        drawExitStatus(maze, gui);
 
         playerView.draw(maze.getAqua(), gui);
         playerView.draw(maze.getIgnis(), gui);
@@ -195,6 +196,26 @@ public class MazeView extends View<Maze> {
         if(isVisible(aquaPos, x, y) || isVisible(ignisPos, x, y)) {
             keyView.draw(gui, key);
         }
+    }
+
+    private void drawExitStatus(Maze maze, GUI gui){
+        String status;
+        TextColor statusColor;
+
+        if(maze.isExitOpen()){
+            status = "Exit : OPEN";
+            statusColor = TextColor.Factory.fromString("#00FF00");
+        }
+        else{
+            status = "Exit : CLOSED";
+            statusColor = TextColor.Factory.fromString("#FF0000");
+        }
+
+        int x = 20;
+        int y = 1;
+
+        TextColor bgColor = TextColor.Factory.fromString("#2C2C2C");
+        gui.drawText(x, y, status,  statusColor, bgColor);
     }
 
 }
