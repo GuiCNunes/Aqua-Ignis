@@ -13,7 +13,6 @@ public class SlimeView {
 
         TextColor slimeColor =  TextColor.Factory.fromString("#00FF00");
 
-        gui.drawString(position.getX() *SCALE, position.getY()* SCALE, "0",
-                slimeColor, slimeColor);
+        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, slimeColor);
     }
 }

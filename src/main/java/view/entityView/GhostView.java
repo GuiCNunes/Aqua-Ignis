@@ -13,7 +13,6 @@ public class GhostView {
 
         TextColor ghostColor = TextColor.Factory.fromString("#FFFFFF");
 
-        gui.drawString(position.getX()*SCALE, position.getY()*SCALE, "∫",
-                ghostColor, ghostColor);
+        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, ghostColor);
     }
 }
