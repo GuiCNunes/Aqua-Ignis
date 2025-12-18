@@ -33,9 +33,13 @@ public class Maze {
 
     private Random random = new Random();
 
+    private long startTime;
+
     public Maze(int width, int height) {
         this.width = width;
         this.height = height;
+
+        this.startTime = System.currentTimeMillis();
 
         walls = new boolean[height][width];
         memory = new boolean[height][width];
@@ -335,5 +339,9 @@ public class Maze {
         if(key.getPosition().getX() == position.getX() && key.getPosition().getY() == position.getY()) {
             exitOpen = true;
             key = null;}
+    }
+
+    public long getTime(){
+        return(System.currentTimeMillis() - startTime)/1000;
     }
 }

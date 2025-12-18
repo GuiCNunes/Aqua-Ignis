@@ -38,6 +38,7 @@ public class MazeView extends View<Maze> {
 
         drawStarCounter(maze, gui);
         drawExitStatus(maze, gui);
+        drawTimer(maze, gui);
 
         playerView.draw(maze.getAqua(), gui);
         playerView.draw(maze.getIgnis(), gui);
@@ -216,6 +217,14 @@ public class MazeView extends View<Maze> {
 
         TextColor bgColor = TextColor.Factory.fromString("#2C2C2C");
         gui.drawText(x, y, status,  statusColor, bgColor);
+    }
+
+    private void drawTimer(Maze maze, GUI gui){
+        long seconds = maze.getTime();
+        String time = String.format("Time: %02d:%02d", seconds / 60, seconds % 60);
+
+        gui.drawText(40, 1, time, TextColor.Factory.fromString("#FFFFFF"),
+                TextColor.Factory.fromString("#2C2C2C"));
     }
 
 }
