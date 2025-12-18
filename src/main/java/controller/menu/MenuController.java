@@ -6,6 +6,7 @@ import model.Game;
 import model.Maze;
 import model.menu.Menu;
 import states.GameState;
+import states.HelpState;
 import view.Scale;
 
 import java.io.IOException;
@@ -34,7 +35,9 @@ public class MenuController extends Controller<Menu> {
                     Scale.setScale(newScale);
                     game.recreateGUI();
                 }
+                if(getModel().isSelectedHelp()) game.setState(new HelpState(getModel()));
                 break;
+
             case quit:
                 game.setState(null);
                 break;
