@@ -51,7 +51,7 @@ public class MonsterController extends EntityController {
 
     @Override
     public void command(Game game, GUI.operation operation, long time) throws IOException {
-        if(time - lastUpdate > 100) {
+        if(time - lastUpdate > 500) {
             for(Monster monster : getModel().getMonsters()){
                 if (monster instanceof Slime) slimeController.moveMonster((Slime) monster, monster.getPosition().getRandomNeighbour());
                 else ghostController.moveMonster((Ghost) monster, monster.getPosition().getRandomNeighbour());
