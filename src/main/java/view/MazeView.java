@@ -85,7 +85,7 @@ public class MazeView extends View<Maze> {
 
     private void drawVision(Maze maze, GUI gui, Position position) {
 
-        TextColor openExitColor = TextColor.Factory.fromString("#00FFFF");
+        TextColor openExitColor = TextColor.Factory.fromString("#FFFFFF");
 
         for (int y = 0; y < maze.getHeight(); y++) {
             for (int x = 0; x < maze.getWidth(); x++) {

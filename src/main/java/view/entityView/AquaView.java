@@ -12,7 +12,6 @@ public class AquaView {
 
         TextColor aquaColor = TextColor.Factory.fromString("#00BFFF");
 
-        gui.drawString(position.getX() * SCALE, position.getY() * SCALE, "0",
-                aquaColor, aquaColor);
+        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, aquaColor);
     }
 }

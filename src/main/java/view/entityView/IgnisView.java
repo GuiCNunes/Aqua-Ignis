@@ -13,7 +13,6 @@ public class IgnisView {
 
         TextColor ignisColor = TextColor.Factory.fromString("#FFA500");
 
-        gui.drawString(position.getX() * SCALE, position.getY() * SCALE, "X",
-                ignisColor, ignisColor);
+        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, ignisColor);
     }
 }

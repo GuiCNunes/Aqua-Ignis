@@ -2,6 +2,7 @@ package view.entityView;
 
 import com.googlecode.lanterna.TextColor;
 import gui.GUI;
+import model.Position;
 import model.entity.Star;
 import view.View;
 
@@ -17,7 +18,8 @@ public class StarView extends View<Star> {
     public void draw(GUI gui, Star star) {
         TextColor starColor = TextColor.Factory.fromString("#FFD700");
 
-        gui.drawString(star.getPosition().getX() * SCALE, star.getPosition().getY() * SCALE,
-                "*" ,starColor, null);
+        Position position = star.getPosition();
+
+        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, starColor);
     }
 }
