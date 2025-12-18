@@ -42,7 +42,7 @@ public class MazeController extends GameController {
             game.setState(new LoseState(new Menu()));
         }
         else if (checkWin()) {
-            game.setState(new WinState(new Menu()));
+            game.setState(new WinState(new Menu(), getModel().getCollectedStars(), getModel().getTime()));
         }
         else if(op != GUI.operation.none) playerController.command(game, op, time);
     }
