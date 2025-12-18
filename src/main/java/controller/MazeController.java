@@ -8,7 +8,9 @@ import model.entity.Ghost;
 import model.entity.Monster;
 import model.entity.Slime;
 import model.menu.Menu;
+import states.LoseState;
 import states.MenuState;
+import states.WinState;
 
 import java.io.IOException;
 import java.util.Random;
@@ -33,13 +35,14 @@ public class MazeController extends GameController {
 
 
 
-        if(op == GUI.operation.quit || checkLoss()){
-            System.out.println("You lost!");
+        if(op == GUI.operation.quit ){
             game.setState(new MenuState(new Menu()));
         }
+        else if(checkLoss()){
+            game.setState(new LoseState(new Menu()));
+        }
         else if (checkWin()) {
-            System.out.println("Congratulations! You win!");
-            game.setState(new MenuState(new Menu()));
+            game.setState(new WinState(new Menu()));
         }
         else if(op != GUI.operation.none) playerController.command(game, op, time);
     }
