@@ -15,6 +15,9 @@ public class Maze {
     private Ignis ignis;
     private Aqua aqua;
 
+    private Key key;
+    private boolean exitOpen;
+
     private boolean[][] walls;
 
     private boolean[][] memory;
@@ -47,13 +50,18 @@ public class Maze {
         aqua = new Aqua(centerX + 1,centerY);
 
         exit = randomExit();
+        exitOpen = false;
 
         generator();
         generateStars();
+        generateKey();
     }
 
     public Aqua getAqua() {return aqua;}
     public Ignis getIgnis() {return ignis;}
+
+    public Key getKey(){return key;}
+    public boolean isExitOpen() {return exitOpen;}
 
     public List<Monster> getMonsters() {return monsters;}
 
@@ -82,6 +90,16 @@ public class Maze {
                 }
             }
 
+            if(key != null && key.getPosition().getX() == x && key.getPosition().getY() == y) free = false;
+
+            for(Star star : stars) {
+                Position starPosition = star.getPosition();
+                if(starPosition.getX() == x && starPosition.getY() == y) {
+                    free = false;
+                    break;
+                }
+            }
+
             if(!free) continue;
             else if (free) {
                 return new Position(x,y);
@@ -103,6 +121,7 @@ public class Maze {
 
         if(entity instanceof Player){
             collectStars(entity.getPosition());
+            collectKey(entity.getPosition());
         }
     }
 
@@ -304,5 +323,17 @@ public class Maze {
                 return;
             }
         }
+    }
+
+    private void generateKey(){
+        Position keyPosition = getFreePosition();
+        key = new Key(keyPosition.getX(), keyPosition.getY());
+    }
+
+    private void collectKey(Position position){
+        if (key == null) return;
+        if(key.getPosition().getX() == position.getX() && key.getPosition().getY() == position.getY()) {
+            exitOpen = true;
+            key = null;}
     }
 }
