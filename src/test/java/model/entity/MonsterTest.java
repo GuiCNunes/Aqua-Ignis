@@ -1,5 +1,5 @@
 package model.entity;
-/*
+
 import model.Position;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,4 +45,3 @@ class MonsterTest {
         assertEquals(21, slime.getPosition().getY());
     }
 }
-*/
