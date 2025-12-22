@@ -1,7 +1,9 @@
 package model;
-/*
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import model.entity.Slime;
+import model.entity.Ghost;
 
 class CollisionTest {
 
@@ -17,6 +19,8 @@ class CollisionTest {
     @Test
     void TestMonsterPositionsDif() {
         Maze maze = new Maze(50, 50);
+        maze.addMonster(new Slime(10, 10));
+        maze.addMonster(new Ghost(30, 30));
         assertEquals(2, maze.getMonsters().size());
 
         Position Monster1Position = maze.getMonsters().get(0).getPosition();
@@ -36,4 +40,3 @@ class CollisionTest {
         assertFalse(exit.getX() == ignis.getX() && exit.getY() == ignis.getY());
     }
 }
-*/
