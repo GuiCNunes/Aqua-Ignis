@@ -1,7 +1,6 @@
 package model.entity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import model.Position;
 import org.junit.jupiter.api.Test;
 
 class StarTest {
