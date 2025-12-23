@@ -39,4 +39,27 @@ class MovementTest {
             }
         }
     }
+
+    @Test
+    void MovementPhaseTest() {
+        Maze maze = new Maze(50,50);
+        Position InitialPosition = maze.getAqua().getPosition();
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                if (dx == 0 && dy == 0) continue;
+                int Wallx = InitialPosition.getX() + dx;
+                int Wally = InitialPosition.getY() + dy;
+                if (Wallx >= 0 && Wally >= 0 && Wallx < 50 && Wally < 50) {
+                    if(maze.isWall(Wallx, Wally)) {
+                        Position WallPosition = new Position(Wallx, Wally);
+                        maze.moveEntity(maze.getAqua(), WallPosition, true);
+                        assertEquals(Wallx, maze.getAqua().getPosition().getX());
+                        assertEquals(Wally, maze.getAqua().getPosition().getY());
+                        return;
+                    }
+                }
+            }
+        }
+
+    }
 }
