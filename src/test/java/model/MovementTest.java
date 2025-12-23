@@ -62,4 +62,15 @@ class MovementTest {
         }
 
     }
+
+    @Test
+    void MovementOutBounndsTest() {
+        Maze maze = new Maze(50,50);
+        Position InitialPosition = maze.getAqua().getPosition();
+        Position OutBounds = new Position(-1, -1);
+        maze.moveEntity(maze.getAqua(), OutBounds, false);
+
+        assertEquals(InitialPosition.getX(), maze.getAqua().getPosition().getX());
+        assertEquals(InitialPosition.getY(), maze.getAqua().getPosition().getY());
+    }
 }
