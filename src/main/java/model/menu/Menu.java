@@ -1,7 +1,5 @@
 package model.menu;
 
-import view.Scale;
-
 import java.util.Arrays;
 import java.util.List;
 

@@ -7,56 +7,32 @@ import model.Position;
 import model.entity.Ghost;
 import model.entity.Monster;
 import model.entity.Slime;
-
 import java.io.IOException;
 
 public class MonsterController extends EntityController {
-
-    private int speed;
-    private long lastUpdate;
-    private GhostController ghostController;
-    private SlimeController slimeController;
+    private long lastUpdate = 0;
+    private final GhostController ghostController;
+    private final SlimeController slimeController;
 
     public MonsterController(Maze maze) {
         super(maze);
-        this.lastUpdate = 0;
         this.ghostController = new GhostController(maze);
         this.slimeController = new SlimeController(maze);
     }
 
-    public int getSpeed() {return speed;}
-
-
-
-    protected Position nextPosition(Monster monster, Position target) {
-        Position monsterPosition = monster.getPosition();
-
-
-        int nextX = monsterPosition.getX();
-        int nextY = monsterPosition.getY();
-        int dx = target.getX() - nextX;
-        int dy = target.getY() - nextY;
-
-        if(Math.abs(dx) > Math.abs(dy)) {
-            if(dx > 0) nextX ++;
-            else nextX--;
-        }
-        else{
-            if(dy > 0) nextY ++;
-            else nextY--;
-        }
-
-        return new Position(nextX, nextY);
-    }
-
     @Override
-    public void command(Game game, GUI.operation operation, long time) throws IOException {
-        if(time - lastUpdate > 500) {
-            for(Monster monster : getModel().getMonsters()){
-                if (monster instanceof Slime) slimeController.moveMonster((Slime) monster, monster.getPosition().getRandomNeighbour());
-                else ghostController.moveMonster((Ghost) monster, monster.getPosition().getRandomNeighbour());
+    public void command(Game game, GUI.operation op, long time) throws IOException {
+        if (time - lastUpdate > 500) {
+            for (Monster monster : getModel().getMonsters()) {
+                Position next = monster.getPosition().getRandomNeighbour();
+
+                if (monster instanceof Ghost) {
+                    ghostController.moveMonster((Ghost) monster, next);
+                } else if (monster instanceof Slime) {
+                    slimeController.moveMonster((Slime) monster, next);
+                }
             }
-            this.lastUpdate = time;
+            lastUpdate = time;
         }
     }
 }
