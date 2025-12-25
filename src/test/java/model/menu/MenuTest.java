@@ -10,5 +10,10 @@ class MenuTest {
         Menu menu = new Menu();
         assertNotNull(menu);
     }
-    
+
+    @Test
+    void EntriesNumberTest() {
+        Menu menu = new Menu();
+        assertEquals(4, menu.getNumberEntries());
+    }
 }
