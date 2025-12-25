@@ -38,4 +38,14 @@ class MenuTest {
         menu.previousEntry();
         assertTrue(menu.isSelectedSize());
     }
+
+    @Test
+    void LoopTest() {
+        Menu menu = new Menu();
+        menu.nextEntry();
+        menu.nextEntry();
+        menu.nextEntry();
+        menu.nextEntry();
+        assertTrue(menu.isSelectedStart());
+    }
 }
