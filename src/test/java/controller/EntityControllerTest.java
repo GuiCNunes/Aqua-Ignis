@@ -32,31 +32,48 @@ class EntityControllerTest {
     void testMoveToEmptySpace() {
         Entity entity = mock(Entity.class);
         Position pos = new Position(5, 5);
-
         when(maze.isWall(5, 5)).thenReturn(false);
-
         controller.requestMove(entity, pos);
-
         verify(entity, times(1)).setPosition(pos);
     }
 
     @Test
-    void testMoveOutOfBoundsNegative() {
+    void testMoveOutOfBoundsNegativeX() {
         Entity entity = mock(Entity.class);
-        Position outOfBounds = new Position(-1, 0);
+        Position out = new Position(-1, 5);
+        controller.requestMove(entity, out);
+        verify(entity, never()).setPosition(any());
+    }
 
-        controller.requestMove(entity, outOfBounds);
+    @Test
+    void testMoveOutOfBoundsUpperX() {
+        Entity entity = mock(Entity.class);
+        Position out = new Position(10, 5);
+        controller.requestMove(entity, out);
+        verify(entity, never()).setPosition(any());
+    }
 
-        verify(entity, never()).setPosition(outOfBounds);
+    @Test
+    void testMoveOutOfBoundsNegativeY() {
+        Entity entity = mock(Entity.class);
+        Position out = new Position(5, -1);
+        controller.requestMove(entity, out);
+        verify(entity, never()).setPosition(any());
+    }
+
+    @Test
+    void testMoveOutOfBoundsUpperY() {
+        Entity entity = mock(Entity.class);
+        Position out = new Position(5, 10);
+        controller.requestMove(entity, out);
+        verify(entity, never()).setPosition(any());
     }
 
     @Test
     void requestMoveNormalEntityToWall() {
         Entity entity = mock(Entity.class);
         when(maze.isWall(5, 5)).thenReturn(true);
-
         controller.requestMove(entity, position);
-
         verify(entity, never()).setPosition(any());
     }
 
@@ -64,51 +81,15 @@ class EntityControllerTest {
     void requestMoveGhostToWall() {
         Ghost ghost = mock(Ghost.class);
         when(maze.isWall(5, 5)).thenReturn(true);
-
         controller.requestMove(ghost, position);
-
         verify(ghost, times(1)).setPosition(position);
     }
 
     @Test
     void requestMoveSlimeToWall() {
         Slime slime = mock(Slime.class);
-        Position wallPos = new Position(5, 5);
-
         when(maze.isWall(5, 5)).thenReturn(true);
-
-        controller.requestMove(slime, wallPos);
-
-        verify(slime, never()).setPosition(wallPos);
-    }
-
-    @Test
-    void requestMoveOutOfBoundsX() {
-        Entity entity = mock(Entity.class);
-        Position out = new Position(-1, 5);
-
-        controller.requestMove(entity, out);
-
-        verify(entity, never()).setPosition(any());
-    }
-
-    @Test
-    void requestMoveOutOfBoundsY() {
-        Entity entity = mock(Entity.class);
-        Position out = new Position(5, 10);
-
-        controller.requestMove(entity, out);
-
-        verify(entity, never()).setPosition(any());
-    }
-
-    @Test
-    void requestMoveToEmptySpace() {
-        Entity entity = mock(Entity.class);
-        when(maze.isWall(5, 5)).thenReturn(false);
-
-        controller.requestMove(entity, position);
-
-        verify(entity, times(1)).setPosition(position);
+        controller.requestMove(slime, position);
+        verify(slime, never()).setPosition(any());
     }
 }
