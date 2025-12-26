@@ -15,15 +15,14 @@ public class WinView extends View<Menu>{
     }
     @Override
     public void drawElements(GUI gui){
-        TextColor bg = TextColor.Factory.fromString("#2C2C2C");
         gui.drawText(10,10, "CONGRATULATIONS!",
-                TextColor.Factory.fromString("#00FF00"), bg);
+                Colors.GREEN, Colors.BG_UI);
         gui.drawText(10,12, "YOU ESCAPED THE MAZE",
-                TextColor.Factory.fromString("#FFFFFF"), bg);
+                Colors.WHITE, Colors.BG_UI);
         gui.drawText(10,14, "Press enter to return to main menu",
-                TextColor.Factory.fromString("#FFFF00"), bg);
-        gui.drawText(10, 12, "Stars Collected: " + stars + "/3", TextColor.Factory.fromString("#FFFF00"), bg);
-        gui.drawText(10, 13, "Total Time: " + time + "s", TextColor.Factory.fromString("#FFFFFF"),
-                bg);
+                Colors.YELLOW, Colors.BG_UI);
+        gui.drawText(10, 12, "Stars Collected: " + stars + "/3", Colors.YELLOW, Colors.BG_UI);
+        gui.drawText(10, 13, "Total Time: " + time + "s", Colors.WHITE, Colors.BG_UI);
+
     }
 }

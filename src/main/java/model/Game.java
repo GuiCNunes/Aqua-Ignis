@@ -6,61 +6,46 @@ import states.State;
 import gui.GUI;
 import gui.LanternaGUI;
 import view.Scale;
-
 import java.io.IOException;
 
 public class Game {
-
     private GUI gui;
     private State state;
 
     public Game() {
-
         try {
             this.state = new MenuState(new Menu());
-            int w = 90 * Scale.SCALE + 2;
-            int h = 30 * Scale.SCALE + 2;
-            this.gui = new LanternaGUI(w, h);
-            gui.startScreen();
-
-        }
-        catch (IOException e) {
+            initializeGUI();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void recreateGUI() throws IOException {
-        if(this.gui != null) this.gui.stopScreen();
+    private void initializeGUI() throws IOException {
         int w = 90 * Scale.SCALE + 2;
         int h = 30 * Scale.SCALE + 2;
         this.gui = new LanternaGUI(w, h);
         this.gui.startScreen();
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void recreateGUI() throws IOException {
+        int newScale = Scale.SCALE + 1;
+        if (newScale > 3) newScale = 1;
+        Scale.setScale(newScale);
+        if (this.gui != null) this.gui.stopScreen();
+        initializeGUI();
     }
 
+    public void setState(State state) { this.state = state; }
 
     public void run() throws IOException {
-        int FPS = 30;
-        int frameTime = 1000 / FPS;
-
+        int frameTime = 1000 / 30;
         while (this.state != null) {
-            long startTime = System.currentTimeMillis();
-
-            state.command(this, gui, startTime);
-
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            long sleepTime = frameTime - elapsedTime;
-
-            try {
-                if (sleepTime > 0) Thread.sleep(sleepTime);
-            } catch (InterruptedException e) {
-            }
+            long start = System.currentTimeMillis();
+            state.command(this, gui, start);
+            long sleep = frameTime - (System.currentTimeMillis() - start);
+            try { if (sleep > 0) Thread.sleep(sleep); } catch (InterruptedException ignored) {}
         }
-
         gui.stopScreen();
     }
-
 }

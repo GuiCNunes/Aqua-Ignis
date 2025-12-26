@@ -7,41 +7,25 @@ import model.Maze;
 import model.menu.Menu;
 import states.GameState;
 import states.HelpState;
-import view.Scale;
-
 import java.io.IOException;
 
 public class MenuController extends Controller<Menu> {
-
     public MenuController(Menu menu) {
         super(menu);
     }
 
     @Override
-    public void command(Game game, GUI.operation operation, long time) throws IOException {
-
-        switch (operation) {
-            case up : getModel().previousEntry();
-                break;
-            case down : getModel().nextEntry();
-                break;
+    public void command(Game game, GUI.operation op, long time) throws IOException {
+        switch (op) {
+            case up: getModel().previousEntry(); break;
+            case down: getModel().nextEntry(); break;
             case select:
                 if (getModel().isSelectedExit()) game.setState(null);
-                if (getModel().isSelectedStart()) game.setState(new GameState(new Maze(90,30)));
-                if (getModel().isSelectedSize()) {
-                    int currentScale = Scale.SCALE;
-                    int newScale = currentScale + 1;
-                    if (newScale > 3) newScale = 1;
-                    Scale.setScale(newScale);
-                    game.recreateGUI();
-                }
-                if(getModel().isSelectedHelp()) game.setState(new HelpState(getModel()));
+                else if (getModel().isSelectedStart()) game.setState(new GameState(new Maze(90, 30)));
+                else if (getModel().isSelectedSize()) game.recreateGUI();
+                else if (getModel().isSelectedHelp()) game.setState(new HelpState(getModel()));
                 break;
-
-            case quit:
-                game.setState(null);
-                break;
+            case quit: game.setState(null); break;
         }
-
     }
 }

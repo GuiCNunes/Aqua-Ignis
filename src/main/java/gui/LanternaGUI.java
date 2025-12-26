@@ -112,26 +112,26 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
-    public void drawPixel(int x, int y, TextColor color) {
+    public void drawPixel(int x, int y, Color color) {
         if (x < 0 || y < 0 || x >= width || y >= height) return;
         var g = screen.newTextGraphics();
-        g.setBackgroundColor(color);
+        g.setBackgroundColor(toLanterna(color));
         g.putString(x, y, " ");
     }
 
     @Override
-    public void drawString(int x, int y, String s, TextColor fg, TextColor bg) {
+    public void drawString(int x, int y, String s, Color fg, Color bg) {
         if (x < 0 || y < 0 || x >= width || y >= height) return;
         var g = screen.newTextGraphics();
-        if (bg != null) g.setBackgroundColor(bg);
-        if (fg != null) g.setForegroundColor(fg);
+        if (bg != null) g.setBackgroundColor(toLanterna(bg));
+        if (fg != null) g.setForegroundColor(toLanterna(fg));
         g.putString(x, y, s);
     }
 
     @Override
-    public void fillRect(int x, int y, int w, int h, TextColor color) {
+    public void fillRect(int x, int y, int w, int h, Color color) {
         var g = screen.newTextGraphics();
-        g.setBackgroundColor(color);
+        g.setBackgroundColor(toLanterna(color));
         g.fillRectangle(
                 new com.googlecode.lanterna.TerminalPosition(x, y),
                 new com.googlecode.lanterna.TerminalSize(w, h),
@@ -140,32 +140,17 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
-    public void drawText(int x, int y, String text, TextColor fg, TextColor bg) {
+    public void drawText(int x, int y, String text, Color fg, Color bg) {
         var g = screen.newTextGraphics();
-        if (bg != null) g.setBackgroundColor(bg);
-        if (fg != null) g.setForegroundColor(fg);
+        if (bg != null) g.setBackgroundColor(toLanterna(bg));
+        if (fg != null) g.setForegroundColor(toLanterna(fg));
         g.putString(x, y, text);
     }
 
-
-    private AWTTerminalFontConfiguration loadSquareFontCfg() throws IOException {
-        try {
-            URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
-            if (resource == null) throw new IOException("Font not found: fonts/square.ttf");
-
-            File fontFile = new File(resource.toURI());
-            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(font);
-
-            Font newfont = font.deriveFont(Font.PLAIN, 4f);
-            return AWTTerminalFontConfiguration.newInstance(newfont);
-
-        } catch (URISyntaxException | FontFormatException e) {
-            throw new IOException("Failed to load font configuration", e);
-        }
+    private TextColor toLanterna(Color c) {
+        return new TextColor.RGB(c.r(), c.g(), c.b());
     }
+
 
     private AWTTerminalFontConfiguration loadSquareFontCfg1() {
         Font font = new Font("Monospaced", Font.PLAIN, 16); // testa 10, 8, 6...

@@ -1,9 +1,10 @@
 package view.entityView;
 
-import com.googlecode.lanterna.TextColor;
 import gui.GUI;
 import model.Position;
 import model.entity.Monster;
+import view.Colors;
+
 import static view.Scale.SCALE;
 
 
@@ -11,8 +12,6 @@ public class GhostView {
     public void draw(Monster monster, GUI gui) {
         Position position = monster.getPosition();
 
-        TextColor ghostColor = TextColor.Factory.fromString("#FFFFFF");
-
-        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, ghostColor);
+        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, Colors.GHOST);
     }
 }
