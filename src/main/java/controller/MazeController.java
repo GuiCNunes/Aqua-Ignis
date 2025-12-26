@@ -1,90 +1,92 @@
 package controller;
 
 import gui.GUI;
-import model.Game;
-import model.Maze;
-import model.Position;
-import model.entity.Ghost;
-import model.entity.Monster;
-import model.entity.Slime;
+import model.*;
+import model.entity.*;
 import model.menu.Menu;
-import states.LoseState;
-import states.MenuState;
-import states.WinState;
-
+import states.*;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Random;
 
 public class MazeController extends GameController {
     private PlayerController playerController;
     private MonsterController monsterController;
-    private long lastSpawnTime = 0;
-    private long spawnInterval = 10000;
+    private MazeGenerator generator;
+    private long lastSpawn = 0;
 
     public MazeController(Maze maze) {
         super(maze);
         this.playerController = new PlayerController(maze);
         this.monsterController = new MonsterController(maze);
-
+        this.generator = new MazeGenerator();
+        this.generator.generate(maze);
     }
 
+    @Override
     public void command(Game game, GUI.operation op, long time) throws IOException {
+        if (op == GUI.operation.quit) {
+            game.setState(new MenuState(new Menu()));
+            return;
+        }
 
         spawnMonsters(time);
-        monsterController.command(game,op, time);
+        monsterController.command(game, op, time);
+        playerController.command(game, op, time);
 
+        handleCollisions();
 
-
-        if(op == GUI.operation.quit ){
-            game.setState(new MenuState(new Menu()));
-        }
-        else if(checkLoss()){
-            game.setState(new LoseState(new Menu()));
-        }
-        else if (checkWin()) {
-            game.setState(new WinState(new Menu(), getModel().getCollectedStars(), getModel().getTime()));
-        }
-        else if(op != GUI.operation.none) playerController.command(game, op, time);
+        if (checkLoss()) game.setState(new LoseState(new Menu()));
+        else if (checkWin()) game.setState(new WinState(new Menu(), getModel().getCollectedStars(), getModel().getTime()));
     }
 
-    private boolean checkWin(){
-        boolean winIgnis = false;
-        boolean winAqua = false;
+    private void handleCollisions() {
+        checkItems(getModel().getIgnis());
+        checkItems(getModel().getAqua());
+    }
 
-        if(!getModel().isExitOpen()) return false;
+    private void checkItems(Player player) {
+        Position p = player.getPosition();
+        Iterator<Star> it = getModel().getStars().iterator();
+        while (it.hasNext()) {
+            if (it.next().getPosition().equals(p)) {
+                getModel().incrementStars();
+                it.remove();
+            }
+        }
+        if (getModel().getKey() != null && getModel().getKey().getPosition().equals(p)) {
+            getModel().setExitOpen(true);
+            getModel().setKey(null);
+        }
+    }
 
-        if(getModel().getIgnis().getPosition().getX() == getModel().getExit().getX() &&
-                getModel().getIgnis().getPosition().getY() == getModel().getExit().getY()) winIgnis = true;
-        if(getModel().getAqua().getPosition().getX() == getModel().getExit().getX() &&
-                getModel().getAqua().getPosition().getY() == getModel().getExit().getY()) winAqua = true;
+    private boolean checkWin() {
+        if (!getModel().isExitOpen()) return false;
+        Position exit = getModel().getExit();
+
+        boolean winIgnis = getModel().getIgnis().getPosition().equals(exit);
+        boolean winAqua = getModel().getAqua().getPosition().equals(exit);
 
         return winIgnis && winAqua;
     }
 
-    private boolean checkLoss(){
-        Position aquaPosition = getModel().getAqua().getPosition();
-        Position ignisPosition = getModel().getIgnis().getPosition();
-
-        for(Monster monster : getModel().getMonsters()){
-            Position monsterPosition = monster.getPosition();
-            if(aquaPosition.getX() == monsterPosition.getX() && aquaPosition.getY() == monsterPosition.getY()) return true;
-            else if (ignisPosition.getX() == monsterPosition.getX() && ignisPosition.getY() == monsterPosition.getY()) return true;
+    private boolean checkLoss() {
+        for (Monster m : getModel().getMonsters()) {
+            if (m.getPosition().equals(getModel().getIgnis().getPosition()) ||
+                    m.getPosition().equals(getModel().getAqua().getPosition())) return true;
         }
-
         return false;
     }
 
-    private void spawnMonsters(long time){
-        if(time - lastSpawnTime >= spawnInterval  && getModel().getMonsters().size() < 15){
-            Position spawn = getModel().getFreePosition();
+    private void spawnMonsters(long time) {
+        if (time - lastSpawn >= 10000 && getModel().getMonsters().size() < 15) {
+            Position p = generator.getFreePosition(getModel());
 
-            Random random = new Random();
+            if (new Random().nextBoolean()) getModel().addMonster(new Slime(p.getX(), p.getY()));
 
-            if(random.nextBoolean()) getModel().addMonster(new Slime(spawn.getX(), spawn.getY()));
-            else getModel().addMonster(new Ghost(spawn.getX(), spawn.getY()));
+            else getModel().addMonster(new Ghost(p.getX(), p.getY()));
 
-            lastSpawnTime = time;
+            lastSpawn = time;
         }
     }
-
 }

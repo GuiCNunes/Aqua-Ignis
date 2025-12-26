@@ -1,6 +1,6 @@
 package view;
 
-import com.googlecode.lanterna.TextColor;
+import gui.Color;
 import gui.GUI;
 import model.Maze;
 import model.Position;
@@ -81,12 +81,11 @@ public class MazeView extends View<Maze> {
 
     private void drawDarkness(Maze maze, GUI gui) {
         gui.fillRect(0, 0, maze.getWidth() * SCALE, maze.getHeight() * SCALE,
-                TextColor.Factory.fromString("#000000"));
+                Colors.BLACK);
     }
 
     private void drawVision(Maze maze, GUI gui, Position position) {
 
-        TextColor openExitColor = TextColor.Factory.fromString("#FFFFFF");
 
         for (int y = 0; y < maze.getHeight(); y++) {
             for (int x = 0; x < maze.getWidth(); x++) {
@@ -94,16 +93,16 @@ public class MazeView extends View<Maze> {
 
                 maze.updateMemory(x,y);
 
-                TextColor c;
+                Color c = Colors.WHITE;
                 Position exitPosition = maze.getExit();
 
                 if(x == exitPosition.getX() && y == exitPosition.getY() && maze.isExitOpen()){
-                    c = openExitColor;
+                    c = Colors.BLACK;
                 }
                 else{
                     c = maze.isWall(x, y)
-                            ? TextColor.Factory.fromString("#4A3B2D")
-                            : TextColor.Factory.fromString("#765341");
+                            ? Colors.WALL
+                            : Colors.FLOOR;
                 }
                 gui.fillRect(sx(x), sy(y), SCALE, SCALE, c);
             }
@@ -151,7 +150,6 @@ public class MazeView extends View<Maze> {
     }
 
     private void drawMemory(Maze maze, GUI gui) {
-        TextColor shadow = TextColor.Factory.fromString("#282828");
 
         for(int y = 0; y < maze.getHeight(); y++) {
             for(int x = 0; x < maze.getWidth(); x++) {
@@ -160,7 +158,7 @@ public class MazeView extends View<Maze> {
                     Position ignisPos = maze.getIgnis().getPosition();
 
                     if((!isVisible(aquaPos, x, y) && !isVisible(ignisPos, x, y))) {
-                        gui.fillRect(sx(x), sy(y), SCALE, SCALE, shadow);
+                        gui.fillRect(sx(x), sy(y), SCALE, SCALE, Colors.SHADOW);
                     }
                 }
             }
@@ -181,9 +179,7 @@ public class MazeView extends View<Maze> {
             starDisplay.append("-");
         }
 
-        TextColor starColor = TextColor.Factory.fromString("#FFD700");
-
-        gui.drawText(3, 1, starDisplay.toString(), starColor, TextColor.Factory.fromString("#2C2C2C"));
+        gui.drawText(3, 1, starDisplay.toString(), Colors.STAR, Colors.BG_UI);
     }
 
     private void drawKey(Maze maze, GUI gui, Position aquaPos, Position ignisPos) {
@@ -201,30 +197,28 @@ public class MazeView extends View<Maze> {
 
     private void drawExitStatus(Maze maze, GUI gui){
         String status;
-        TextColor statusColor;
+        Color statusColor;
 
         if(maze.isExitOpen()){
             status = "Exit : OPEN";
-            statusColor = TextColor.Factory.fromString("#00FF00");
+            statusColor = Colors.SLIME;
         }
         else{
             status = "Exit : CLOSED";
-            statusColor = TextColor.Factory.fromString("#FF0000");
+            statusColor = Colors.KEY;
         }
 
         int x = 20;
         int y = 1;
 
-        TextColor bgColor = TextColor.Factory.fromString("#2C2C2C");
-        gui.drawText(x, y, status,  statusColor, bgColor);
+        gui.drawText(x, y, status,  statusColor, Colors.BG_UI);
     }
 
     private void drawTimer(Maze maze, GUI gui){
         long seconds = maze.getTime();
         String time = String.format("Time: %02d:%02d", seconds / 60, seconds % 60);
 
-        gui.drawText(40, 1, time, TextColor.Factory.fromString("#FFFFFF"),
-                TextColor.Factory.fromString("#2C2C2C"));
+        gui.drawText(40, 1, time, Colors.WHITE, Colors.BG_UI);
     }
 
 }
