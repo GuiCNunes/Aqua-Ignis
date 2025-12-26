@@ -14,7 +14,7 @@ class EntityTest {
     @Test
     void TestMoveUp() {
         Entity entity = new TestEntity(5, 5);
-        Position position = entity.moveUp();
+        Position position = entity.getPosition().getUp();
         assertEquals(5,position.getX());
         assertEquals(4,position.getY());
     }
@@ -22,7 +22,7 @@ class EntityTest {
     @Test
     void TestMoveDown() {
         Entity entity = new TestEntity(5, 5);
-        Position position = entity.moveDown();
+        Position position = entity.getPosition().getDown();
         assertEquals(5,position.getX());
         assertEquals(6,position.getY());
     }
@@ -30,7 +30,7 @@ class EntityTest {
     @Test
     void TestMoveLeft() {
         Entity entity = new TestEntity(5, 5);
-        Position position = entity.moveLeft();
+        Position position = entity.getPosition().getLeft();
         assertEquals(4,position.getX());
         assertEquals(5,position.getY());
     }
@@ -38,7 +38,7 @@ class EntityTest {
     @Test
     void TestMoveRight() {
         Entity entity = new TestEntity(5, 5);
-        Position position = entity.moveRight();
+        Position position = entity.getPosition().getRight();
         assertEquals(6,position.getX());
         assertEquals(5,position.getY());
     }

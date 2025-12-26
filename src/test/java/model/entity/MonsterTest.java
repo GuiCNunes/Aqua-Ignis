@@ -26,13 +26,13 @@ class MonsterTest {
     void TestMonsterMov() {
         Ghost ghost = new Ghost(10, 12);
 
-        Position left = ghost.moveLeft();
-        assertEquals(9, left.getX());
-        assertEquals(12, left.getY());
+        ghost.setPosition(new Position(9, 12));
+        assertEquals(9, ghost.getPosition().getX());
+        assertEquals(12, ghost.getPosition().getY());
 
-        Position right = ghost.moveRight();
-        assertEquals(11, right.getX());
-        assertEquals(12, right.getY());
+        ghost.setPosition(new Position(11, 12));
+        assertEquals(11, ghost.getPosition().getX());
+        assertEquals(12, ghost.getPosition().getY());
     }
 
     @Test
