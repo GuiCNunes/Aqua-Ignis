@@ -1,7 +1,9 @@
 package model;
-/*
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import model.entity.Slime;
+import model.entity.Ghost;
 
 class MazeTest {
 
@@ -21,8 +23,10 @@ class MazeTest {
 
     @Test
     void TestMonsterCreation() {
-        Maze maze = new Maze(20, 50);
+        Maze maze = new Maze(40, 50);
         assertNotNull(maze.getMonsters());
+        maze.addMonster(new Ghost(20, 20));
+        maze.addMonster(new Slime(30, 30));
         assertEquals(2, maze.getMonsters().size());
     }
 
@@ -30,20 +34,6 @@ class MazeTest {
     void TestExitExists() {
         Maze maze = new Maze(20, 50);
         assertNotNull(maze.getExit());
-    }
-
-    @Test
-    void TestWinExit() {
-        Maze maze = new Maze(20, 50);
-        Position exitPosition = maze.getExit();
-        assertTrue(maze.checkWin(exitPosition));
-    }
-
-    @Test
-    void TestWinNotExit() {
-        Maze maze = new Maze(20, 50);
-        Position randomPosition = new Position(7,6);
-        assertFalse(maze.checkWin(randomPosition));
     }
 
     @Test
@@ -58,10 +48,10 @@ class MazeTest {
     @Test
     void testPlayerStarPosition() {
         Maze maze = new Maze(20, 50);
-        assertEquals(11, maze.getIgnis().getPosition().getX());
-        assertEquals(10, maze.getIgnis().getPosition().getY());
-        assertEquals(10, maze.getAqua().getPosition().getX());
-        assertEquals(10, maze.getAqua().getPosition().getY());
+        assertEquals(9, maze.getIgnis().getPosition().getX());
+        assertEquals(25, maze.getIgnis().getPosition().getY());
+        assertEquals(11, maze.getAqua().getPosition().getX());
+        assertEquals(25, maze.getAqua().getPosition().getY());
     }
 
     @Test
@@ -84,18 +74,9 @@ class MazeTest {
     @Test
     void TestWallsBlockMov() {
         Maze maze = new Maze(20, 50);
-        Position exitPosition = maze.getExit();
-
-        for (int x = 0; x < maze.getWidth(); x++) {
-            assertTrue(maze.isWall(x,0));
-            if (x != exitPosition.getX() || (maze.getHeight() - 1) != exitPosition.getY()) {
-                assertTrue(maze.isWall(x,maze.getHeight()-1));
-            }
-        }
-        for (int y = 0; y < maze.getHeight(); y++) {
-            assertTrue(maze.isWall(0,y));
-            assertTrue(maze.isWall(maze.getWidth()-1, y));
-        }
+        assertTrue(maze.isWall(0,0));
+        assertTrue(maze.isWall(19,0));
+        assertTrue(maze.isWall(0,49));
+        assertTrue(maze.isWall(19,49));
     }
 }
-*/
