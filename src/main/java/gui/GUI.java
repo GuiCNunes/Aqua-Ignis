@@ -21,11 +21,11 @@ public interface GUI {
 
     operation getOperation() throws IOException;
 
-    void drawPixel(int x, int y, TextColor color);
+    void drawPixel(int x, int y, Color color);
 
-    void drawString(int x, int y, String s, TextColor fg, TextColor bg);
+    void drawString(int x, int y, String s, Color fg, Color bg);
 
-    void fillRect(int x, int y, int width, int height, TextColor color);
+    void fillRect(int x, int y, int width, int height, Color color);
 
-    void drawText(int x, int y, String text, TextColor fg, TextColor bg);
+    void drawText(int x, int y, String text, Color fg, Color bg);
 }
