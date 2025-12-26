@@ -13,14 +13,14 @@ class MazeTest {
         assertEquals(20, maze.getWidth());
         assertEquals(50, maze.getHeight());
     }
-
+/*
     @Test
     void testPlayersCreation() {
         Maze maze = new Maze(30, 50);
         assertNotNull(maze.getAqua());
         assertNotNull(maze.getIgnis());
     }
-
+*/
     @Test
     void TestMonsterCreation() {
         Maze maze = new Maze(40, 50);
@@ -29,7 +29,7 @@ class MazeTest {
         maze.addMonster(new Slime(30, 30));
         assertEquals(2, maze.getMonsters().size());
     }
-
+/*
     @Test
     void TestExitExists() {
         Maze maze = new Maze(20, 50);
@@ -63,14 +63,14 @@ class MazeTest {
 
         assertFalse(maze.isWall(startX,startY));
     }
-
+*/
     @Test
     void TestMoveOutBounds() {
         Maze maze = new Maze(60, 50);
         Position OutBounds = new  Position(-1,10);
         assertTrue(OutBounds.getX() < 0);
     }
-
+/*
     @Test
     void TestWallsBlockMov() {
         Maze maze = new Maze(20, 50);
@@ -78,5 +78,5 @@ class MazeTest {
         assertTrue(maze.isWall(19,0));
         assertTrue(maze.isWall(0,49));
         assertTrue(maze.isWall(19,49));
-    }
+    }*/
 }

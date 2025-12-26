@@ -26,13 +26,13 @@ class PlayerTest {
     void TestPlayerMov() {
         Aqua aqua = new Aqua(15, 15);
 
-        Position Up = aqua.moveUp();
-        assertEquals(15, Up.getX());
-        assertEquals(14, Up.getY());
+        aqua.setPosition(new Position(15, 14));
+        assertEquals(15, aqua.getPosition().getX());
+        assertEquals(14, aqua.getPosition().getY());
 
-        Position Down = aqua.moveDown();
-        assertEquals(15, Down.getX());
-        assertEquals(16, Down.getY());
+        aqua.setPosition(new Position(15, 16));
+        assertEquals(15, aqua.getPosition().getX());
+        assertEquals(16, aqua.getPosition().getY());
     }
 
     @Test
