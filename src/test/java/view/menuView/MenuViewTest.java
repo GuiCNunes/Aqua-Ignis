@@ -56,4 +56,22 @@ class MenuViewTest {
 
         verify(gui, times(3)).drawString(anyInt(), anyInt(), anyString(), any(), any());
     }
+
+    @Test
+    void testDrawBoundaryAndIteration() throws IOException {
+        when(menu.getNumberEntries()).thenReturn(1);
+        when(menu.getEntry(0)).thenReturn("Test");
+        when(menu.isSelected(0)).thenReturn(false);
+
+        view.draw(gui);
+
+        verify(gui).drawString(5, 7, "Test", Colors.WHITE, null);
+
+        reset(gui);
+        when(menu.getNumberEntries()).thenReturn(0);
+
+        view.draw(gui);
+
+        verify(gui, never()).drawString(eq(5), eq(7), anyString(), any(), any());
+    }
 }

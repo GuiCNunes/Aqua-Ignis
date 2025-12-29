@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -20,63 +19,68 @@ class MonsterControllerTest {
     private Maze maze;
     private Game game;
     private MonsterController controller;
+    private Position pos;
 
     @BeforeEach
     void setUp() {
         maze = mock(Maze.class);
         game = mock(Game.class);
+        pos = mock(Position.class);
+        when(maze.getWidth()).thenReturn(10);
+        when(maze.getHeight()).thenReturn(10);
+        when(pos.getRandomNeighbour()).thenReturn(new Position(1, 1));
         controller = new MonsterController(maze);
     }
 
     @Test
-    void testCommandUpdates() throws IOException {
-        Slime slime = mock(Slime.class);
-        Ghost ghost = mock(Ghost.class);
-        Position pos = mock(Position.class);
-        Position nextPos = mock(Position.class);
-
-        when(slime.getPosition()).thenReturn(pos);
-        when(ghost.getPosition()).thenReturn(pos);
-        when(pos.getRandomNeighbour()).thenReturn(nextPos);
-
-        List<Monster> monsters = new ArrayList<>();
-        monsters.add(slime);
-        monsters.add(ghost);
-        when(maze.getMonsters()).thenReturn(monsters);
-
-        controller.command(game, GUI.operation.none, 600);
-
-        verify(pos, times(2)).getRandomNeighbour();
-    }
-
-    @Test
-    void testCommand() throws IOException {
+    void testCommandTimerExactBoundary() throws IOException {
         Monster monster = mock(Monster.class);
-        List<Monster> monsters = List.of(monster);
-        when(maze.getMonsters()).thenReturn(monsters);
+        when(monster.getPosition()).thenReturn(pos);
+        when(maze.getMonsters()).thenReturn(List.of(monster));
 
-        controller.command(game, GUI.operation.none, 100);
-
+        controller.command(game, GUI.operation.none, 500);
         verify(monster, never()).getPosition();
+
+        controller.command(game, GUI.operation.none, 501);
+        verify(monster, times(1)).getPosition();
     }
 
     @Test
-    void testCommandMultipleUpdates() throws IOException {
-        Slime slime = mock(Slime.class);
-        Position pos = mock(Position.class);
-        when(slime.getPosition()).thenReturn(pos);
-        when(pos.getRandomNeighbour()).thenReturn(mock(Position.class));
+    void testGhostMoveExecution() throws IOException {
+        Ghost ghost = mock(Ghost.class);
+        when(ghost.getPosition()).thenReturn(pos);
+        when(maze.getMonsters()).thenReturn(List.of(ghost));
 
+        controller.command(game, GUI.operation.none, 501);
+
+        verify(ghost, atLeastOnce()).setPosition(any(Position.class));
+    }
+
+    @Test
+    void testSlimeMoveExecution() throws IOException {
+        Slime slime = mock(Slime.class);
+        when(slime.getPosition()).thenReturn(pos);
+        when(maze.getMonsters()).thenReturn(List.of(slime));
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        controller.command(game, GUI.operation.none, 501);
+
+        verify(slime, atLeastOnce()).setPosition(any(Position.class));
+    }
+
+    @Test
+    void testTimerResetAfterUpdate() throws IOException {
+        Slime slime = mock(Slime.class);
+        when(slime.getPosition()).thenReturn(pos);
         when(maze.getMonsters()).thenReturn(List.of(slime));
 
-        controller.command(game, GUI.operation.none, 600);
-        verify(pos, times(1)).getRandomNeighbour();
+        controller.command(game, GUI.operation.none, 501);
+        verify(slime, times(1)).getPosition();
 
-        controller.command(game, GUI.operation.none, 700);
-        verify(pos, times(1)).getRandomNeighbour();
+        controller.command(game, GUI.operation.none, 1000);
+        verify(slime, times(1)).getPosition();
 
-        controller.command(game, GUI.operation.none, 1200);
-        verify(pos, times(2)).getRandomNeighbour();
+        controller.command(game, GUI.operation.none, 1002);
+        verify(slime, times(2)).getPosition();
     }
-
 }
