@@ -1,5 +1,7 @@
 package controller;
 
+import controller.entity.MonsterController;
+import controller.entity.PlayerController;
 import gui.GUI;
 import model.*;
 import model.entity.*;

@@ -1,5 +1,6 @@
 package controller;
 
+import controller.entity.SlimeController;
 import gui.GUI;
 import model.Game;
 import model.Maze;
