@@ -8,13 +8,7 @@ import com.Nunes.aqua_and_ignis.view.View;
 
 import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
 
-public class KeyView extends View<Key> {
-
-    public KeyView() {
-        super(null);
-    }
-    @Override
-    public void drawElements(GUI gui) {}
+public class KeyView {
 
     public void draw(GUI gui, Key key) {
 
