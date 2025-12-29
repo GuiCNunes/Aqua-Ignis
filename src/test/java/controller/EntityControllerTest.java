@@ -13,7 +13,6 @@ import static org.mockito.Mockito.*;
 class EntityControllerTest {
     private Maze maze;
     private EntityController controller;
-    private Position position;
 
     @BeforeEach
     void setUp() {
@@ -22,74 +21,66 @@ class EntityControllerTest {
             @Override
             public void command(model.Game game, gui.GUI.operation op, long time) {}
         };
-        position = new Position(5, 5);
 
         when(maze.getWidth()).thenReturn(10);
         when(maze.getHeight()).thenReturn(10);
     }
 
     @Test
-    void testMoveToEmptySpace() {
+    void testMoveAtBoundaries() {
         Entity entity = mock(Entity.class);
-        Position pos = new Position(5, 5);
-        when(maze.isWall(5, 5)).thenReturn(false);
-        controller.requestMove(entity, pos);
-        verify(entity, times(1)).setPosition(pos);
+
+        Position zeroX = new Position(0, 5);
+        controller.requestMove(entity, zeroX);
+        verify(entity).setPosition(zeroX);
+
+        Position maxX = new Position(9, 5);
+        controller.requestMove(entity, maxX);
+        verify(entity).setPosition(maxX);
+
+        Position zeroY = new Position(5, 0);
+        controller.requestMove(entity, zeroY);
+        verify(entity).setPosition(zeroY);
+
+        Position maxY = new Position(5, 9);
+        controller.requestMove(entity, maxY);
+        verify(entity).setPosition(maxY);
     }
 
     @Test
-    void testMoveOutOfBoundsNegativeX() {
+    void testMoveOutOfBoundsEdges() {
         Entity entity = mock(Entity.class);
-        Position out = new Position(-1, 5);
-        controller.requestMove(entity, out);
+
+        controller.requestMove(entity, new Position(-1, 5));
+        controller.requestMove(entity, new Position(10, 5));
+        controller.requestMove(entity, new Position(5, -1));
+        controller.requestMove(entity, new Position(5, 10));
+
         verify(entity, never()).setPosition(any());
     }
 
     @Test
-    void testMoveOutOfBoundsUpperX() {
-        Entity entity = mock(Entity.class);
-        Position out = new Position(10, 5);
-        controller.requestMove(entity, out);
-        verify(entity, never()).setPosition(any());
-    }
-
-    @Test
-    void testMoveOutOfBoundsNegativeY() {
-        Entity entity = mock(Entity.class);
-        Position out = new Position(5, -1);
-        controller.requestMove(entity, out);
-        verify(entity, never()).setPosition(any());
-    }
-
-    @Test
-    void testMoveOutOfBoundsUpperY() {
-        Entity entity = mock(Entity.class);
-        Position out = new Position(5, 10);
-        controller.requestMove(entity, out);
-        verify(entity, never()).setPosition(any());
-    }
-
-    @Test
-    void requestMoveNormalEntityToWall() {
-        Entity entity = mock(Entity.class);
-        when(maze.isWall(5, 5)).thenReturn(true);
-        controller.requestMove(entity, position);
-        verify(entity, never()).setPosition(any());
-    }
-
-    @Test
-    void requestMoveGhostToWall() {
+    void testWallCollisions() {
+        Entity normal = mock(Slime.class);
         Ghost ghost = mock(Ghost.class);
+        Position wallPos = new Position(5, 5);
+
         when(maze.isWall(5, 5)).thenReturn(true);
-        controller.requestMove(ghost, position);
-        verify(ghost, times(1)).setPosition(position);
+
+        controller.requestMove(normal, wallPos);
+        verify(normal, never()).setPosition(any());
+
+        controller.requestMove(ghost, wallPos);
+        verify(ghost).setPosition(wallPos);
     }
 
     @Test
-    void requestMoveSlimeToWall() {
-        Slime slime = mock(Slime.class);
-        when(maze.isWall(5, 5)).thenReturn(true);
-        controller.requestMove(slime, position);
-        verify(slime, never()).setPosition(any());
+    void testEmptySpaceMove() {
+        Entity entity = mock(Entity.class);
+        Position pos = new Position(2, 2);
+        when(maze.isWall(2, 2)).thenReturn(false);
+
+        controller.requestMove(entity, pos);
+        verify(entity).setPosition(pos);
     }
 }
