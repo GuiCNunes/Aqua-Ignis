@@ -1,6 +1,5 @@
-package controller;
+package controller.entity;
 
-import controller.entity.AquaController;
 import gui.GUI;
 import model.Game;
 import model.Maze;

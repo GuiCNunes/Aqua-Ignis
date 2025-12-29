@@ -1,6 +1,5 @@
-package controller;
+package controller.entity;
 
-import controller.entity.GhostController;
 import gui.GUI;
 import model.Game;
 import model.Maze;

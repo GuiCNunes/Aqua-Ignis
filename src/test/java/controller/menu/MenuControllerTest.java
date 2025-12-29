@@ -2,7 +2,6 @@ package controller.menu;
 
 import gui.GUI;
 import model.Game;
-import model.Maze;
 import model.menu.Menu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

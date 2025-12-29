@@ -1,5 +1,6 @@
-package controller;
+package controller.entity;
 
+import controller.EntityController;
 import model.Entity;
 import model.Maze;
 import model.Position;
