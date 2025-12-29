@@ -12,7 +12,7 @@ repositories {
 }
 
 application {
-    mainClass.set("Application")
+    mainClass.set("com.Nunes.aqua_and_ignis.Application")
 }
 
 dependencies {
@@ -30,8 +30,8 @@ test {
     useJUnitPlatform()
 }
 pitest {
-    targetClasses = ['model.*', 'gui.*', 'states.*', 'controller.*', 'view.*']
-    targetTests = ['model.*', 'gui.*', 'states.*', 'controller.*','view.*']
+    targetClasses = ['com.Nunes.aqua_and_ignis.*']
+    targetTests = ['com.Nunes.aqua_and_ignis.*']
     junit5PluginVersion = '1.2.1'
     threads = 4
     outputFormats = ['HTML']
