@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 group = 'com.Nunes.aqua_and_iginis'
@@ -27,4 +28,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+pitest {
+    targetClasses = ['model.*', 'gui.*', 'states.*', 'controller.*', 'view.*']
+    targetTests = ['model.*', 'gui.*', 'states.*', 'controller.*','view.*']
+    junit5PluginVersion = '1.2.1'
+    threads = 4
+    outputFormats = ['HTML']
+    timestampedReports = false
 }
