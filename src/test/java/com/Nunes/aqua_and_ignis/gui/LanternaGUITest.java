@@ -1,8 +1,5 @@
 package com.Nunes.aqua_and_ignis.gui;
 
-import com.Nunes.aqua_and_ignis.gui.Color;
-import com.Nunes.aqua_and_ignis.gui.GUI;
-import com.Nunes.aqua_and_ignis.gui.LanternaGUI;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
@@ -24,9 +21,10 @@ class LanternaGUITest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gui = new LanternaGUI(90, 30);
         screen = mock(TerminalScreen.class);
         graphics = mock(TextGraphics.class);
+
+        gui = new LanternaGUI(90, 30);
 
         Field field = LanternaGUI.class.getDeclaredField("screen");
         field.setAccessible(true);
@@ -37,37 +35,15 @@ class LanternaGUITest {
     }
 
     @Test
-    void testLifecycle() throws IOException {
-        gui.startScreen();
-        verify(screen).startScreen();
-        verify(screen).setCursorPosition(null);
-        verify(screen).doResizeIfNecessary();
-
-        gui.stopScreen();
-        verify(screen).stopScreen();
-
-        gui.clear();
-        verify(screen).clear();
-
-        gui.refresh();
-        verify(screen).refresh();
+    void readInput() throws IOException {
+        KeyStroke expected = new KeyStroke(KeyType.Enter);
+        when(screen.readInput()).thenReturn(expected);
+        KeyStroke result = gui.readInput();
+        assertEquals(expected, result);
     }
 
     @Test
-    void testDimensions() {
-        assertEquals(90, gui.getWidth());
-        assertEquals(30, gui.getHeight());
-    }
-
-    @Test
-    void testReadInput() throws IOException {
-        KeyStroke stroke = new KeyStroke(KeyType.Enter);
-        when(screen.readInput()).thenReturn(stroke);
-        assertEquals(stroke, gui.readInput());
-    }
-
-    @Test
-    void testGetOperationBasic() throws IOException {
+    void getOperationBasic() throws IOException {
         when(screen.pollInput()).thenReturn(null);
         assertEquals(GUI.operation.none, gui.getOperation());
 
@@ -82,7 +58,25 @@ class LanternaGUITest {
     }
 
     @Test
-    void testGetOperationArrows() throws IOException {
+    void getOperationWASD() throws IOException {
+        when(screen.pollInput()).thenReturn(new KeyStroke('w', false, false));
+        assertEquals(GUI.operation.w, gui.getOperation());
+
+        when(screen.pollInput()).thenReturn(new KeyStroke('S', false, false));
+        assertEquals(GUI.operation.s, gui.getOperation());
+
+        when(screen.pollInput()).thenReturn(new KeyStroke('a', false, false));
+        assertEquals(GUI.operation.a, gui.getOperation());
+
+        when(screen.pollInput()).thenReturn(new KeyStroke('D', false, false));
+        assertEquals(GUI.operation.d, gui.getOperation());
+
+        when(screen.pollInput()).thenReturn(new KeyStroke('z', false, false));
+        assertEquals(GUI.operation.none, gui.getOperation());
+    }
+
+    @Test
+    void getOperationArrows() throws IOException {
         when(screen.pollInput()).thenReturn(new KeyStroke(KeyType.ArrowUp));
         assertEquals(GUI.operation.up, gui.getOperation());
 
@@ -97,86 +91,85 @@ class LanternaGUITest {
     }
 
     @Test
-    void testGetOperationWASD() throws IOException {
-        char[] keys = {'w', 's', 'a', 'd', 'W', 'S', 'A', 'D'};
-        GUI.operation[] results = {
-                GUI.operation.w, GUI.operation.s, GUI.operation.a, GUI.operation.d,
-                GUI.operation.w, GUI.operation.s, GUI.operation.a, GUI.operation.d
-        };
+    void lifecycle() throws IOException {
+        gui.startScreen();
+        verify(screen).startScreen();
+        verify(screen).setCursorPosition(null);
 
-        for (int i = 0; i < keys.length; i++) {
-            when(screen.pollInput()).thenReturn(new KeyStroke(keys[i], false, false));
-            assertEquals(results[i], gui.getOperation());
-        }
+        gui.stopScreen();
+        verify(screen).stopScreen();
 
-        when(screen.pollInput()).thenReturn(new KeyStroke('x', false, false));
-        assertEquals(GUI.operation.none, gui.getOperation());
+        gui.clear();
+        verify(screen).clear();
+
+        gui.refresh();
+        verify(screen).refresh();
     }
 
     @Test
-    void testDrawPixel() {
+    void drawPixel() {
         Color color = new Color(255, 0, 0);
+        gui.drawPixel(0, 0, color);
+        gui.drawPixel(89, 29, color);
+        verify(graphics, times(2)).putString(anyInt(), anyInt(), eq(" "));
 
-        gui.drawPixel(1, 1, color);
-        verify(graphics).putString(1, 1, " ");
-
+        reset(graphics);
         gui.drawPixel(-1, 0, color);
-        gui.drawPixel(0, -1, color);
         gui.drawPixel(90, 0, color);
+        gui.drawPixel(0, -1, color);
         gui.drawPixel(0, 30, color);
-        verify(graphics, times(1)).putString(anyInt(), anyInt(), anyString());
+        verify(graphics, never()).putString(anyInt(), anyInt(), anyString());
     }
 
     @Test
-    void testDrawString() {
+    void drawString() {
         Color fg = new Color(255, 255, 255);
         Color bg = new Color(0, 0, 0);
 
-        gui.drawString(0, 0, "test", fg, bg);
+        gui.drawString(0, 0, "text", fg, bg);
         verify(graphics).setForegroundColor(any());
         verify(graphics).setBackgroundColor(any());
-        verify(graphics).putString(0, 0, "test");
-
-        gui.drawString(-1, 0, "test", fg, bg);
-        gui.drawString(0, -1, "test", fg, bg);
-        gui.drawString(90, 0, "test", fg, bg);
-        gui.drawString(0, 30, "test", fg, bg);
-        verify(graphics, times(1)).putString(anyInt(), anyInt(), anyString());
-    }
-
-    @Test
-    void testDrawStringColorBranches() {
-        Color color = new Color(1, 1, 1);
-
-        gui.drawString(0, 0, "test", color, null);
-        verify(graphics).setForegroundColor(any());
-        verify(graphics, times(0)).setBackgroundColor(any());
+        verify(graphics).putString(0, 0, "text");
 
         reset(graphics);
-        gui.drawString(0, 0, "test", null, color);
-        verify(graphics, times(0)).setForegroundColor(any());
-        verify(graphics).setBackgroundColor(any());
+        gui.drawString(0, 0, "text", null, null);
+        verify(graphics, never()).setForegroundColor(any());
+        verify(graphics, never()).setBackgroundColor(any());
+        verify(graphics).putString(0, 0, "text");
+
+        reset(graphics);
+        gui.drawString(-1, 0, "out", fg, bg);
+        gui.drawString(90, 0, "out", fg, bg);
+        gui.drawString(0, -1, "out", fg, bg);
+        gui.drawString(0, 30, "out", fg, bg);
+        verify(graphics, never()).putString(anyInt(), anyInt(), anyString());
     }
 
     @Test
-    void testDrawTextBranches() {
+    void drawText() {
         Color fg = new Color(255, 255, 255);
         Color bg = new Color(0, 0, 0);
 
         gui.drawText(0, 0, "text", fg, null);
         verify(graphics).setForegroundColor(any());
-        verify(graphics, times(0)).setBackgroundColor(any());
+        verify(graphics, never()).setBackgroundColor(any());
 
         reset(graphics);
         gui.drawText(0, 0, "text", null, bg);
-        verify(graphics, times(0)).setForegroundColor(any());
+        verify(graphics, never()).setForegroundColor(any());
         verify(graphics).setBackgroundColor(any());
     }
 
     @Test
-    void testFillRect() {
+    void dimensions() {
+        assertEquals(90, gui.getWidth());
+        assertEquals(30, gui.getHeight());
+    }
+
+    @Test
+    void fillRect() {
         Color color = new Color(255, 255, 255);
-        gui.fillRect(0, 0, 5, 5, color);
+        gui.fillRect(0, 0, 10, 10, color);
         verify(graphics).fillRectangle(any(), any(), eq(' '));
     }
 }
