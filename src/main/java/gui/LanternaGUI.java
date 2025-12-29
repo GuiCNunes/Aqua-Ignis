@@ -153,7 +153,7 @@ public class LanternaGUI implements GUI {
 
 
     private AWTTerminalFontConfiguration loadSquareFontCfg1() {
-        Font font = new Font("Monospaced", Font.PLAIN, 16); // testa 10, 8, 6...
+        Font font = new Font("Monospaced", Font.PLAIN, 16);
         return AWTTerminalFontConfiguration.newInstance(font);
     }
 

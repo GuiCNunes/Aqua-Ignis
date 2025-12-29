@@ -1,11 +1,10 @@
 package states;
 
 import controller.Controller;
-import controller.menu.MenuController;
 import controller.menu.WinController;
 import model.menu.Menu;
 import view.View;
-import view.WinView;
+import view.menuView.WinView;
 
 public class WinState extends State<Menu>{
 

@@ -1,9 +1,8 @@
 package view.menuView;
 
-import com.googlecode.lanterna.TextColor;
 import gui.GUI;
 import model.menu.Menu;
-import view.Colors;
+import view.Theme.Colors;
 import view.View;
 
 

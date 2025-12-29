@@ -3,7 +3,7 @@ package view.menuView;
 import gui.Color;
 import gui.GUI;
 import model.menu.Menu;
-import view.Colors;
+import view.Theme.Colors;
 import view.View;
 
 public class MenuView extends View<Menu> {

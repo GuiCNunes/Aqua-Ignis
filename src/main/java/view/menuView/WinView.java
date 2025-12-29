@@ -1,10 +1,11 @@
-package view;
+package view.menuView;
 
-import com.googlecode.lanterna.TextColor;
 import gui.GUI;
 import model.menu.Menu;
+import view.Theme.Colors;
+import view.View;
 
-public class WinView extends View<Menu>{
+public class WinView extends View<Menu> {
     private final int stars;
     private final long time;
 

@@ -3,7 +3,7 @@ package states;
 import controller.Controller;
 import controller.MazeController;
 import model.Maze;
-import view.MazeView;
+import view.mazeView.MazeView;
 import view.View;
 
 public class GameState extends State<Maze> {

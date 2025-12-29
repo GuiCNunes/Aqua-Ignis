@@ -1,10 +1,11 @@
-package view;
+package view.menuView;
 
-import view.Colors;
+import view.Theme.Colors;
 import gui.GUI;
 import model.menu.Menu;
+import view.View;
 
-public class LoseView extends View<Menu>{
+public class LoseView extends View<Menu> {
     public LoseView(Menu menu) {
         super(menu);
     }

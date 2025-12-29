@@ -3,7 +3,7 @@ package view.entityView;
 import gui.GUI;
 import model.Position;
 import model.entity.Monster;
-import view.Colors;
+import view.Theme.Colors;
 
 import static view.Scale.SCALE;
 
