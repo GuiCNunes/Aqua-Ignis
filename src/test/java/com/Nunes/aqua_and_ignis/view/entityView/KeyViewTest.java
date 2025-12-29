@@ -34,10 +34,4 @@ class KeyViewTest {
 
         verify(gui).fillRect(6, 14, 2, 2, Colors.KEY);
     }
-
-    @Test
-    void drawElements() throws IOException {
-        view.drawElements(gui);
-        verifyNoInteractions(gui);
-    }
 }

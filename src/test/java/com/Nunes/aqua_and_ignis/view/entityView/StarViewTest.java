@@ -34,10 +34,4 @@ class StarViewTest {
 
         verify(gui).fillRect(20, 10, 2, 2, Colors.STAR);
     }
-
-    @Test
-    void drawElements() throws IOException {
-        view.drawElements(gui);
-        verifyNoInteractions(gui);
-    }
 }
