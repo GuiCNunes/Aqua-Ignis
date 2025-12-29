@@ -8,12 +8,7 @@ import com.Nunes.aqua_and_ignis.view.View;
 
 import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
 
-public class StarView extends View<Star> {
-    public StarView() {
-        super(null);
-    }
-    @Override
-    public void drawElements(GUI gui) {}
+public class StarView {
 
     public void draw(GUI gui, Star star) {
 
