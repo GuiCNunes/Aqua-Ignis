@@ -8,12 +8,12 @@ import com.Nunes.aqua_and_ignis.view.View;
 
 import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
 
-public class KeyView {
-
-    public void draw(GUI gui, Key key) {
+public class KeyView implements EntityView<Key> {
+    @Override
+    public void draw(Key key , GUI gui) {
 
         Position position = key.getPosition();
 
-        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, Colors.KEY);
+        gui.fillTile(position.getX(), position.getY(), Colors.KEY);
     }
 }

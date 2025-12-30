@@ -108,7 +108,7 @@ public class MazeWorldRenderer {
         for (Star star : maze.getStars()) {
             int x = star.getPosition().getX();
             int y = star.getPosition().getY();
-            if (visible[x][y]) starView.draw(gui, star);
+            if (visible[x][y]) starView.draw( star, gui);
         }
     }
 
@@ -118,7 +118,7 @@ public class MazeWorldRenderer {
 
         int x = key.getPosition().getX();
         int y = key.getPosition().getY();
-        if (visible[x][y]) keyView.draw(gui, key);
+        if (visible[x][y]) keyView.draw(key, gui);
     }
 
     private void drawMonsters(Maze maze, GUI gui, boolean[][] visible) {

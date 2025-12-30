@@ -25,6 +25,7 @@ public class Game {
         int w = 90 * Scale.SCALE + 2;
         int h = 30 * Scale.SCALE + 2;
         this.gui = new LanternaGUI(w, h);
+        this.gui.setScale(Scale.SCALE);
         this.gui.startScreen();
     }
 

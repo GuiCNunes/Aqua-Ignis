@@ -18,6 +18,7 @@ public class LanternaGUI implements GUI {
     private Screen screen;
     private int width;
     private int height;
+    private int scale = 1;
 
     public LanternaGUI(int width, int height) throws IOException {
         TerminalSize terminalSize = new TerminalSize(width, height);
@@ -148,6 +149,16 @@ public class LanternaGUI implements GUI {
         return AWTTerminalFontConfiguration.newInstance(font);
     }
 
+    @Override
+    public void setScale(int scale) {
+        if (scale < 1) scale = 1;
+        this.scale = scale;
+    }
+
+    @Override
+    public int getScale() {
+        return scale;
+    }
 
 }
 

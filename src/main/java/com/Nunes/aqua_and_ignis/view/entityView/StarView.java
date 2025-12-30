@@ -8,12 +8,12 @@ import com.Nunes.aqua_and_ignis.view.View;
 
 import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
 
-public class StarView {
-
-    public void draw(GUI gui, Star star) {
+public class StarView implements EntityView<Star> {
+    @Override
+    public void draw( Star star, GUI gui) {
 
         Position position = star.getPosition();
 
-        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, Colors.STAR);
+        gui.fillTile(position.getX(), position.getY(), Colors.STAR);
     }
 }

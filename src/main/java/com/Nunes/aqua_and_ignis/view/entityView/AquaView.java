@@ -7,10 +7,11 @@ import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 
 import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
 
-public class AquaView {
+public class AquaView implements EntityView<Player> {
+    @Override
     public void draw(Player player, GUI gui) {
         Position position = player.getPosition();
 
-        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, Colors.AQUA);
+        gui.fillTile(position.getX(), position.getY(),Colors.AQUA);
     }
 }

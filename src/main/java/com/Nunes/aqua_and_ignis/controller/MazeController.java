@@ -11,6 +11,8 @@ import com.Nunes.aqua_and_ignis.model.entity.*;
 import com.Nunes.aqua_and_ignis.states.LoseState;
 import com.Nunes.aqua_and_ignis.states.MenuState;
 import com.Nunes.aqua_and_ignis.states.WinState;
+import com.Nunes.aqua_and_ignis.model.entity.monsterfactory.MonsterFactory;
+import com.Nunes.aqua_and_ignis.model.entity.monsterfactory.RandomMonsterFactory;
 
 import com.Nunes.aqua_and_ignis.model.menu.Menu;
 import java.io.IOException;
@@ -21,6 +23,10 @@ public class MazeController extends GameController {
     private PlayerController playerController;
     private MonsterController monsterController;
     private MazeGenerator generator;
+
+    private final Random random = new Random();
+    private final MonsterFactory monsterFactory;
+
     private long lastSpawn = 0;
 
     public MazeController(Maze maze) {
@@ -29,6 +35,7 @@ public class MazeController extends GameController {
         this.monsterController = new MonsterController(maze);
         this.generator = new MazeGenerator();
         this.generator.generate(maze);
+        this.monsterFactory = new RandomMonsterFactory(random);
     }
 
     @Override
@@ -90,9 +97,7 @@ public class MazeController extends GameController {
         if (time - lastSpawn >= 10000 && getModel().getMonsters().size() < 15) {
             Position p = generator.getFreePosition(getModel());
 
-            if (new Random().nextBoolean()) getModel().addMonster(new Slime(p.getX(), p.getY()));
-
-            else getModel().addMonster(new Ghost(p.getX(), p.getY()));
+            getModel().addMonster(monsterFactory.create(p));
 
             lastSpawn = time;
         }
