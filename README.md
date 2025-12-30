@@ -149,11 +149,18 @@ This design makes it easier to add new monster types with new behaviors: we can 
 We believe we fix all the errors. No major code smells identified.
 
 ## Testing
+![image_alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Images/Screenshot%20from%202025-12-30%2022-43-51.png)
+![image_alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Images/Screenshot%20from%202025-12-30%2022-44-03.png)
 
 ## Screenshot of coverage report
+![image_alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/Images/Screenshot%20from%202025-12-30%2022-45-31.png)
 
 ## Link to mutation testing report
 
-##Self-evaluation
+## Self-evaluation
+During this project we believe that the work was not divided fully equallt, with:
+-Guilherme Nunes leading the project with 42%;
+-Carlos Costa with 33%;
+-João Barros with 25%;
 
 
