@@ -1,7 +1,5 @@
 package com.Nunes.aqua_and_ignis.model;
 
-import com.Nunes.aqua_and_ignis.model.Maze;
-import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -240,5 +238,35 @@ class MazeTest {
         Thread.sleep(10000);
         long time2 = maze.getTime();
         assertTrue(time2 >= time1);
+    }
+    @Test
+    void TestGridBoundaryAndMemory(){
+        int w = 10;
+        int h = 10;
+        Maze maze = new Maze(w,h);
+        assertFalse(maze.isMemorized(0,0));
+        maze.updateMemory(0,0);
+        assertTrue(maze.isMemorized(0,0));
+
+        assertFalse(maze.isMemorized(w-1,h-1));
+        maze.updateMemory(w-1,h-1);
+        assertTrue(maze.isMemorized(w-1,h-1));
+
+        maze.updateMemory(-1,0);
+        assertFalse(maze.isMemorized(-1,0));
+
+        maze.updateMemory(w,0);
+        assertFalse(maze.isMemorized(w,0));
+    }
+    @Test
+    void TestTimeMath(){
+        Maze maze = new Maze(20, 50);
+        assertEquals(0,maze.getTime());
+        try{
+            Thread.sleep(1500);
+        }catch(InterruptedException e){}
+        long time = maze.getTime();
+        assertTrue(time < 1000);
+        assertEquals(1, time);
     }
 }
