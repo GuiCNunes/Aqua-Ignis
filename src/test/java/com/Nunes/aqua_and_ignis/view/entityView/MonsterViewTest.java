@@ -43,7 +43,7 @@ class MonsterViewTest {
     }
 
     @Test
-    void drawGhost() {
+    void drawUnknownGhost() {
         Monster ghost = mock(Monster.class);
 
         monsterView.draw(ghost, gui);
