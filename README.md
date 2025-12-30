@@ -29,13 +29,13 @@ This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes 
 
 -**Random maze algorithm** 
 
--**Clock** - clock that counts the seconds of in game time.
+-**Clock** - Clock that counts the seconds of in game time.
 
 -**Stars** - 3 starts that the players can catch.
 
--**Key** - key that players catch to open a door to therefore win the game.
+-**Key** - Key that players catch to open a door to therefore win the game.
 
--**Scale**- feature that makes possible the players to choose 3 different sizes for the window.
+-**Scale**- Feature that makes possible the for the players to choose between 3 different sizes for the window.
 
 
 ## Planned Features
