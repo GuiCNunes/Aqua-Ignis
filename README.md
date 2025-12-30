@@ -9,25 +9,25 @@ This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes 
 
 ## Implemented Features
 
--**two players** - both players are implemented.
+-**Two players** - Both players are implemented.
 
 -**Buttons** - Functional and interactive buttons.
 
 -**Players Control** - Each player has the habilitie to move using the keyboard control.
 
--**Collisions detection** collisions between different objects are verified.(Ex.: both players, monsters walls)
+-**Collisions detection** - Collisions between different objects are verified.(Ex.: both players, monsters, walls)
 
--**Low-vision habilities**- each player only has the abilities to a certaint space around its position.
+-**Low-vision habilities** - Each player only has the abilities to a certain radius around its position.
 
--**Monsters** - monsters are implemented
+-**Monsters** - Monsters are implemented.
 
--**Connected Menus** - the user can browse throw different menus. (EX: Main Menu, Play and Help)
+-**Connected Menus** - The user can browse throw different menus. (EX: Main Menu, Play and Help)
 
--**Monsters** - monsters moving acording to clock.
+-**Monsters Movement** - Monsters moving using a time-based logic.
 
--**Path View** - the path of each player is remembered.
+-**Path View** - The path of each player is remembered.
 
--**Random labyrinth algorithm** 
+-**Random maze algorithm** 
 
 -**Clock** - clock that counts the seconds of in game time.
 
@@ -35,7 +35,7 @@ This project was developed by Carlos Costa (up202405390@up.pt), Guilherme Nunes 
 
 -**Key** - key that players catch to open a door to therefore win the game.
 
--**Scale**- feature that makes possible the players to choose 3 different resolutios for the window.
+-**Scale**- feature that makes possible the players to choose 3 different sizes for the window.
 
 
 ## Planned Features
@@ -128,7 +128,7 @@ We implemented the pattern in the abstract class View<T>. The method draw(GUI gu
 -**Consequences**-
 This approach reduces code duplication and guarantees that all screens are rendered using the same reliable process, improving maintainability and readability. It also makes it easier to add new screens, since new views only need to implement drawElements(gui) and automatically inherit the correct rendering workflow. The main drawback is reduced flexibility: if a specific screen needs a different rendering pipeline (for example multiple refreshes per frame or special transitions), the template may need to be extended or adjusted, otherwise subclasses are forced to follow the same structure.
 
-## Monsters Moovement
+## Monsters Movement
 
 -**Problem in context**
 During development we needed different behaviors for entities that are conceptually similar but act differently. In particular, different monster types should move according to their own rules (for example, ghosts can ignore walls while slimes cannot). If we implemented all movement logic inside a single method with many conditionals, the code would become harder to extend whenever new monster types were added.
