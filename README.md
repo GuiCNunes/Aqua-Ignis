@@ -92,6 +92,8 @@ We implemented this pattern through the abstract State class and multiple concre
 
 -**Consequences**
 This makes the codebase more modular and easier to extend, since adding a new screen/state usually only requires creating a new State class with its own view and controller, without modifying existing states. It also reduces complex conditionals and keeps state-specific logic isolated. The main downside is the increased number of classes and the need to keep transitions well organized, otherwise it can become harder to track how the game flows between states.
+(![image_alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/UML/img.png)
+
 
 ## GUI
 
@@ -113,6 +115,7 @@ This approach greatly reduces coupling between the game logic/views and the Lant
 In the Game class we also used the Game Loop pattern, which repeatedly reads the input, updates the state and redraws the game.
 Additionally, we apply a simple delegation pattern in the view layer, where generic views for players and monsters delegate the concrete rendering to specific views for each entity type.
 
+![image_alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/UML/img_2.png)
 
 ## Construction of interface
 
@@ -128,6 +131,9 @@ We implemented the pattern in the abstract class View<T>. The method draw(GUI gu
 -**Consequences**-
 This approach reduces code duplication and guarantees that all screens are rendered using the same reliable process, improving maintainability and readability. It also makes it easier to add new screens, since new views only need to implement drawElements(gui) and automatically inherit the correct rendering workflow. The main drawback is reduced flexibility: if a specific screen needs a different rendering pipeline (for example multiple refreshes per frame or special transitions), the template may need to be extended or adjusted, otherwise subclasses are forced to follow the same structure.
 
+![image_alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/UML/img_1.png)
+
+
 ## Monsters Movement
 
 -**Problem in context**
@@ -142,8 +148,8 @@ We implemented different movement strategies through dedicated controllers for e
 -**Consequences**-
 This design makes it easier to add new monster types with new behaviors: we can create a new controller/strategy for that monster and integrate it without rewriting existing movement logic. It also improves readability because each behavior is isolated in its own class. The downside is the increase in the number of classes and the extra indirection introduced by delegation. Additionally, using instanceof for dispatching is simple but can become less scalable as the number of monster types grows, requiring refactoring to a more flexible registration-based approach.
 
-## UML
-![image alt](https://github.com/FEUP-LDTS-2025/project-t01g09/blob/main/src/main/resources/UML/img.png?raw=true)
+
+
 
 ## Known-code smells
 We believe we fix all the errors. No major code smells identified.
