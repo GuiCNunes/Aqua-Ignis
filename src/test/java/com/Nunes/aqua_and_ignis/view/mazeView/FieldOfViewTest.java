@@ -103,4 +103,98 @@ class FieldOfViewTest {
         when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
         assertTrue(fov.isVisible(maze, start, 2, 1));
     }
+
+    @Test
+    void testComputeVisibleLoops() {
+        when(maze.getWidth()).thenReturn(2);
+        when(maze.getHeight()).thenReturn(2);
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        boolean[][] visible = fov.computeVisible(maze, new Position(0, 0));
+
+        assertTrue(visible[0][0]);
+        assertTrue(visible[1][0]);
+        assertTrue(visible[0][1]);
+        assertTrue(visible[1][1]);
+    }
+
+    @Test
+    void testIsVisibleRadiusBoundary() {
+        Position from = new Position(5, 5);
+        int r = 5;
+        FieldOfView fovR = new FieldOfView(r);
+
+        assertTrue(fovR.isVisible(maze, from, 5, 10));
+        assertFalse(fovR.isVisible(maze, from, 5, 11));
+    }
+
+    @Test
+    void testStepConditionBoundaries() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 6, 6));
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 4, 4));
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 5, 6));
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 5, 4));
+    }
+
+    @Test
+    void testFovLogic() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        assertTrue(fov.isVisible(maze, new Position(0, 0), 4, 2));
+        assertTrue(fov.isVisible(maze, new Position(0, 0), 2, 4));
+    }
+
+    @Test
+    void testWallDetection() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+        when(maze.isWall(1, 1)).thenReturn(true);
+
+        assertFalse(fov.isVisible(maze, new Position(0, 0), 2, 2));
+    }
+
+    @Test
+    void testStepXBoundary() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 5, 5));
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 6, 5));
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 4, 5));
+    }
+
+    @Test
+    void testStepYBoundary() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 5, 6));
+        assertTrue(fov.isVisible(maze, new Position(5, 5), 5, 4));
+    }
+
+    @Test
+    void testDifGreaterBoundary() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        int x0 = 0, y0 = 0;
+        int x = 1, y = 2;
+
+        assertTrue(fov.isVisible(maze, new Position(x0, y0), x, y));
+    }
+
+    @Test
+    void testDifLessBoundary() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+
+        int x0 = 0, y0 = 0;
+        int x = 2, y = 1;
+
+        assertTrue(fov.isVisible(maze, new Position(x0, y0), x, y));
+    }
+
+    @Test
+    void testExactDiagonal() {
+        when(maze.isWall(anyInt(), anyInt())).thenReturn(false);
+        assertTrue(fov.isVisible(maze, new Position(0, 0), 1, 1));
+    }
+
 }
