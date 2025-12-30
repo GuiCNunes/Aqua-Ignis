@@ -1,9 +1,11 @@
 package com.Nunes.aqua_and_ignis.controller;
 
-import com.Nunes.aqua_and_ignis.controller.MazeController;
+import com.Nunes.aqua_and_ignis.controller.entity.MonsterController;
+import com.Nunes.aqua_and_ignis.controller.entity.PlayerController;
 import com.Nunes.aqua_and_ignis.gui.GUI;
 import com.Nunes.aqua_and_ignis.model.Game;
 import com.Nunes.aqua_and_ignis.model.Maze;
+import com.Nunes.aqua_and_ignis.model.MazeGenerator;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +13,16 @@ import org.junit.jupiter.api.Test;
 import com.Nunes.aqua_and_ignis.states.LoseState;
 import com.Nunes.aqua_and_ignis.states.MenuState;
 import com.Nunes.aqua_and_ignis.states.WinState;
+import org.mockito.MockedConstruction;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class MazeControllerTest {
@@ -45,7 +52,7 @@ class MazeControllerTest {
     }
 
     @Test
-    void testCheckWinFullCoverage() throws IOException {
+    void testCheckWin() throws IOException {
         Position exit = new Position(10, 10);
         Position other = new Position(0, 0);
         when(maze.getExit()).thenReturn(exit);
@@ -74,7 +81,7 @@ class MazeControllerTest {
     }
 
     @Test
-    void testCheckLossFullCoverage() throws IOException {
+    void testCheckLoss() throws IOException {
         Position p1 = new Position(1, 1);
         Position p2 = new Position(2, 2);
         Monster m = mock(Monster.class);
@@ -146,5 +153,126 @@ class MazeControllerTest {
     void commandQuit() throws IOException {
         controller.command(game, GUI.operation.quit, 0);
         verify(game).setState(any(MenuState.class));
+    }
+
+    @Test
+    void testController() throws Exception {
+        PlayerController playerController = mock(PlayerController.class);
+        MonsterController monsterController = mock(MonsterController.class);
+
+        Field playerField = MazeController.class.getDeclaredField("playerController");
+        playerField.setAccessible(true);
+        playerField.set(controller, playerController);
+
+        Field monsterField = MazeController.class.getDeclaredField("monsterController");
+        monsterField.setAccessible(true);
+        monsterField.set(controller, monsterController);
+
+        controller.command(game, GUI.operation.up, 0);
+
+        verify(playerController).command(game, GUI.operation.up, 0);
+        verify(monsterController).command(game, GUI.operation.up, 0);
+    }
+
+    @Test
+    void testCheckItemsAqua() throws IOException {
+        Position position = new Position(1, 1);
+        when(aqua.getPosition()).thenReturn(position);
+        when(ignis.getPosition()).thenReturn(new Position(0, 0));
+
+        Star star = mock(Star.class);
+        when(star.getPosition()).thenReturn(position);
+        List<Star> stars = new ArrayList<>();
+        stars.add(star);
+        when(maze.getStars()).thenReturn(stars);
+
+        controller.command(game, GUI.operation.none, 0);
+
+        verify(maze).incrementStars();
+        assertTrue(stars.isEmpty());
+    }
+
+    @Test
+    void testKeyNullBranch() throws IOException {
+        when(maze.getKey()).thenReturn(null);
+        controller.command(game, GUI.operation.none, 0);
+        verify(maze, never()).setExitOpen(anyBoolean());
+    }
+
+    @Test
+    void testSpawnTimer() throws IOException {
+        controller.command(game, GUI.operation.none, 9999);
+        verify(maze, never()).addMonster(any());
+
+        controller.command(game, GUI.operation.none, 10000);
+        verify(maze, times(1)).addMonster(any());
+    }
+
+    @Test
+    void testConstructorGeneration() throws Exception {
+        Maze mazeMock = mock(Maze.class);
+        try (MockedConstruction<MazeGenerator> mocked = mockConstruction(MazeGenerator.class)) {
+            new MazeController(mazeMock);
+            verify(mocked.constructed().get(0)).generate(mazeMock);
+        }
+    }
+
+    @Test
+    void testNoStarCollision() throws IOException {
+        Position pIgnis = new Position(1, 1);
+        Position pStar = new Position(2, 2);
+        when(ignis.getPosition()).thenReturn(pIgnis);
+        when(aqua.getPosition()).thenReturn(new Position(0, 0));
+
+        Star star = mock(Star.class);
+        when(star.getPosition()).thenReturn(pStar);
+        when(maze.getStars()).thenReturn(new ArrayList<>(List.of(star)));
+
+        controller.command(game, GUI.operation.none, 0);
+        verify(maze, never()).incrementStars();
+    }
+
+    @Test
+    void testKeyCollision() throws IOException {
+        Position pIgnis = new Position(1, 1);
+        Position pKey = new Position(2, 2);
+        Key key = mock(Key.class);
+
+        when(ignis.getPosition()).thenReturn(pIgnis);
+        when(aqua.getPosition()).thenReturn(pIgnis);
+        when(key.getPosition()).thenReturn(pKey);
+        when(maze.getKey()).thenReturn(key);
+
+        controller.command(game, GUI.operation.none, 0);
+        verify(maze, never()).setExitOpen(true);
+    }
+
+    @Test
+    void testSpawnTimerAdditionNegation() throws IOException {
+        controller.command(game, GUI.operation.none, 10000);
+        verify(maze, times(1)).addMonster(any());
+
+        controller.command(game, GUI.operation.none, 11000);
+        verify(maze, times(1)).addMonster(any());
+    }
+
+    @Test
+    void testSpawnMonsterRandomNegation() throws IOException {
+        when(maze.getMonsters()).thenReturn(new ArrayList<>());
+
+        try (MockedConstruction<Random> mockedRandom = mockConstruction(Random.class, (mock, context) -> {
+            when(mock.nextBoolean()).thenReturn(true);
+        })) {
+            controller.command(game, GUI.operation.none, 10000);
+            verify(maze).addMonster(any(Slime.class));
+            verify(maze, never()).addMonster(any(Ghost.class));
+        }
+
+        try (MockedConstruction<Random> mockedRandom = mockConstruction(Random.class, (mock, context) -> {
+            when(mock.nextBoolean()).thenReturn(false);
+        })) {
+            controller.command(game, GUI.operation.none, 20001);
+            verify(maze).addMonster(any(Ghost.class));
+        }
     }
 }
