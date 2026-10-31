@@ -59,8 +59,8 @@ public class MazeWorldRenderer {
         drawKey(maze, gui, visible);
         drawMonsters(maze, gui, visible);
 
-        playerView.draw(maze.getAqua(), gui, litFloor(maze, aquaPos));
-        playerView.draw(maze.getIgnis(), gui, litFloor(maze, ignisPos));
+        playerView.draw(maze.getAqua(), gui, litFloor(maze, aquaPos), frame(maze));
+        playerView.draw(maze.getIgnis(), gui, litFloor(maze, ignisPos), frame(maze));
     }
 
     private boolean[][] orVisible(Maze maze, boolean[][] a, boolean[][] b) {
@@ -105,6 +105,10 @@ public class MazeWorldRenderer {
         } else {
             drawTile(gui, x, y, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR, shade);
         }
+    }
+
+    private int frame(Maze maze) {
+        return (int) (maze.getTime() % 2);
     }
 
     private Color lit(Maze maze, Color color, int x, int y) {
@@ -169,7 +173,7 @@ public class MazeWorldRenderer {
         for (Star star : maze.getStars()) {
             int x = star.getPosition().getX();
             int y = star.getPosition().getY();
-            if (visible[x][y]) starView.draw(gui, star, litFloor(maze, star.getPosition()));
+            if (visible[x][y]) starView.draw(gui, star, litFloor(maze, star.getPosition()), frame(maze));
         }
     }
 
@@ -186,7 +190,7 @@ public class MazeWorldRenderer {
         for (Monster m : maze.getMonsters()) {
             int x = m.getPosition().getX();
             int y = m.getPosition().getY();
-            if (visible[x][y]) monsterView.draw(m, gui, litFloor(maze, m.getPosition()));
+            if (visible[x][y]) monsterView.draw(m, gui, litFloor(maze, m.getPosition()), frame(maze));
         }
     }
 }

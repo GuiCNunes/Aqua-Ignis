@@ -11,9 +11,11 @@ import static com.Nunes.aqua_and_ignis.view.Layout.worldX;
 import static com.Nunes.aqua_and_ignis.view.Layout.worldY;
 
 public class GhostView {
-    public void draw(Monster monster, GUI gui, Color background) {
+    public void draw(Monster monster, GUI gui, Color background, int frame) {
         Position position = monster.getPosition();
 
-        gui.drawTile(worldX(position.getX()), worldY(position.getY()), Tile.GHOST, Colors.GHOST, background);
+        Tile tile = frame == 0 ? Tile.GHOST : Tile.GHOST_2;
+
+        gui.drawTile(worldX(position.getX()), worldY(position.getY()), tile, Colors.GHOST, background);
     }
 }

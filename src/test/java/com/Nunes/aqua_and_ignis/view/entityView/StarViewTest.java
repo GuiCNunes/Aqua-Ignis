@@ -29,8 +29,17 @@ class StarViewTest {
     void draw() {
         when(star.getPosition()).thenReturn(new Position(10, 5));
 
-        view.draw(gui, star, Colors.FLOOR);
+        view.draw(gui, star, Colors.FLOOR, 0);
 
         verify(gui).drawTile(11, 7, Tile.STAR, Colors.STAR, Colors.FLOOR);
+    }
+
+    @Test
+    void drawSecondFrame() {
+        when(star.getPosition()).thenReturn(new Position(10, 5));
+
+        view.draw(gui, star, Colors.FLOOR, 1);
+
+        verify(gui).drawTile(11, 7, Tile.STAR_2, Colors.STAR, Colors.FLOOR);
     }
 }

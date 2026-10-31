@@ -27,8 +27,17 @@ class AquaViewTest {
     void draw() {
         when(player.getPosition()).thenReturn(new Position(5, 10));
 
-        view.draw(player, gui, Colors.FLOOR);
+        view.draw(player, gui, Colors.FLOOR, 0);
 
         verify(gui).drawTile(6, 12, Tile.AQUA, Colors.AQUA, Colors.FLOOR);
+    }
+
+    @Test
+    void drawSecondFrame() {
+        when(player.getPosition()).thenReturn(new Position(5, 10));
+
+        view.draw(player, gui, Colors.FLOOR, 1);
+
+        verify(gui).drawTile(6, 12, Tile.AQUA_2, Colors.AQUA, Colors.FLOOR);
     }
 }

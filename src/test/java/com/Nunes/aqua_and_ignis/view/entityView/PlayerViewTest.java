@@ -39,29 +39,29 @@ class PlayerViewTest {
     void drawAqua() {
         Aqua aqua = mock(Aqua.class);
 
-        playerView.draw(aqua, gui, Colors.FLOOR);
+        playerView.draw(aqua, gui, Colors.FLOOR, 0);
 
-        verify(aquaView, times(1)).draw(aqua, gui, Colors.FLOOR);
-        verify(ignisView, never()).draw(any(), any(), any());
+        verify(aquaView, times(1)).draw(aqua, gui, Colors.FLOOR, 0);
+        verify(ignisView, never()).draw(any(), any(), any(), anyInt());
     }
 
     @Test
     void drawIgnis() {
         Ignis ignis = mock(Ignis.class);
 
-        playerView.draw(ignis, gui, Colors.FLOOR);
+        playerView.draw(ignis, gui, Colors.FLOOR, 0);
 
-        verify(ignisView, times(1)).draw(ignis, gui, Colors.FLOOR);
-        verify(aquaView, never()).draw(any(), any(), any());
+        verify(ignisView, times(1)).draw(ignis, gui, Colors.FLOOR, 0);
+        verify(aquaView, never()).draw(any(), any(), any(), anyInt());
     }
 
     @Test
     void drawUnknownPlayer() {
         Player player = mock(Player.class);
 
-        playerView.draw(player, gui, Colors.FLOOR);
+        playerView.draw(player, gui, Colors.FLOOR, 0);
 
-        verify(aquaView, never()).draw(any(), any(), any());
-        verify(ignisView, never()).draw(any(), any(), any());
+        verify(aquaView, never()).draw(any(), any(), any(), anyInt());
+        verify(ignisView, never()).draw(any(), any(), any(), anyInt());
     }
 }

@@ -11,9 +11,11 @@ import static com.Nunes.aqua_and_ignis.view.Layout.worldX;
 import static com.Nunes.aqua_and_ignis.view.Layout.worldY;
 
 public class StarView {
-    public void draw(GUI gui, Star star, Color background) {
+    public void draw(GUI gui, Star star, Color background, int frame) {
         Position position = star.getPosition();
 
-        gui.drawTile(worldX(position.getX()), worldY(position.getY()), Tile.STAR, Colors.STAR, background);
+        Tile tile = frame == 0 ? Tile.STAR : Tile.STAR_2;
+
+        gui.drawTile(worldX(position.getX()), worldY(position.getY()), tile, Colors.STAR, background);
     }
 }

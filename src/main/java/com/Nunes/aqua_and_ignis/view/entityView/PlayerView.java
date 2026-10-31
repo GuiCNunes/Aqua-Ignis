@@ -10,12 +10,12 @@ public class PlayerView {
     private IgnisView ignisView = new IgnisView();
     private AquaView aquaView = new AquaView();
 
-    public void draw(Player player, GUI gui, Color background) {
+    public void draw(Player player, GUI gui, Color background, int frame) {
         if (player instanceof Aqua) {
-            aquaView.draw(player, gui, background);
+            aquaView.draw(player, gui, background, frame);
         }
         else if (player instanceof Ignis) {
-            ignisView.draw(player, gui, background);
+            ignisView.draw(player, gui, background, frame);
         }
     }
 }

@@ -160,9 +160,9 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(starView).draw(gui, s, lit(Colors.FLOOR, 0, 0));
+        verify(starView).draw(gui, s, lit(Colors.FLOOR, 0, 0), 0);
         verify(keyView).draw(gui, k, lit(Colors.FLOOR, 0, 0));
-        verify(monsterView).draw(m, gui, lit(Colors.FLOOR, 0, 0));
+        verify(monsterView).draw(m, gui, lit(Colors.FLOOR, 0, 0), 0);
     }
 
     @Test
@@ -186,9 +186,9 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(starView, never()).draw(any(), any(), any());
+        verify(starView, never()).draw(any(), any(), any(), anyInt());
         verify(keyView, never()).draw(any(), any(), any());
-        verify(monsterView, never()).draw(any(), any(), any());
+        verify(monsterView, never()).draw(any(), any(), any(), anyInt());
     }
 
     @Test
@@ -222,11 +222,26 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(playerView).draw(aqua, gui, lit(Colors.FLOOR, 0, 0));
-        verify(playerView).draw(ignis, gui, lit(Colors.FLOOR, 1, 1));
+        verify(playerView).draw(aqua, gui, lit(Colors.FLOOR, 0, 0), 0);
+        verify(playerView).draw(ignis, gui, lit(Colors.FLOOR, 1, 1), 0);
     }
 
     private Color lit(Color color, int x, int y) {
         return lighting.light(color, x, y, new Position(0, 0), new Position(1, 1));
+    }
+
+    @Test
+    void entitiesUseTheSecondFrameOnOddSeconds() {
+        boolean[][] vis = {{true, false}, {false, false}};
+        when(fov.computeVisible(any(), any())).thenReturn(vis);
+        when(maze.getTime()).thenReturn(7L);
+        Monster m = mock(Monster.class);
+        when(m.getPosition()).thenReturn(new Position(0, 0));
+        when(maze.getMonsters()).thenReturn(List.of(m));
+
+        renderer.render(maze, gui);
+
+        verify(monsterView).draw(m, gui, lit(Colors.FLOOR, 0, 0), 1);
+        verify(playerView).draw(aqua, gui, lit(Colors.FLOOR, 0, 0), 1);
     }
 }

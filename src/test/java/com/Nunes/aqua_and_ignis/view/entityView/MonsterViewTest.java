@@ -37,19 +37,19 @@ class MonsterViewTest {
     void drawSlime() {
         Slime slime = mock(Slime.class);
 
-        monsterView.draw(slime, gui, Colors.FLOOR);
+        monsterView.draw(slime, gui, Colors.FLOOR, 0);
 
-        verify(slimeView, times(1)).draw(slime, gui, Colors.FLOOR);
-        verify(ghostView, never()).draw(any(), any(), any());
+        verify(slimeView, times(1)).draw(slime, gui, Colors.FLOOR, 0);
+        verify(ghostView, never()).draw(any(), any(), any(), anyInt());
     }
 
     @Test
     void drawUnknownGhost() {
         Monster ghost = mock(Monster.class);
 
-        monsterView.draw(ghost, gui, Colors.FLOOR);
+        monsterView.draw(ghost, gui, Colors.FLOOR, 0);
 
-        verify(ghostView, times(1)).draw(ghost, gui, Colors.FLOOR);
-        verify(slimeView, never()).draw(any(), any(), any());
+        verify(ghostView, times(1)).draw(ghost, gui, Colors.FLOOR, 0);
+        verify(slimeView, never()).draw(any(), any(), any(), anyInt());
     }
 }

@@ -11,9 +11,11 @@ import static com.Nunes.aqua_and_ignis.view.Layout.worldX;
 import static com.Nunes.aqua_and_ignis.view.Layout.worldY;
 
 public class AquaView {
-    public void draw(Player player, GUI gui, Color background) {
+    public void draw(Player player, GUI gui, Color background, int frame) {
         Position position = player.getPosition();
 
-        gui.drawTile(worldX(position.getX()), worldY(position.getY()), Tile.AQUA, Colors.AQUA, background);
+        Tile tile = frame == 0 ? Tile.AQUA : Tile.AQUA_2;
+
+        gui.drawTile(worldX(position.getX()), worldY(position.getY()), tile, Colors.AQUA, background);
     }
 }

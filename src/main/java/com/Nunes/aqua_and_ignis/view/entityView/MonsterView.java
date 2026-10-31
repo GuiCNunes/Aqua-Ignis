@@ -9,11 +9,11 @@ public class MonsterView {
     private SlimeView slimeView = new SlimeView();
     private GhostView ghostView = new GhostView();
 
-    public void draw(Monster monster, GUI gui, Color background) {
+    public void draw(Monster monster, GUI gui, Color background, int frame) {
         if (monster instanceof Slime) {
-            slimeView.draw(monster, gui, background);
+            slimeView.draw(monster, gui, background, frame);
         } else {
-            ghostView.draw(monster, gui, background);
+            ghostView.draw(monster, gui, background, frame);
         }
     }
 }

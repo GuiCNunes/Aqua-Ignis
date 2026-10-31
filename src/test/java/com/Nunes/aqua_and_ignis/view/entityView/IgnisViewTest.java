@@ -27,8 +27,17 @@ class IgnisViewTest {
     void draw() {
         when(player.getPosition()).thenReturn(new Position(2, 4));
 
-        view.draw(player, gui, Colors.FLOOR);
+        view.draw(player, gui, Colors.FLOOR, 0);
 
         verify(gui).drawTile(3, 6, Tile.IGNIS, Colors.IGNIS, Colors.FLOOR);
+    }
+
+    @Test
+    void drawSecondFrame() {
+        when(player.getPosition()).thenReturn(new Position(2, 4));
+
+        view.draw(player, gui, Colors.FLOOR, 1);
+
+        verify(gui).drawTile(3, 6, Tile.IGNIS_2, Colors.IGNIS, Colors.FLOOR);
     }
 }

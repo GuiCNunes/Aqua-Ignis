@@ -20,8 +20,19 @@ class SlimeViewTest {
         Position position = new Position(5, 8);
         when(monster.getPosition()).thenReturn(position);
 
-        slimeView.draw(monster, gui, Colors.FLOOR);
+        slimeView.draw(monster, gui, Colors.FLOOR, 0);
 
         verify(gui, times(1)).drawTile(6, 10, Tile.SLIME, Colors.SLIME, Colors.FLOOR);
+    }
+
+    @Test
+    void drawSecondFrame() {
+        GUI gui = mock(GUI.class);
+        Monster monster = mock(Monster.class);
+        when(monster.getPosition()).thenReturn(new Position(5, 8));
+
+        new SlimeView().draw(monster, gui, Colors.FLOOR, 1);
+
+        verify(gui).drawTile(6, 10, Tile.SLIME_2, Colors.SLIME, Colors.FLOOR);
     }
 }
