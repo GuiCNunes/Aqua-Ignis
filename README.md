@@ -41,5 +41,3 @@ To change a sprite, edit `sprites.txt` and run:
 ```
 ./gradlew buildFont
 ```
-
-Then commit the new `.ttf`.
