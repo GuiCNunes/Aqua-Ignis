@@ -165,16 +165,16 @@ class LanternaGUITest {
         Color fg = new Color(255, 255, 255);
         Color bg = new Color(0, 0, 0);
 
-        gui.drawTile(3, 4, Tile.WALL, fg, bg);
+        gui.drawTile(3, 4, Tile.WALL_0, fg, bg);
         verify(graphics).setForegroundColor(any());
         verify(graphics).setBackgroundColor(any());
-        verify(graphics).putString(3, 4, String.valueOf(Tile.WALL.glyph()));
+        verify(graphics).putString(3, 4, String.valueOf(Tile.WALL_0.glyph()));
 
         reset(graphics);
-        gui.drawTile(-1, 0, Tile.WALL, fg, bg);
-        gui.drawTile(90, 0, Tile.WALL, fg, bg);
-        gui.drawTile(0, -1, Tile.WALL, fg, bg);
-        gui.drawTile(0, 30, Tile.WALL, fg, bg);
+        gui.drawTile(-1, 0, Tile.WALL_0, fg, bg);
+        gui.drawTile(90, 0, Tile.WALL_0, fg, bg);
+        gui.drawTile(0, -1, Tile.WALL_0, fg, bg);
+        gui.drawTile(0, 30, Tile.WALL_0, fg, bg);
         verify(graphics, never()).putString(anyInt(), anyInt(), anyString());
     }
 

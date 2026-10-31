@@ -69,10 +69,23 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).drawTile(1, 2, Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
+        verify(gui).drawTile(1, 2, Tile.WALL_9, Colors.WALL_BRICK, Colors.WALL);
         verify(gui).drawTile(2, 3, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
         verify(maze).updateMemory(0, 0);
         verify(maze).updateMemory(1, 1);
+    }
+
+    @Test
+    void wallSpriteFollowsNeighbouringWalls() {
+        boolean[][] vis = {{true, false}, {false, false}};
+        when(fov.computeVisible(any(), any())).thenReturn(vis);
+        when(maze.isWall(0, 0)).thenReturn(true);
+        when(maze.isWall(1, 0)).thenReturn(true);
+        when(maze.isWall(0, 1)).thenReturn(false);
+
+        renderer.render(maze, gui);
+
+        verify(gui).drawTile(1, 2, Tile.WALL_11, Colors.WALL_BRICK, Colors.WALL);
     }
 
     @Test

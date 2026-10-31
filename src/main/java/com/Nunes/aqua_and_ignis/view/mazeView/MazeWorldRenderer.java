@@ -84,12 +84,26 @@ public class MazeWorldRenderer {
                 if (exit != null && x == exit.getX() && y == exit.getY() && maze.isExitOpen()) {
                     gui.fillRect(worldX(x), worldY(y), 1, 1, Colors.WHITE);
                 } else if (maze.isWall(x, y)) {
-                    gui.drawTile(worldX(x), worldY(y), Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
+                    gui.drawTile(worldX(x), worldY(y), wallTile(maze, x, y), Colors.WALL_BRICK, Colors.WALL);
                 } else {
                     gui.drawTile(worldX(x), worldY(y), Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
                 }
             }
         }
+    }
+
+    private Tile wallTile(Maze maze, int x, int y) {
+        int neighbours = 0;
+        if (isWallOrOutside(maze, x, y - 1)) neighbours += 1;
+        if (isWallOrOutside(maze, x + 1, y)) neighbours += 2;
+        if (isWallOrOutside(maze, x, y + 1)) neighbours += 4;
+        if (isWallOrOutside(maze, x - 1, y)) neighbours += 8;
+        return Tile.wall(neighbours);
+    }
+
+    private boolean isWallOrOutside(Maze maze, int x, int y) {
+        if (x < 0 || y < 0 || x >= maze.getWidth() || y >= maze.getHeight()) return true;
+        return maze.isWall(x, y);
     }
 
     private void drawMemory(Maze maze, GUI gui, boolean[][] visible) {
