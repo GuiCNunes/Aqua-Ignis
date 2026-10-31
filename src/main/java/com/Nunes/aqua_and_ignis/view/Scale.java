@@ -8,7 +8,7 @@ public final class Scale {
     public static int fontSize() {
         return switch (SCALE) {
             case 1 -> 12;
-            case 3 -> 24;
+            case 3 -> 20;
             default -> 16;
         };
     }

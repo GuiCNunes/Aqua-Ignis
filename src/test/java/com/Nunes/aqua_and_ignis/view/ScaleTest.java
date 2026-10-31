@@ -21,7 +21,7 @@ class ScaleTest {
         Scale.SCALE = 2;
         assertEquals(16, Scale.fontSize());
         Scale.SCALE = 3;
-        assertEquals(24, Scale.fontSize());
+        assertEquals(20, Scale.fontSize());
     }
 
     @Test

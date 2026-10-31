@@ -8,7 +8,7 @@ class TileFontConfigurationTest {
 
     @Test
     void cellsAreSquare() {
-        for (int size : new int[]{12, 16, 24}) {
+        for (int size : new int[]{12, 16, 20}) {
             TileFontConfiguration configuration = new TileFontConfiguration(size);
 
             assertEquals(size, configuration.getFontWidth());
