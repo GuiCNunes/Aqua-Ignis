@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.menuView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.menu.Menu;
 import com.Nunes.aqua_and_ignis.view.menuView.LoseView;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,5 +37,15 @@ class LoseViewTest {
         view.draw(gui);
 
         verify(gui).drawText(10, 13, "Press enter to go back to main menu", Colors.YELLOW, Colors.BG_UI);
+    }
+
+    @Test
+    void testDrawBorder() throws IOException {
+        when(gui.getWidth()).thenReturn(92);
+        when(gui.getHeight()).thenReturn(32);
+
+        view.draw(gui);
+
+        verify(gui).drawTile(91, 31, Tile.WALL_9, Colors.WALL_BRICK, Colors.WALL);
     }
 }

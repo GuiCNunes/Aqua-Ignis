@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.menuView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.menu.Menu;
 import com.Nunes.aqua_and_ignis.view.menuView.MenuView;
 import org.junit.jupiter.api.BeforeEach;
@@ -74,5 +75,23 @@ class MenuViewTest {
         view.draw(gui);
 
         verify(gui, never()).drawString(eq(5), eq(7), anyString(), any(), any());
+    }
+
+    @Test
+    void testDrawSprites() throws IOException {
+        view.draw(gui);
+
+        verify(gui).drawTile(3, 5, Tile.AQUA, Colors.AQUA, Colors.BLACK);
+        verify(gui).drawTile(18, 5, Tile.IGNIS, Colors.IGNIS, Colors.BLACK);
+    }
+
+    @Test
+    void testDrawBorder() throws IOException {
+        when(gui.getWidth()).thenReturn(92);
+        when(gui.getHeight()).thenReturn(32);
+
+        view.draw(gui);
+
+        verify(gui).drawTile(0, 0, Tile.WALL_6, Colors.WALL_BRICK, Colors.WALL);
     }
 }

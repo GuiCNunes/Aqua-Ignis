@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.menuView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.menu.Menu;
 import com.Nunes.aqua_and_ignis.view.menuView.WinView;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,5 +45,15 @@ class WinViewTest {
         view.draw(gui);
 
         verify(gui).drawText(10, 16, "Press enter to return to main menu", Colors.YELLOW, Colors.BG_UI);
+    }
+
+    @Test
+    void testDrawBorder() throws IOException {
+        when(gui.getWidth()).thenReturn(92);
+        when(gui.getHeight()).thenReturn(32);
+
+        view.draw(gui);
+
+        verify(gui).drawTile(91, 0, Tile.WALL_12, Colors.WALL_BRICK, Colors.WALL);
     }
 }
