@@ -20,10 +20,10 @@ public class WinView extends View<Menu> {
                 Colors.GREEN, Colors.BG_UI);
         gui.drawText(10,12, "YOU ESCAPED THE MAZE",
                 Colors.WHITE, Colors.BG_UI);
-        gui.drawText(10,14, "Press enter to return to main menu",
+        gui.drawText(10, 13, "Stars Collected: " + stars + "/3", Colors.YELLOW, Colors.BG_UI);
+        gui.drawText(10, 14, "Total Time: " + time + "s", Colors.WHITE, Colors.BG_UI);
+        gui.drawText(10,16, "Press enter to return to main menu",
                 Colors.YELLOW, Colors.BG_UI);
-        gui.drawText(10, 12, "Stars Collected: " + stars + "/3", Colors.YELLOW, Colors.BG_UI);
-        gui.drawText(10, 13, "Total Time: " + time + "s", Colors.WHITE, Colors.BG_UI);
 
     }
 }

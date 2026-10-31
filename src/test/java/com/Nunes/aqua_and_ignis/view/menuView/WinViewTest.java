@@ -35,14 +35,14 @@ class WinViewTest {
     void testDrawStats() throws IOException {
         view.draw(gui);
 
-        verify(gui).drawText(10, 12, "Stars Collected: 3/3", Colors.YELLOW, Colors.BG_UI);
-        verify(gui).drawText(10, 13, "Total Time: 120s", Colors.WHITE, Colors.BG_UI);
+        verify(gui).drawText(10, 13, "Stars Collected: 3/3", Colors.YELLOW, Colors.BG_UI);
+        verify(gui).drawText(10, 14, "Total Time: 120s", Colors.WHITE, Colors.BG_UI);
     }
 
     @Test
     void testDrawFooter() throws IOException {
         view.draw(gui);
 
-        verify(gui).drawText(10, 14, "Press enter to return to main menu", Colors.YELLOW, Colors.BG_UI);
+        verify(gui).drawText(10, 16, "Press enter to return to main menu", Colors.YELLOW, Colors.BG_UI);
     }
 }
