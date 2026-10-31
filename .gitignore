@@ -48,3 +48,6 @@ bin/
 out/
 build/
 *.iml
+
+# For dev branch only
+.claude/
