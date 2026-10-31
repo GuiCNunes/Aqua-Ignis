@@ -38,6 +38,28 @@ class ColorTest {
     }
 
     @Test
+    void scaledDarkensEveryChannel() {
+        assertEquals(new Color(50, 100, 125), new Color(100, 200, 250).scaled(0.5));
+    }
+
+    @Test
+    void scaledByOneKeepsTheColor() {
+        Color color = new Color(12, 34, 56);
+        assertEquals(color, color.scaled(1.0));
+    }
+
+    @Test
+    void scaledRoundsToTheNearestValue() {
+        assertEquals(new Color(1, 2, 3), new Color(3, 5, 7).scaled(0.4));
+    }
+
+    @Test
+    void scaledStaysInsideZeroAndTwoFiftyFive() {
+        assertEquals(new Color(255, 255, 255), new Color(200, 255, 100).scaled(10));
+        assertEquals(new Color(0, 0, 0), new Color(200, 255, 100).scaled(-1));
+    }
+
+    @Test
     void equality() {
         Color c1 = new Color(100, 100, 100);
         Color c2 = new Color(100, 100, 100);

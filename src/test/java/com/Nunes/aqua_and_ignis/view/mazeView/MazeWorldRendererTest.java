@@ -112,8 +112,29 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui, never()).fillRect(1, 2, 1, 1, Colors.SHADOW);
-        verify(gui).fillRect(2, 3, 1, 1, Colors.SHADOW);
+        verify(gui, never()).drawTile(eq(1), eq(2), any(), eq(Colors.FLOOR_DETAIL.scaled(0.4)), eq(Colors.FLOOR.scaled(0.4)));
+        verify(gui).drawTile(2, 3, Tile.FLOOR, Colors.FLOOR_DETAIL.scaled(0.4), Colors.FLOOR.scaled(0.4));
+    }
+
+    @Test
+    void drawMemoryShowsWallsNextToExploredFloor() {
+        when(fov.computeVisible(any(), any())).thenReturn(new boolean[2][2]);
+        when(maze.isWall(1, 0)).thenReturn(true);
+        when(maze.isMemorized(1, 1)).thenReturn(true);
+
+        renderer.render(maze, gui);
+
+        verify(gui).drawTile(2, 2, Tile.WALL_3, Colors.WALL_BRICK.scaled(0.4), Colors.WALL.scaled(0.4));
+    }
+
+    @Test
+    void drawMemorySkipsWallsFarFromExploredFloor() {
+        when(fov.computeVisible(any(), any())).thenReturn(new boolean[2][2]);
+        when(maze.isWall(1, 0)).thenReturn(true);
+
+        renderer.render(maze, gui);
+
+        verify(gui, never()).drawTile(anyInt(), anyInt(), any(), any(), any());
     }
 
     @Test
