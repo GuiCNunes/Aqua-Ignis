@@ -1,5 +1,6 @@
 package com.Nunes.aqua_and_ignis.view.mazeView;
 
+import com.Nunes.aqua_and_ignis.gui.Color;
 import com.Nunes.aqua_and_ignis.gui.GUI;
 import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.Maze;
@@ -30,6 +31,7 @@ class MazeWorldRendererTest {
     private StarView starView;
     private KeyView keyView;
     private MonsterView monsterView;
+    private Lighting lighting;
 
     @BeforeEach
     void setUp() {
@@ -50,7 +52,8 @@ class MazeWorldRendererTest {
         when(aqua.getPosition()).thenReturn(new Position(0, 0));
         when(ignis.getPosition()).thenReturn(new Position(1, 1));
 
-        renderer = new MazeWorldRenderer(fov, playerView, monsterView, starView, keyView);
+        lighting = new Lighting(20);
+        renderer = new MazeWorldRenderer(fov, playerView, monsterView, starView, keyView, lighting);
     }
 
     @Test
@@ -69,8 +72,8 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).drawTile(1, 2, Tile.WALL_9, Colors.WALL_BRICK, Colors.WALL);
-        verify(gui).drawTile(2, 3, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
+        verify(gui).drawTile(1, 2, Tile.WALL_9, lit(Colors.WALL_BRICK, 0, 0), lit(Colors.WALL, 0, 0));
+        verify(gui).drawTile(2, 3, Tile.FLOOR, lit(Colors.FLOOR_DETAIL, 1, 1), lit(Colors.FLOOR, 1, 1));
         verify(maze).updateMemory(0, 0);
         verify(maze).updateMemory(1, 1);
     }
@@ -85,7 +88,7 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).drawTile(1, 2, Tile.WALL_11, Colors.WALL_BRICK, Colors.WALL);
+        verify(gui).drawTile(1, 2, Tile.WALL_11, lit(Colors.WALL_BRICK, 0, 0), lit(Colors.WALL, 0, 0));
     }
 
     @Test
@@ -97,7 +100,7 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).drawTile(2, 2, Tile.DOOR_OPEN, Colors.DOOR_OPEN, Colors.BLACK);
+        verify(gui).drawTile(2, 2, Tile.DOOR_OPEN, lit(Colors.DOOR_OPEN, 1, 0), lit(Colors.BLACK, 1, 0));
     }
 
     @Test
@@ -157,9 +160,9 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(starView).draw(gui, s, Colors.FLOOR);
-        verify(keyView).draw(gui, k, Colors.FLOOR);
-        verify(monsterView).draw(m, gui, Colors.FLOOR);
+        verify(starView).draw(gui, s, lit(Colors.FLOOR, 0, 0));
+        verify(keyView).draw(gui, k, lit(Colors.FLOOR, 0, 0));
+        verify(monsterView).draw(m, gui, lit(Colors.FLOOR, 0, 0));
     }
 
     @Test
@@ -209,7 +212,21 @@ class MazeWorldRendererTest {
         when(maze.isWall(0, 0)).thenReturn(false);
 
         renderer.render(maze, gui);
-        verify(gui).drawTile(1, 2, Tile.DOOR_CLOSED, Colors.DOOR_CLOSED, Colors.WALL);
-        verify(gui).drawTile(2, 2, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
+        verify(gui).drawTile(1, 2, Tile.DOOR_CLOSED, lit(Colors.DOOR_CLOSED, 0, 0), lit(Colors.WALL, 0, 0));
+        verify(gui).drawTile(2, 2, Tile.FLOOR, lit(Colors.FLOOR_DETAIL, 1, 0), lit(Colors.FLOOR, 1, 0));
+    }
+
+    @Test
+    void playersAreDrawnOnLitFloor() {
+        when(fov.computeVisible(any(), any())).thenReturn(new boolean[2][2]);
+
+        renderer.render(maze, gui);
+
+        verify(playerView).draw(aqua, gui, lit(Colors.FLOOR, 0, 0));
+        verify(playerView).draw(ignis, gui, lit(Colors.FLOOR, 1, 1));
+    }
+
+    private Color lit(Color color, int x, int y) {
+        return lighting.light(color, x, y, new Position(0, 0), new Position(1, 1));
     }
 }

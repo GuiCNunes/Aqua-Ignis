@@ -16,14 +16,16 @@ public class MazeView extends View<Maze> {
     public MazeView(Maze maze) {
         super(maze);
 
-        FieldOfView fov = new FieldOfView(20);
+        int visionRadius = 20;
+        FieldOfView fov = new FieldOfView(visionRadius);
 
         this.worldRenderer = new MazeWorldRenderer(
                 fov,
                 new PlayerView(),
                 new MonsterView(),
                 new StarView(),
-                new KeyView()
+                new KeyView(),
+                new Lighting(visionRadius)
         );
 
         this.hudRenderer = new HudRenderer();

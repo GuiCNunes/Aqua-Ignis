@@ -43,6 +43,16 @@ class ColorTest {
     }
 
     @Test
+    void mixedMovesTowardsTheOtherColor() {
+        Color color = new Color(0, 100, 200);
+        Color other = new Color(100, 200, 0);
+
+        assertEquals(color, color.mixed(other, 0));
+        assertEquals(other, color.mixed(other, 1));
+        assertEquals(new Color(25, 125, 150), color.mixed(other, 0.25));
+    }
+
+    @Test
     void scaledByOneKeepsTheColor() {
         Color color = new Color(12, 34, 56);
         assertEquals(color, color.scaled(1.0));

@@ -11,6 +11,14 @@ public record Color(int r, int g, int b) {
         return new Color(scale(r, factor), scale(g, factor), scale(b, factor));
     }
 
+    public Color mixed(Color other, double amount) {
+        return new Color(mix(r, other.r, amount), mix(g, other.g, amount), mix(b, other.b, amount));
+    }
+
+    private static int mix(int from, int to, double amount) {
+        return (int) Math.round(from + (to - from) * amount);
+    }
+
     private static int scale(int channel, double factor) {
         return (int) Math.max(0, Math.min(255, Math.round(channel * factor)));
     }

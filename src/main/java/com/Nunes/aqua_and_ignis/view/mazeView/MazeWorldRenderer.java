@@ -14,14 +14,18 @@ import com.Nunes.aqua_and_ignis.view.entityView.MonsterView;
 import com.Nunes.aqua_and_ignis.view.entityView.PlayerView;
 import com.Nunes.aqua_and_ignis.view.entityView.StarView;
 
+import java.util.function.UnaryOperator;
+
 import static com.Nunes.aqua_and_ignis.view.Layout.worldX;
 import static com.Nunes.aqua_and_ignis.view.Layout.worldY;
 
 public class MazeWorldRenderer {
 
     private static final double MEMORY_BRIGHTNESS = 0.4;
+    private static final UnaryOperator<Color> MEMORY_SHADE = color -> color.scaled(MEMORY_BRIGHTNESS);
 
     private final FieldOfView fov;
+    private final Lighting lighting;
 
     private final PlayerView playerView;
     private final MonsterView monsterView;
@@ -29,8 +33,9 @@ public class MazeWorldRenderer {
     private final KeyView keyView;
 
     public MazeWorldRenderer(FieldOfView fov, PlayerView playerView, MonsterView monsterView,
-                             StarView starView, KeyView keyView) {
+                             StarView starView, KeyView keyView, Lighting lighting) {
         this.fov = fov;
+        this.lighting = lighting;
         this.playerView = playerView;
         this.monsterView = monsterView;
         this.starView = starView;
@@ -54,8 +59,8 @@ public class MazeWorldRenderer {
         drawKey(maze, gui, visible);
         drawMonsters(maze, gui, visible);
 
-        playerView.draw(maze.getAqua(), gui, Colors.FLOOR);
-        playerView.draw(maze.getIgnis(), gui, Colors.FLOOR);
+        playerView.draw(maze.getAqua(), gui, litFloor(maze, aquaPos));
+        playerView.draw(maze.getIgnis(), gui, litFloor(maze, ignisPos));
     }
 
     private boolean[][] orVisible(Maze maze, boolean[][] a, boolean[][] b) {
@@ -81,33 +86,47 @@ public class MazeWorldRenderer {
                 if (!visible[x][y]) continue;
 
                 maze.updateMemory(x, y);
-                drawWorldTile(maze, gui, x, y, 1.0);
+                drawLitTile(maze, gui, x, y);
             }
         }
     }
 
-    private void drawWorldTile(Maze maze, GUI gui, int x, int y, double brightness) {
+    private void drawLitTile(Maze maze, GUI gui, int x, int y) {
+        drawWorldTile(maze, gui, x, y, color -> lit(maze, color, x, y));
+    }
+
+    private void drawWorldTile(Maze maze, GUI gui, int x, int y, UnaryOperator<Color> shade) {
         Position exit = maze.getExit();
 
         if (exit != null && x == exit.getX() && y == exit.getY()) {
-            drawDoor(maze, gui, x, y, brightness);
+            drawDoor(maze, gui, x, y, shade);
         } else if (maze.isWall(x, y)) {
-            drawTile(gui, x, y, wallTile(maze, x, y), Colors.WALL_BRICK, Colors.WALL, brightness);
+            drawTile(gui, x, y, wallTile(maze, x, y), Colors.WALL_BRICK, Colors.WALL, shade);
         } else {
-            drawTile(gui, x, y, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR, brightness);
+            drawTile(gui, x, y, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR, shade);
         }
     }
 
-    private void drawDoor(Maze maze, GUI gui, int x, int y, double brightness) {
+    private Color lit(Maze maze, Color color, int x, int y) {
+        Position aqua = maze.getAqua().getPosition();
+        Position ignis = maze.getIgnis().getPosition();
+        return lighting.light(color, x, y, aqua, ignis);
+    }
+
+    private Color litFloor(Maze maze, Position position) {
+        return lit(maze, Colors.FLOOR, position.getX(), position.getY());
+    }
+
+    private void drawDoor(Maze maze, GUI gui, int x, int y, UnaryOperator<Color> shade) {
         if (maze.isExitOpen()) {
-            drawTile(gui, x, y, Tile.DOOR_OPEN, Colors.DOOR_OPEN, Colors.BLACK, brightness);
+            drawTile(gui, x, y, Tile.DOOR_OPEN, Colors.DOOR_OPEN, Colors.BLACK, shade);
         } else {
-            drawTile(gui, x, y, Tile.DOOR_CLOSED, Colors.DOOR_CLOSED, Colors.WALL, brightness);
+            drawTile(gui, x, y, Tile.DOOR_CLOSED, Colors.DOOR_CLOSED, Colors.WALL, shade);
         }
     }
 
-    private void drawTile(GUI gui, int x, int y, Tile tile, Color fg, Color bg, double brightness) {
-        gui.drawTile(worldX(x), worldY(y), tile, fg.scaled(brightness), bg.scaled(brightness));
+    private void drawTile(GUI gui, int x, int y, Tile tile, Color fg, Color bg, UnaryOperator<Color> shade) {
+        gui.drawTile(worldX(x), worldY(y), tile, shade.apply(fg), shade.apply(bg));
     }
 
     private Tile wallTile(Maze maze, int x, int y) {
@@ -130,7 +149,7 @@ public class MazeWorldRenderer {
                 if (visible[x][y]) continue;
                 if (!isExplored(maze, x, y)) continue;
 
-                drawWorldTile(maze, gui, x, y, MEMORY_BRIGHTNESS);
+                drawWorldTile(maze, gui, x, y, MEMORY_SHADE);
             }
         }
     }
@@ -150,7 +169,7 @@ public class MazeWorldRenderer {
         for (Star star : maze.getStars()) {
             int x = star.getPosition().getX();
             int y = star.getPosition().getY();
-            if (visible[x][y]) starView.draw(gui, star, Colors.FLOOR);
+            if (visible[x][y]) starView.draw(gui, star, litFloor(maze, star.getPosition()));
         }
     }
 
@@ -160,14 +179,14 @@ public class MazeWorldRenderer {
 
         int x = key.getPosition().getX();
         int y = key.getPosition().getY();
-        if (visible[x][y]) keyView.draw(gui, key, Colors.FLOOR);
+        if (visible[x][y]) keyView.draw(gui, key, litFloor(maze, key.getPosition()));
     }
 
     private void drawMonsters(Maze maze, GUI gui, boolean[][] visible) {
         for (Monster m : maze.getMonsters()) {
             int x = m.getPosition().getX();
             int y = m.getPosition().getY();
-            if (visible[x][y]) monsterView.draw(m, gui, Colors.FLOOR);
+            if (visible[x][y]) monsterView.draw(m, gui, litFloor(maze, m.getPosition()));
         }
     }
 }
