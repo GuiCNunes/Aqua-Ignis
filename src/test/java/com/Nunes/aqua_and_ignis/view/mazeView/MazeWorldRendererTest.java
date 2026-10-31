@@ -69,8 +69,8 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).drawTile(0, 0, Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
-        verify(gui).drawTile(1, 1, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
+        verify(gui).drawTile(1, 2, Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
+        verify(gui).drawTile(2, 3, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
         verify(maze).updateMemory(0, 0);
         verify(maze).updateMemory(1, 1);
     }
@@ -84,7 +84,7 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).fillRect(1, 0, 1, 1, Colors.WHITE);
+        verify(gui).fillRect(2, 2, 1, 1, Colors.WHITE);
     }
 
     @Test
@@ -99,8 +99,8 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui, never()).fillRect(0, 0, 1, 1, Colors.SHADOW);
-        verify(gui).fillRect(1, 1, 1, 1, Colors.SHADOW);
+        verify(gui, never()).fillRect(1, 2, 1, 1, Colors.SHADOW);
+        verify(gui).fillRect(2, 3, 1, 1, Colors.SHADOW);
     }
 
     @Test
@@ -175,6 +175,6 @@ class MazeWorldRendererTest {
         when(maze.isWall(0, 0)).thenReturn(false);
 
         renderer.render(maze, gui);
-        verify(gui).drawTile(0, 0, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
+        verify(gui).drawTile(1, 2, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
     }
 }

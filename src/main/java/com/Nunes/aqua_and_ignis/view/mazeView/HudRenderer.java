@@ -8,9 +8,14 @@ import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 public class HudRenderer {
 
     public void render(Maze maze, GUI gui) {
+        drawBackground(gui);
         drawStarCounter(maze, gui);
         drawExitStatus(maze, gui);
         drawTimer(maze, gui);
+    }
+
+    private void drawBackground(GUI gui) {
+        gui.fillRect(0, 0, gui.getWidth(), 2, Colors.BG_UI);
     }
 
     private void drawStarCounter(Maze maze, GUI gui) {

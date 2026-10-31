@@ -21,6 +21,6 @@ class GhostViewTest {
 
         ghostView.draw(monster, gui);
 
-        verify(gui, times(1)).fillRect(2, 3, 1, 1, Colors.GHOST);
+        verify(gui, times(1)).fillRect(3, 5, 1, 1, Colors.GHOST);
     }
 }

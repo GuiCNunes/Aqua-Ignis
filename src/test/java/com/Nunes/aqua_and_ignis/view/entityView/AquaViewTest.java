@@ -28,6 +28,6 @@ class AquaViewTest {
 
         view.draw(player, gui);
 
-        verify(gui).fillRect(5, 10, 1, 1, Colors.AQUA);
+        verify(gui).fillRect(6, 12, 1, 1, Colors.AQUA);
     }
 }

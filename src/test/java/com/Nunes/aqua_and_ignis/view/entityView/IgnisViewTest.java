@@ -28,6 +28,6 @@ class IgnisViewTest {
 
         view.draw(player, gui);
 
-        verify(gui).fillRect(2, 4, 1, 1, Colors.IGNIS);
+        verify(gui).fillRect(3, 6, 1, 1, Colors.IGNIS);
     }
 }

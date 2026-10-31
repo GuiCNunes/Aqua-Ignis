@@ -30,6 +30,6 @@ class StarViewTest {
 
         view.draw(gui, star);
 
-        verify(gui).fillRect(10, 5, 1, 1, Colors.STAR);
+        verify(gui).fillRect(11, 7, 1, 1, Colors.STAR);
     }
 }

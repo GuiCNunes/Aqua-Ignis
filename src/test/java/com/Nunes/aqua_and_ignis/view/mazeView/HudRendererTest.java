@@ -48,6 +48,15 @@ class HudRendererTest {
     }
 
     @Test
+    void renderDrawsHudBackground() {
+        when(gui.getWidth()).thenReturn(92);
+
+        renderer.render(maze, gui);
+
+        verify(gui).fillRect(0, 0, 92, 2, Colors.BG_UI);
+    }
+
+    @Test
     void renderStarsPartial() {
         when(maze.getCollectedStars()).thenReturn(1);
         renderer.render(maze, gui);

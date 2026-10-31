@@ -30,6 +30,6 @@ class KeyViewTest {
 
         view.draw(gui, key);
 
-        verify(gui).fillRect(3, 7, 1, 1, Colors.KEY);
+        verify(gui).fillRect(4, 9, 1, 1, Colors.KEY);
     }
 }

@@ -13,6 +13,9 @@ import com.Nunes.aqua_and_ignis.view.entityView.MonsterView;
 import com.Nunes.aqua_and_ignis.view.entityView.PlayerView;
 import com.Nunes.aqua_and_ignis.view.entityView.StarView;
 
+import static com.Nunes.aqua_and_ignis.view.Layout.worldX;
+import static com.Nunes.aqua_and_ignis.view.Layout.worldY;
+
 public class MazeWorldRenderer {
 
     private final FieldOfView fov;
@@ -66,7 +69,7 @@ public class MazeWorldRenderer {
     }
 
     private void drawDarkness(Maze maze, GUI gui) {
-        gui.fillRect(0, 0, maze.getWidth(), maze.getHeight(), Colors.BLACK);
+        gui.fillRect(worldX(0), worldY(0), maze.getWidth(), maze.getHeight(), Colors.BLACK);
     }
 
     private void drawTilesAndUpdateMemory(Maze maze, GUI gui, boolean[][] visible) {
@@ -79,11 +82,11 @@ public class MazeWorldRenderer {
                 maze.updateMemory(x, y);
 
                 if (exit != null && x == exit.getX() && y == exit.getY() && maze.isExitOpen()) {
-                    gui.fillRect(x, y, 1, 1, Colors.WHITE);
+                    gui.fillRect(worldX(x), worldY(y), 1, 1, Colors.WHITE);
                 } else if (maze.isWall(x, y)) {
-                    gui.drawTile(x, y, Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
+                    gui.drawTile(worldX(x), worldY(y), Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
                 } else {
-                    gui.drawTile(x, y, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
+                    gui.drawTile(worldX(x), worldY(y), Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
                 }
             }
         }
@@ -95,7 +98,7 @@ public class MazeWorldRenderer {
                 if (!maze.isMemorized(x, y)) continue;
                 if (visible[x][y]) continue;
 
-                gui.fillRect(x, y, 1, 1, Colors.SHADOW);
+                gui.fillRect(worldX(x), worldY(y), 1, 1, Colors.SHADOW);
             }
         }
     }

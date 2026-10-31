@@ -21,6 +21,6 @@ class SlimeViewTest {
 
         slimeView.draw(monster, gui);
 
-        verify(gui, times(1)).fillRect(5, 8, 1, 1, Colors.SLIME);
+        verify(gui, times(1)).fillRect(6, 10, 1, 1, Colors.SLIME);
     }
 }
