@@ -16,7 +16,9 @@ public class WinView extends View<Menu> {
     }
     @Override
     public void drawElements(GUI gui){
+        Background.draw(gui);
         Border.draw(gui);
+        gui.fillRect(8, 8, 42, 11, Colors.BG_UI);
         gui.drawText(10,10, "CONGRATULATIONS!",
                 Colors.GREEN, Colors.BG_UI);
         gui.drawText(10,12, "YOU ESCAPED THE MAZE",

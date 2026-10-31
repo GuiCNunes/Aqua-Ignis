@@ -30,9 +30,9 @@ class MenuViewTest {
 
         view.draw(gui);
 
-        verify(gui).drawString(5, 5, "Aqua", Colors.AQUA, null);
-        verify(gui).drawString(10, 5, "&", Colors.GREEN, null);
-        verify(gui).drawString(12, 5, "Ignis", Colors.IGNIS, null);
+        verify(gui).drawString(5, 5, "Aqua", Colors.AQUA, Colors.BG_UI);
+        verify(gui).drawString(10, 5, "&", Colors.GREEN, Colors.BG_UI);
+        verify(gui).drawString(12, 5, "Ignis", Colors.IGNIS, Colors.BG_UI);
     }
 
     @Test
@@ -46,8 +46,8 @@ class MenuViewTest {
 
         view.draw(gui);
 
-        verify(gui).drawString(5, 7, "Start", Colors.GOLD, null);
-        verify(gui).drawString(5, 8, "Exit", Colors.WHITE, null);
+        verify(gui).drawString(5, 7, "Start", Colors.GOLD, Colors.BG_UI);
+        verify(gui).drawString(5, 8, "Exit", Colors.WHITE, Colors.BG_UI);
     }
 
     @Test
@@ -67,7 +67,7 @@ class MenuViewTest {
 
         view.draw(gui);
 
-        verify(gui).drawString(5, 7, "Test", Colors.WHITE, null);
+        verify(gui).drawString(5, 7, "Test", Colors.WHITE, Colors.BG_UI);
 
         reset(gui);
         when(menu.getNumberEntries()).thenReturn(0);
@@ -81,8 +81,8 @@ class MenuViewTest {
     void testDrawSprites() throws IOException {
         view.draw(gui);
 
-        verify(gui).drawTile(3, 5, Tile.AQUA, Colors.AQUA, Colors.BLACK);
-        verify(gui).drawTile(18, 5, Tile.IGNIS, Colors.IGNIS, Colors.BLACK);
+        verify(gui).drawTile(3, 5, Tile.AQUA, Colors.AQUA, Colors.BG_UI);
+        verify(gui).drawTile(18, 5, Tile.IGNIS, Colors.IGNIS, Colors.BG_UI);
     }
 
     @Test

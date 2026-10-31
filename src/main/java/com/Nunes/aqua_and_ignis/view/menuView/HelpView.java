@@ -14,7 +14,9 @@ public class HelpView extends View<Menu> {
         }
         @Override
         public void drawElements(GUI gui){
+            Background.draw(gui);
             Border.draw(gui);
+            gui.fillRect(2, 3, 62, 18, Colors.BG_UI);
             drawSprites(gui);
             gui.drawText(5, 5, "OBJECTIVE:", Colors.TITLE, Colors.BG_UI);
             gui.drawText(5, 7, "Work together to collect 3 STARS and find the KEY.", Colors.WHITE, Colors.BG_UI);

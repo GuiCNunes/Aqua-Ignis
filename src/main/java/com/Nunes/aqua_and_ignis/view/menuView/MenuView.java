@@ -13,6 +13,7 @@ public class MenuView extends View<Menu> {
     }
     @Override
     public void drawElements(GUI gui) {
+        Background.draw(gui);
         Border.draw(gui);
         Menu menu = getModel();
         drawMenu(menu, gui);
@@ -20,15 +21,16 @@ public class MenuView extends View<Menu> {
 
 
     private void drawMenu(Menu menu, GUI gui) {
+        gui.fillRect(2, 3, 22, menu.getNumberEntries() + 6, Colors.BG_UI);
 
-        gui.drawTile(3, 5, Tile.AQUA, Colors.AQUA, Colors.BLACK);
-        gui.drawTile(18, 5, Tile.IGNIS, Colors.IGNIS, Colors.BLACK);
-        gui.drawString(5, 5, "Aqua", Colors.AQUA, null);
-        gui.drawString(10, 5, "&", Colors.GREEN, null);
-        gui.drawString( 12, 5, "Ignis", Colors.IGNIS, null);
+        gui.drawTile(3, 5, Tile.AQUA, Colors.AQUA, Colors.BG_UI);
+        gui.drawTile(18, 5, Tile.IGNIS, Colors.IGNIS, Colors.BG_UI);
+        gui.drawString(5, 5, "Aqua", Colors.AQUA, Colors.BG_UI);
+        gui.drawString(10, 5, "&", Colors.GREEN, Colors.BG_UI);
+        gui.drawString( 12, 5, "Ignis", Colors.IGNIS, Colors.BG_UI);
         for (int i = 0; i < menu.getNumberEntries(); i++) {
             Color color = menu.isSelected(i) ? Colors.GOLD : Colors.WHITE;
-            gui.drawString(5, 7 + i, menu.getEntry(i), color, null);
+            gui.drawString(5, 7 + i, menu.getEntry(i), color, Colors.BG_UI);
         }
     }
 }

@@ -25,6 +25,24 @@ public final class Colors {
     public static  Color GREEN = Color.ofHex("#00FF00");
     public static  Color GOLD = Color.ofHex("#FFD700");
 
+    public static  Color FIRE_SKY_TOP = Color.ofHex("#3A0E1C");
+    public static  Color FIRE_SKY_LOW = Color.ofHex("#F0701C");
+    public static  Color FIRE_MOUNTAIN = Color.ofHex("#6A2840");
+    public static  Color FIRE_HILL = Color.ofHex("#2A1424");
+    public static  Color FIRE_WATER = Color.ofHex("#E8781C");
+    public static  Color FIRE_WATER_GLINT = Color.ofHex("#FFB04C");
+    public static  Color FIRE_WATER_DEEP = Color.ofHex("#B8401A");
+
+    public static  Color WATER_SKY_TOP = Color.ofHex("#0A1840");
+    public static  Color WATER_SKY_LOW = Color.ofHex("#2068C0");
+    public static  Color WATER_MOUNTAIN = Color.ofHex("#2A3A78");
+    public static  Color WATER_HILL = Color.ofHex("#101C40");
+    public static  Color WATER_WATER = Color.ofHex("#3AA0F0");
+    public static  Color WATER_WATER_GLINT = Color.ofHex("#80D0FF");
+    public static  Color WATER_WATER_DEEP = Color.ofHex("#1C64B8");
+
+    public static  Color STAR_DIM = Color.ofHex("#D8E0F0");
+
 
 
 
