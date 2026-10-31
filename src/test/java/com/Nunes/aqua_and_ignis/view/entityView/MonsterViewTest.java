@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.entityView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 import com.Nunes.aqua_and_ignis.model.entity.Monster;
 import com.Nunes.aqua_and_ignis.model.entity.Slime;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,19 +37,19 @@ class MonsterViewTest {
     void drawSlime() {
         Slime slime = mock(Slime.class);
 
-        monsterView.draw(slime, gui);
+        monsterView.draw(slime, gui, Colors.FLOOR);
 
-        verify(slimeView, times(1)).draw(slime, gui);
-        verify(ghostView, never()).draw(any(), any());
+        verify(slimeView, times(1)).draw(slime, gui, Colors.FLOOR);
+        verify(ghostView, never()).draw(any(), any(), any());
     }
 
     @Test
     void drawUnknownGhost() {
         Monster ghost = mock(Monster.class);
 
-        monsterView.draw(ghost, gui);
+        monsterView.draw(ghost, gui, Colors.FLOOR);
 
-        verify(ghostView, times(1)).draw(ghost, gui);
-        verify(slimeView, never()).draw(any(), any());
+        verify(ghostView, times(1)).draw(ghost, gui, Colors.FLOOR);
+        verify(slimeView, never()).draw(any(), any(), any());
     }
 }

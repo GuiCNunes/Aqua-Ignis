@@ -51,8 +51,8 @@ public class MazeWorldRenderer {
         drawKey(maze, gui, visible);
         drawMonsters(maze, gui, visible);
 
-        playerView.draw(maze.getAqua(), gui);
-        playerView.draw(maze.getIgnis(), gui);
+        playerView.draw(maze.getAqua(), gui, Colors.FLOOR);
+        playerView.draw(maze.getIgnis(), gui, Colors.FLOOR);
     }
 
     private boolean[][] orVisible(Maze maze, boolean[][] a, boolean[][] b) {
@@ -121,7 +121,7 @@ public class MazeWorldRenderer {
         for (Star star : maze.getStars()) {
             int x = star.getPosition().getX();
             int y = star.getPosition().getY();
-            if (visible[x][y]) starView.draw(gui, star);
+            if (visible[x][y]) starView.draw(gui, star, Colors.FLOOR);
         }
     }
 
@@ -131,14 +131,14 @@ public class MazeWorldRenderer {
 
         int x = key.getPosition().getX();
         int y = key.getPosition().getY();
-        if (visible[x][y]) keyView.draw(gui, key);
+        if (visible[x][y]) keyView.draw(gui, key, Colors.FLOOR);
     }
 
     private void drawMonsters(Maze maze, GUI gui, boolean[][] visible) {
         for (Monster m : maze.getMonsters()) {
             int x = m.getPosition().getX();
             int y = m.getPosition().getY();
-            if (visible[x][y]) monsterView.draw(m, gui);
+            if (visible[x][y]) monsterView.draw(m, gui, Colors.FLOOR);
         }
     }
 }

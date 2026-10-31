@@ -1,5 +1,6 @@
 package com.Nunes.aqua_and_ignis.view.entityView;
 
+import com.Nunes.aqua_and_ignis.gui.Color;
 import com.Nunes.aqua_and_ignis.gui.GUI;
 import com.Nunes.aqua_and_ignis.model.entity.Monster;
 import com.Nunes.aqua_and_ignis.model.entity.Slime;
@@ -8,11 +9,11 @@ public class MonsterView {
     private SlimeView slimeView = new SlimeView();
     private GhostView ghostView = new GhostView();
 
-    public void draw(Monster monster, GUI gui) {
+    public void draw(Monster monster, GUI gui, Color background) {
         if (monster instanceof Slime) {
-            slimeView.draw(monster, gui);
+            slimeView.draw(monster, gui, background);
         } else {
-            ghostView.draw(monster, gui);
+            ghostView.draw(monster, gui, background);
         }
     }
 }

@@ -136,9 +136,9 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(starView).draw(gui, s);
-        verify(keyView).draw(gui, k);
-        verify(monsterView).draw(m, gui);
+        verify(starView).draw(gui, s, Colors.FLOOR);
+        verify(keyView).draw(gui, k, Colors.FLOOR);
+        verify(monsterView).draw(m, gui, Colors.FLOOR);
     }
 
     @Test
@@ -162,9 +162,9 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(starView, never()).draw(any(), any());
-        verify(keyView, never()).draw(any(), any());
-        verify(monsterView, never()).draw(any(), any());
+        verify(starView, never()).draw(any(), any(), any());
+        verify(keyView, never()).draw(any(), any(), any());
+        verify(monsterView, never()).draw(any(), any(), any());
     }
 
     @Test
@@ -175,7 +175,7 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(keyView, never()).draw(any(), any());
+        verify(keyView, never()).draw(any(), any(), any());
     }
 
     @Test

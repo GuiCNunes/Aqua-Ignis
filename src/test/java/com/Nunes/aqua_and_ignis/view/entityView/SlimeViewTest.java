@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.entityView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.Monster;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
@@ -19,8 +20,8 @@ class SlimeViewTest {
         Position position = new Position(5, 8);
         when(monster.getPosition()).thenReturn(position);
 
-        slimeView.draw(monster, gui);
+        slimeView.draw(monster, gui, Colors.FLOOR);
 
-        verify(gui, times(1)).fillRect(6, 10, 1, 1, Colors.SLIME);
+        verify(gui, times(1)).drawTile(6, 10, Tile.SLIME, Colors.SLIME, Colors.FLOOR);
     }
 }

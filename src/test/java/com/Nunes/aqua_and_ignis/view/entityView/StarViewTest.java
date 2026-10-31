@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.entityView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.Star;
 import com.Nunes.aqua_and_ignis.view.entityView.StarView;
@@ -28,8 +29,8 @@ class StarViewTest {
     void draw() {
         when(star.getPosition()).thenReturn(new Position(10, 5));
 
-        view.draw(gui, star);
+        view.draw(gui, star, Colors.FLOOR);
 
-        verify(gui).fillRect(11, 7, 1, 1, Colors.STAR);
+        verify(gui).drawTile(11, 7, Tile.STAR, Colors.STAR, Colors.FLOOR);
     }
 }

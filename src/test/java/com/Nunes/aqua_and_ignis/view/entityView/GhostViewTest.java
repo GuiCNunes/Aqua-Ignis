@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.entityView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.Monster;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
@@ -19,8 +20,8 @@ class GhostViewTest {
         Position position = new Position(2, 3);
         when(monster.getPosition()).thenReturn(position);
 
-        ghostView.draw(monster, gui);
+        ghostView.draw(monster, gui, Colors.FLOOR);
 
-        verify(gui, times(1)).fillRect(3, 5, 1, 1, Colors.GHOST);
+        verify(gui, times(1)).drawTile(3, 5, Tile.GHOST, Colors.GHOST, Colors.FLOOR);
     }
 }

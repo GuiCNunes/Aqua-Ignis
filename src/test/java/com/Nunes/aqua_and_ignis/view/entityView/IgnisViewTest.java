@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.entityView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.Player;
 import com.Nunes.aqua_and_ignis.view.entityView.IgnisView;
@@ -26,8 +27,8 @@ class IgnisViewTest {
     void draw() {
         when(player.getPosition()).thenReturn(new Position(2, 4));
 
-        view.draw(player, gui);
+        view.draw(player, gui, Colors.FLOOR);
 
-        verify(gui).fillRect(3, 6, 1, 1, Colors.IGNIS);
+        verify(gui).drawTile(3, 6, Tile.IGNIS, Colors.IGNIS, Colors.FLOOR);
     }
 }

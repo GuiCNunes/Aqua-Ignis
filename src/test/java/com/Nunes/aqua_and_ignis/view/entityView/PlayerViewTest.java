@@ -1,6 +1,8 @@
 package com.Nunes.aqua_and_ignis.view.entityView;
 
+import com.Nunes.aqua_and_ignis.gui.Color;
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 import com.Nunes.aqua_and_ignis.model.entity.Aqua;
 import com.Nunes.aqua_and_ignis.model.entity.Ignis;
 import com.Nunes.aqua_and_ignis.model.entity.Player;
@@ -37,29 +39,29 @@ class PlayerViewTest {
     void drawAqua() {
         Aqua aqua = mock(Aqua.class);
 
-        playerView.draw(aqua, gui);
+        playerView.draw(aqua, gui, Colors.FLOOR);
 
-        verify(aquaView, times(1)).draw(aqua, gui);
-        verify(ignisView, never()).draw(any(), any());
+        verify(aquaView, times(1)).draw(aqua, gui, Colors.FLOOR);
+        verify(ignisView, never()).draw(any(), any(), any());
     }
 
     @Test
     void drawIgnis() {
         Ignis ignis = mock(Ignis.class);
 
-        playerView.draw(ignis, gui);
+        playerView.draw(ignis, gui, Colors.FLOOR);
 
-        verify(ignisView, times(1)).draw(ignis, gui);
-        verify(aquaView, never()).draw(any(), any());
+        verify(ignisView, times(1)).draw(ignis, gui, Colors.FLOOR);
+        verify(aquaView, never()).draw(any(), any(), any());
     }
 
     @Test
     void drawUnknownPlayer() {
         Player player = mock(Player.class);
 
-        playerView.draw(player, gui);
+        playerView.draw(player, gui, Colors.FLOOR);
 
-        verify(aquaView, never()).draw(any(), any());
-        verify(ignisView, never()).draw(any(), any());
+        verify(aquaView, never()).draw(any(), any(), any());
+        verify(ignisView, never()).draw(any(), any(), any());
     }
 }
