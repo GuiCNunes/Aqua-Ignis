@@ -6,14 +6,12 @@ import com.Nunes.aqua_and_ignis.model.entity.Key;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 import com.Nunes.aqua_and_ignis.view.View;
 
-import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
-
 public class KeyView {
 
     public void draw(GUI gui, Key key) {
 
         Position position = key.getPosition();
 
-        gui.fillRect(position.getX() * SCALE, position.getY() * SCALE, SCALE, SCALE, Colors.KEY);
+        gui.fillRect(position.getX(), position.getY(), 1, 1, Colors.KEY);
     }
 }

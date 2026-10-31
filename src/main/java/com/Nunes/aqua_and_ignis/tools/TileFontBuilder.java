@@ -22,6 +22,7 @@ public class TileFontBuilder {
     private static final int SPRITE_SIZE = 16;
     private static final int PIXEL = 100;
     private static final int EM = SPRITE_SIZE * PIXEL;
+    private static final int ASCENT = EM + 1;
     private static final String FONT_NAME = "AquaIgnisTiles";
 
     public static void main(String[] args) throws IOException {
@@ -190,7 +191,7 @@ public class TileFontBuilder {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         DataOutputStream data = new DataOutputStream(bytes);
         data.writeInt(0x00010000);
-        data.writeShort(EM);
+        data.writeShort(ASCENT);
         data.writeShort(0);
         data.writeShort(0);
         data.writeShort(EM);
@@ -308,10 +309,10 @@ public class TileFontBuilder {
         data.writeShort(0x40);
         data.writeShort(first);
         data.writeShort(last);
-        data.writeShort(EM);
+        data.writeShort(ASCENT);
         data.writeShort(0);
         data.writeShort(0);
-        data.writeShort(EM);
+        data.writeShort(ASCENT);
         data.writeShort(0);
         data.writeInt(1);
         data.writeInt(0);

@@ -6,7 +6,6 @@ import com.Nunes.aqua_and_ignis.model.entity.Key;
 import com.Nunes.aqua_and_ignis.view.entityView.KeyView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.Nunes.aqua_and_ignis.view.Scale;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 
 import java.io.IOException;
@@ -23,7 +22,6 @@ class KeyViewTest {
         gui = mock(GUI.class);
         key = mock(Key.class);
         view = new KeyView();
-        Scale.setScale(2);
     }
 
     @Test
@@ -32,6 +30,6 @@ class KeyViewTest {
 
         view.draw(gui, key);
 
-        verify(gui).fillRect(6, 14, 2, 2, Colors.KEY);
+        verify(gui).fillRect(3, 7, 1, 1, Colors.KEY);
     }
 }

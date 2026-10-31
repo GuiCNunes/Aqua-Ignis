@@ -29,6 +29,13 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register('buildFont', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.Nunes.aqua_and_ignis.tools.TileFontBuilder'
+    args 'src/main/resources/sprites/sprites.txt', 'src/main/resources/fonts/AquaIgnisTiles.ttf'
+}
+
 pitest {
     targetClasses = ['com.Nunes.aqua_and_ignis.*']
     targetTests = ['com.Nunes.aqua_and_ignis.*']

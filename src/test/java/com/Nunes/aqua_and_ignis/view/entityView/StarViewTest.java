@@ -6,7 +6,6 @@ import com.Nunes.aqua_and_ignis.model.entity.Star;
 import com.Nunes.aqua_and_ignis.view.entityView.StarView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.Nunes.aqua_and_ignis.view.Scale;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 
 import java.io.IOException;
@@ -23,7 +22,6 @@ class StarViewTest {
         gui = mock(GUI.class);
         star = mock(Star.class);
         view = new StarView();
-        Scale.setScale(2);
     }
 
     @Test
@@ -32,6 +30,6 @@ class StarViewTest {
 
         view.draw(gui, star);
 
-        verify(gui).fillRect(20, 10, 2, 2, Colors.STAR);
+        verify(gui).fillRect(10, 5, 1, 1, Colors.STAR);
     }
 }

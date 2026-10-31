@@ -24,7 +24,7 @@ class LanternaGUITest {
         screen = mock(TerminalScreen.class);
         graphics = mock(TextGraphics.class);
 
-        gui = new LanternaGUI(90, 30);
+        gui = new LanternaGUI(90, 30, 16);
 
         Field field = LanternaGUI.class.getDeclaredField("screen");
         field.setAccessible(true);

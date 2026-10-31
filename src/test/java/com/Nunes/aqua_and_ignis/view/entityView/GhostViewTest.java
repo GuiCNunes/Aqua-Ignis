@@ -3,11 +3,9 @@ package com.Nunes.aqua_and_ignis.view.entityView;
 import com.Nunes.aqua_and_ignis.gui.GUI;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.Monster;
-import com.Nunes.aqua_and_ignis.view.Scale;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 import org.junit.jupiter.api.Test;
 
-import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
 import static org.mockito.Mockito.*;
 
 class GhostViewTest {
@@ -21,17 +19,8 @@ class GhostViewTest {
         Position position = new Position(2, 3);
         when(monster.getPosition()).thenReturn(position);
 
-        Scale scale = mock(Scale.class);
-        scale.setScale(2);
-
         ghostView.draw(monster, gui);
 
-        verify(gui, times(1)).fillRect(
-                2 * SCALE,
-                3 * SCALE,
-                SCALE,
-                SCALE,
-                Colors.GHOST
-        );
+        verify(gui, times(1)).fillRect(2, 3, 1, 1, Colors.GHOST);
     }
 }

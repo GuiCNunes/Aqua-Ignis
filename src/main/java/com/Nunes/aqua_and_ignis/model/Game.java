@@ -22,9 +22,7 @@ public class Game {
     }
 
     private void initializeGUI() throws IOException {
-        int w = 90 * Scale.SCALE + 2;
-        int h = 30 * Scale.SCALE + 2;
-        this.gui = new LanternaGUI(w, h);
+        this.gui = new LanternaGUI(92, 32, Scale.fontSize());
         this.gui.startScreen();
     }
 

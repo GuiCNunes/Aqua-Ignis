@@ -15,6 +15,16 @@ class ScaleTest {
         assertEquals(1,  Scale.SCALE);;
     }
     @Test
+    void FontSizeTest() {
+        Scale.SCALE = 1;
+        assertEquals(12, Scale.fontSize());
+        Scale.SCALE = 2;
+        assertEquals(16, Scale.fontSize());
+        Scale.SCALE = 3;
+        assertEquals(24, Scale.fontSize());
+    }
+
+    @Test
     void SetScaleTest_2() {
         Scale.SCALE = 2;
         assertEquals(2,  Scale.SCALE);

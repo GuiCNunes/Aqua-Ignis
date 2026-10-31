@@ -6,7 +6,6 @@ import com.Nunes.aqua_and_ignis.model.entity.Player;
 import com.Nunes.aqua_and_ignis.view.entityView.AquaView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.Nunes.aqua_and_ignis.view.Scale;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 
 import static org.mockito.Mockito.*;
@@ -21,7 +20,6 @@ class AquaViewTest {
         gui = mock(GUI.class);
         player = mock(Player.class);
         view = new AquaView();
-        Scale.setScale(2);
     }
 
     @Test
@@ -30,6 +28,6 @@ class AquaViewTest {
 
         view.draw(player, gui);
 
-        verify(gui).fillRect(10, 20, 2, 2, Colors.AQUA);
+        verify(gui).fillRect(5, 10, 1, 1, Colors.AQUA);
     }
 }

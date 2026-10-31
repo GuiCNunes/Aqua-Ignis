@@ -12,8 +12,6 @@ import com.Nunes.aqua_and_ignis.view.entityView.MonsterView;
 import com.Nunes.aqua_and_ignis.view.entityView.PlayerView;
 import com.Nunes.aqua_and_ignis.view.entityView.StarView;
 
-import static com.Nunes.aqua_and_ignis.view.Scale.SCALE;
-
 public class MazeWorldRenderer {
 
     private final FieldOfView fov;
@@ -31,9 +29,6 @@ public class MazeWorldRenderer {
         this.starView = starView;
         this.keyView = keyView;
     }
-
-    private int sx(int x) { return x * SCALE; }
-    private int sy(int y) { return y * SCALE; }
 
     public void render(Maze maze, GUI gui) {
         Position aquaPos = maze.getAqua().getPosition();
@@ -70,7 +65,7 @@ public class MazeWorldRenderer {
     }
 
     private void drawDarkness(Maze maze, GUI gui) {
-        gui.fillRect(0, 0, maze.getWidth() * SCALE, maze.getHeight() * SCALE, Colors.BLACK);
+        gui.fillRect(0, 0, maze.getWidth(), maze.getHeight(), Colors.BLACK);
     }
 
     private void drawTilesAndUpdateMemory(Maze maze, GUI gui, boolean[][] visible) {
@@ -88,7 +83,7 @@ public class MazeWorldRenderer {
                     color = Colors.WHITE; // ajusta para uma cor própria se quiseres
                 }
 
-                gui.fillRect(sx(x), sy(y), SCALE, SCALE, color);
+                gui.fillRect(x, y, 1, 1, color);
             }
         }
     }
@@ -99,7 +94,7 @@ public class MazeWorldRenderer {
                 if (!maze.isMemorized(x, y)) continue;
                 if (visible[x][y]) continue;
 
-                gui.fillRect(sx(x), sy(y), SCALE, SCALE, Colors.SHADOW);
+                gui.fillRect(x, y, 1, 1, Colors.SHADOW);
             }
         }
     }

@@ -8,7 +8,6 @@ import com.Nunes.aqua_and_ignis.view.mazeView.FieldOfView;
 import com.Nunes.aqua_and_ignis.view.mazeView.MazeWorldRenderer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.Nunes.aqua_and_ignis.view.Scale;
 import com.Nunes.aqua_and_ignis.view.Theme.Colors;
 import com.Nunes.aqua_and_ignis.view.entityView.KeyView;
 import com.Nunes.aqua_and_ignis.view.entityView.MonsterView;
@@ -33,7 +32,6 @@ class MazeWorldRendererTest {
 
     @BeforeEach
     void setUp() {
-        Scale.setScale(1);
         gui = mock(GUI.class);
         maze = mock(Maze.class);
         fov = mock(FieldOfView.class);

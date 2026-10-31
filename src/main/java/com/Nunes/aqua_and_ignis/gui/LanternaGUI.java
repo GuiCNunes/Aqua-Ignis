@@ -1,9 +1,7 @@
 package com.Nunes.aqua_and_ignis.gui;
 
 import java.io.IOException;
-import java.awt.Font;
 
-import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
@@ -19,12 +17,12 @@ public class LanternaGUI implements GUI {
     private int width;
     private int height;
 
-    public LanternaGUI(int width, int height) throws IOException {
+    public LanternaGUI(int width, int height, int fontSize) throws IOException {
         TerminalSize terminalSize = new TerminalSize(width, height);
 
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                 .setInitialTerminalSize(terminalSize)
-                .setTerminalEmulatorFontConfiguration(loadSquareFontCfg1());
+                .setTerminalEmulatorFontConfiguration(new TileFontConfiguration(fontSize));
 
         AWTTerminalFrame terminal = terminalFactory.createAWTTerminal();
         terminal.setTitle("Aqua & Ignis");
@@ -141,13 +139,6 @@ public class LanternaGUI implements GUI {
     private TextColor toLanterna(Color c) {
         return new TextColor.RGB(c.r(), c.g(), c.b());
     }
-
-
-    private AWTTerminalFontConfiguration loadSquareFontCfg1() {
-        Font font = new Font("Monospaced", Font.PLAIN, 16);
-        return AWTTerminalFontConfiguration.newInstance(font);
-    }
-
 
 }
 
