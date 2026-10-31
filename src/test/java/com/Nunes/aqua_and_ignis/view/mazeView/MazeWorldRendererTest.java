@@ -97,7 +97,7 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).fillRect(2, 2, 1, 1, Colors.WHITE);
+        verify(gui).drawTile(2, 2, Tile.DOOR_OPEN, Colors.DOOR_OPEN, Colors.BLACK);
     }
 
     @Test
@@ -179,7 +179,7 @@ class MazeWorldRendererTest {
     }
 
     @Test
-    void exitClosedOrMismatch() {
+    void drawTilesWithExitClosed() {
         boolean[][] vis = {{true, true}, {true, true}};
         when(fov.computeVisible(any(), any())).thenReturn(vis);
 
@@ -188,6 +188,7 @@ class MazeWorldRendererTest {
         when(maze.isWall(0, 0)).thenReturn(false);
 
         renderer.render(maze, gui);
-        verify(gui).drawTile(1, 2, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
+        verify(gui).drawTile(1, 2, Tile.DOOR_CLOSED, Colors.DOOR_CLOSED, Colors.WALL);
+        verify(gui).drawTile(2, 2, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
     }
 }

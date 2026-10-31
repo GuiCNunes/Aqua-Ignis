@@ -81,14 +81,22 @@ public class MazeWorldRenderer {
 
                 maze.updateMemory(x, y);
 
-                if (exit != null && x == exit.getX() && y == exit.getY() && maze.isExitOpen()) {
-                    gui.fillRect(worldX(x), worldY(y), 1, 1, Colors.WHITE);
+                if (exit != null && x == exit.getX() && y == exit.getY()) {
+                    drawDoor(maze, gui, x, y);
                 } else if (maze.isWall(x, y)) {
                     gui.drawTile(worldX(x), worldY(y), wallTile(maze, x, y), Colors.WALL_BRICK, Colors.WALL);
                 } else {
                     gui.drawTile(worldX(x), worldY(y), Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
                 }
             }
+        }
+    }
+
+    private void drawDoor(Maze maze, GUI gui, int x, int y) {
+        if (maze.isExitOpen()) {
+            gui.drawTile(worldX(x), worldY(y), Tile.DOOR_OPEN, Colors.DOOR_OPEN, Colors.BLACK);
+        } else {
+            gui.drawTile(worldX(x), worldY(y), Tile.DOOR_CLOSED, Colors.DOOR_CLOSED, Colors.WALL);
         }
     }
 
