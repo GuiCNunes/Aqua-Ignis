@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.mazeView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.Maze;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.*;
@@ -68,8 +69,8 @@ class MazeWorldRendererTest {
 
         renderer.render(maze, gui);
 
-        verify(gui).fillRect(0, 0, 1, 1, Colors.WALL);
-        verify(gui).fillRect(1, 1, 1, 1, Colors.FLOOR);
+        verify(gui).drawTile(0, 0, Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
+        verify(gui).drawTile(1, 1, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
         verify(maze).updateMemory(0, 0);
         verify(maze).updateMemory(1, 1);
     }
@@ -174,6 +175,6 @@ class MazeWorldRendererTest {
         when(maze.isWall(0, 0)).thenReturn(false);
 
         renderer.render(maze, gui);
-        verify(gui).fillRect(0, 0, 1, 1, Colors.FLOOR);
+        verify(gui).drawTile(0, 0, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
     }
 }

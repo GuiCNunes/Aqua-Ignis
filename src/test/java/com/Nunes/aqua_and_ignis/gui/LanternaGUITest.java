@@ -161,6 +161,24 @@ class LanternaGUITest {
     }
 
     @Test
+    void drawTile() {
+        Color fg = new Color(255, 255, 255);
+        Color bg = new Color(0, 0, 0);
+
+        gui.drawTile(3, 4, Tile.WALL, fg, bg);
+        verify(graphics).setForegroundColor(any());
+        verify(graphics).setBackgroundColor(any());
+        verify(graphics).putString(3, 4, String.valueOf(Tile.WALL.glyph()));
+
+        reset(graphics);
+        gui.drawTile(-1, 0, Tile.WALL, fg, bg);
+        gui.drawTile(90, 0, Tile.WALL, fg, bg);
+        gui.drawTile(0, -1, Tile.WALL, fg, bg);
+        gui.drawTile(0, 30, Tile.WALL, fg, bg);
+        verify(graphics, never()).putString(anyInt(), anyInt(), anyString());
+    }
+
+    @Test
     void dimensions() {
         assertEquals(90, gui.getWidth());
         assertEquals(30, gui.getHeight());

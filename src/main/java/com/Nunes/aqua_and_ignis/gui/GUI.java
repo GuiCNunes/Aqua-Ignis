@@ -26,4 +26,6 @@ public interface GUI {
     void fillRect(int x, int y, int width, int height, Color color);
 
     void drawText(int x, int y, String text, Color fg, Color bg);
+
+    void drawTile(int x, int y, Tile tile, Color fg, Color bg);
 }

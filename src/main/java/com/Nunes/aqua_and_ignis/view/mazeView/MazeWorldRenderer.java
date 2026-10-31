@@ -1,6 +1,7 @@
 package com.Nunes.aqua_and_ignis.view.mazeView;
 
 import com.Nunes.aqua_and_ignis.gui.GUI;
+import com.Nunes.aqua_and_ignis.gui.Tile;
 import com.Nunes.aqua_and_ignis.model.Maze;
 import com.Nunes.aqua_and_ignis.model.Position;
 import com.Nunes.aqua_and_ignis.model.entity.Key;
@@ -77,13 +78,13 @@ public class MazeWorldRenderer {
 
                 maze.updateMemory(x, y);
 
-                var color = maze.isWall(x, y) ? Colors.WALL : Colors.FLOOR;
-
                 if (exit != null && x == exit.getX() && y == exit.getY() && maze.isExitOpen()) {
-                    color = Colors.WHITE; // ajusta para uma cor própria se quiseres
+                    gui.fillRect(x, y, 1, 1, Colors.WHITE);
+                } else if (maze.isWall(x, y)) {
+                    gui.drawTile(x, y, Tile.WALL, Colors.WALL_BRICK, Colors.WALL);
+                } else {
+                    gui.drawTile(x, y, Tile.FLOOR, Colors.FLOOR_DETAIL, Colors.FLOOR);
                 }
-
-                gui.fillRect(x, y, 1, 1, color);
             }
         }
     }

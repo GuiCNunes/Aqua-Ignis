@@ -136,6 +136,15 @@ public class LanternaGUI implements GUI {
         g.putString(x, y, text);
     }
 
+    @Override
+    public void drawTile(int x, int y, Tile tile, Color fg, Color bg) {
+        if (x < 0 || y < 0 || x >= width || y >= height) return;
+        var g = screen.newTextGraphics();
+        g.setBackgroundColor(toLanterna(bg));
+        g.setForegroundColor(toLanterna(fg));
+        g.putString(x, y, String.valueOf(tile.glyph()));
+    }
+
     private TextColor toLanterna(Color c) {
         return new TextColor.RGB(c.r(), c.g(), c.b());
     }
