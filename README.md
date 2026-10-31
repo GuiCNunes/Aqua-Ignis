@@ -7,6 +7,8 @@ Aqua & Ignis is a two-player escape game. Aqua and Ignis are lost in a dark maze
 
 Made with Java and [Lanterna](https://github.com/mabe02/lanterna).
 
+![Gameplay](src/main/resources/Images/gameplay.png)
+
 ## Run
 
 You need JDK 21. Then:
